@@ -114,6 +114,19 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void createEventInPhone(String name, String location, String description, Date startTime, Date endTime){
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra(CalendarContract.Events.TITLE, name);
+        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, location);
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, description);
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
+        intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
+        intent.setData(CalendarContract.Events.CONTENT_URI);
+        startActivity(intent);
+
+    }
+
 
 
 
@@ -127,6 +140,8 @@ public class MainActivity extends Activity {
                 int duration = Toast.LENGTH_LONG;
                 Toast toast = Toast.makeText(context, location, duration);
                 toast.show();
+
+                createEventInPhone(firstEvent.getString("name"), firstEvent.getString("location"), firstEvent.getString("description"), new Date(firstEvent.getString("startTime")), null);
 
             } catch (JSONException e) {
                 e.printStackTrace();
