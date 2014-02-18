@@ -17,15 +17,7 @@
         android:layout_height="wrap_content"
         android:text="Planit Login" />
 
-
-    <Button
-        android:id="@+id/eventAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Event"
-        android:onClick="getFacebookEvents" />
-
-    <Button
+   <Button
         android:id="@+id/eventAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

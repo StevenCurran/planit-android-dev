@@ -36,7 +36,6 @@ public class MainActivity extends Activity {
     private Button button;
     private AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
     final Context context = this;
-    //private PersistentCookieStore cookieStore;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -69,42 +68,6 @@ public class MainActivity extends Activity {
         asyncHttpClient.get(UrlServerConstants.FACEBOOK_EVENTS, null, JSON_CALLBACK_HANDLER);
 
     }
-
-    /*
-            asyncHttpClient.get("http://planit-dev.herokuapp.com/fbevents", new AsyncHttpResponseHandler(){
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-            String response = new String(responseBody);
-            System.out.println(response);
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error)
-        {
-            String response = new String(responseBody);
-            System.out.println(response);
-        }
-
-
-    });
-    */
-
-    public void getFacebookEvents2(View view){
-//        this.cookieStore = new PersistentCookieStore(getApplicationContext());
-        BasicClientCookie clientCookie = new BasicClientCookie("JSESSIONID", getCookie(UrlServerConstants.PLANIT_ROOT, "JSESSIONID"));
-        clientCookie.setVersion(1);
-        clientCookie.setDomain("planit-dev.herokuapp.com");
-        clientCookie.setPath("/");
-        GlobalCookieStore.getCookieStore().addCookie(clientCookie);
-  //      this.cookieStore.addCookie(clientCookie);
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, getCookie(UrlServerConstants.PLANIT_ROOT, "JSESSIONID"), duration);
-        toast.show();
-
-//        Intent intent = new Intent(context, WebViewActivity2.class);
-//
-  //      startActivity(intent);
-     }
 
     public void openCalendarEvent(View view){
         Intent intent = new Intent(Intent.ACTION_INSERT);
@@ -158,33 +121,5 @@ public class MainActivity extends Activity {
         {
             System.out.println(statusCode);
         }
-
-        @Override
-        public void onRetry() {
-            System.out.println();
-        }
-
-        @Override
-        public void onFinish() {
-            System.out.println("Big error...");
-        }
-
-
     };
-
-    public String getCookie(String siteName,String CookieName){
-        String CookieValue = null;
-
-        CookieManager cookieManager = CookieManager.getInstance();
-        String cookies = cookieManager.getCookie(siteName);
-        String[] temp=cookies.split("[;]");
-        for (String ar1 : temp ){
-            if(ar1.contains(CookieName)){
-                String[] temp1=ar1.split("[=]");
-                CookieValue = temp1[1];
-            }
-        }
-        return CookieValue;
-    }
-
 }
