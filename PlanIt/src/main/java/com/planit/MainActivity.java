@@ -19,6 +19,8 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.ResponseHandlerInterface;
+import com.planit.constants.GlobalCookieStore;
+import com.planit.constants.UrlServerConstants;
 import com.restfb.types.Event;
 
 import org.apache.http.Header;
@@ -34,7 +36,7 @@ public class MainActivity extends Activity {
     private Button button;
     private AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
     final Context context = this;
-    private PersistentCookieStore cookieStore;
+    //private PersistentCookieStore cookieStore;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -63,9 +65,8 @@ public class MainActivity extends Activity {
 
 
     public void getFacebookEvents(View view){
-
-        asyncHttpClient.setCookieStore(cookieStore);
-        asyncHttpClient.get("http://planit-dev.herokuapp.com/fbevents", null, JSON_CALLBACK_HANDLER);
+        asyncHttpClient.setCookieStore(GlobalCookieStore.getCookieStore());
+        asyncHttpClient.get(UrlServerConstants.FACEBOOK_EVENTS, null, JSON_CALLBACK_HANDLER);
 
     }
 
@@ -89,17 +90,15 @@ public class MainActivity extends Activity {
     */
 
     public void getFacebookEvents2(View view){
-
-        this.cookieStore = new PersistentCookieStore(this);
-
-        BasicClientCookie clientCookie = new BasicClientCookie("JSESSIONID", getCookie("http://planit-dev.herokuapp.com", "JSESSIONID"));
+//        this.cookieStore = new PersistentCookieStore(getApplicationContext());
+        BasicClientCookie clientCookie = new BasicClientCookie("JSESSIONID", getCookie(UrlServerConstants.PLANIT_ROOT, "JSESSIONID"));
         clientCookie.setVersion(1);
         clientCookie.setDomain("planit-dev.herokuapp.com");
         clientCookie.setPath("/");
-        this.cookieStore.addCookie(clientCookie);
-
+        GlobalCookieStore.getCookieStore().addCookie(clientCookie);
+  //      this.cookieStore.addCookie(clientCookie);
         int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, "Cookie Obtained!!", duration);
+        Toast toast = Toast.makeText(context, getCookie(UrlServerConstants.PLANIT_ROOT, "JSESSIONID"), duration);
         toast.show();
 
 //        Intent intent = new Intent(context, WebViewActivity2.class);
