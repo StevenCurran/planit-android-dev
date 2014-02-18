@@ -15,6 +15,7 @@ import android.widget.TextView;
 public class LoginActivity extends Activity {
 
     final Context context = this;
+    private Bundle b = new Bundle();
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -29,6 +30,15 @@ public class LoginActivity extends Activity {
 
     public void doGoogleLogin(View view){
         Intent intent = new Intent(context, WebViewActivity.class);
+        b.putString("login_type", "google");
+        intent.putExtras(b);
+        startActivity(intent);
+    }
+
+    public void doFacebookLogin(View view){
+        Intent intent = new Intent(context, WebViewActivity.class);
+        b.putString("login_type", "facebook");
+        intent.putExtras(b);
         startActivity(intent);
     }
 

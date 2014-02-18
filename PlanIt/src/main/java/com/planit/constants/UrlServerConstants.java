@@ -5,9 +5,15 @@ package com.planit.constants;
  */
 public class UrlServerConstants {
 
-
-    //private urls
     public static final String PLANIT_ROOT = "http://planit-dev.herokuapp.com";
+
+    //login urls
+    public static final String FACEBOOK_LOGIN = PLANIT_ROOT + "/socialauth?id=facebook";
+    public static final String GOOGLE_LOGIN = PLANIT_ROOT + "/googlelogin/login";
+
+
+
+    //redirects
     public static final String GOOGLE_AUTH_REDIRECT  = PLANIT_ROOT + "/googlelogin/oauthCallback";
     public static final String FACEBOOK_AUTH_REDIRECT  = PLANIT_ROOT + "/authSuccess";
 

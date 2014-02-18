@@ -20,6 +20,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/google_login_image"
-        android:onClick="doGoogleLogin"/>
+        android:onClick="doGoogleLogin" />
+
+    <ImageButton
+        android:id="@+id/facebookLoginButton"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/facebook_login_button"
+        android:onClick="doFacebookLogin" />
 
 </LinearLayout>
