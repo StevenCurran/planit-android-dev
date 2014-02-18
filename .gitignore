@@ -29,6 +29,8 @@ local.properties
 proguard/
 
 
-.iws
+
+*.iws
 workspace.xml
 tasks.xml
+*.iml
