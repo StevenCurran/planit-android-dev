@@ -22,7 +22,7 @@
         android:id="@+id/eventAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Event"
+        android:text="Get Session Cookie"
         android:onClick="getFacebookEvents2" />
 
     <CalendarView

@@ -59,27 +59,29 @@ public class MainActivity extends Activity {
 
     public void getFacebookEvents(View view){
 
-        //asyncHttpClient.get("http://planit-dev.herokuapp.com/fbevents", null, JSON_CALLBACK_HANDLER);
         asyncHttpClient.setCookieStore(cookieStore);
-
-        asyncHttpClient.get("http://planit-dev.herokuapp.com/fbevents", new AsyncHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String response = new String(responseBody);
-                System.out.println(response);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error)
-            {
-                String response = new String(responseBody);
-                System.out.println(response);
-            }
-
-
-        });
+        asyncHttpClient.get("http://planit-dev.herokuapp.com/fbevents", null, JSON_CALLBACK_HANDLER);
 
     }
+
+    /*
+            asyncHttpClient.get("http://planit-dev.herokuapp.com/fbevents", new AsyncHttpResponseHandler(){
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            String response = new String(responseBody);
+            System.out.println(response);
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error)
+        {
+            String response = new String(responseBody);
+            System.out.println(response);
+        }
+
+
+    });
+    */
 
     public void getFacebookEvents2(View view){
 
