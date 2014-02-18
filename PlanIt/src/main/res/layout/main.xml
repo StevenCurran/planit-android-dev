@@ -17,12 +17,6 @@
         android:layout_height="wrap_content"
         android:text="Planit Login" />
 
-   <Button
-        android:id="@+id/eventAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get Session Cookie"
-        android:onClick="getFacebookEvents2" />
 
     <CalendarView
         android:layout_width="match_parent"
