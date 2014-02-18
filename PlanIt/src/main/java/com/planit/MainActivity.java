@@ -120,7 +120,7 @@ public class MainActivity extends Activity {
         intent.putExtra(CalendarContract.Events.TITLE, name);
         intent.putExtra(CalendarContract.Events.EVENT_LOCATION, location);
         intent.putExtra(CalendarContract.Events.DESCRIPTION, description);
-        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, new Date());
         intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
         intent.setData(CalendarContract.Events.CONTENT_URI);
         startActivity(intent);
@@ -141,7 +141,7 @@ public class MainActivity extends Activity {
                 Toast toast = Toast.makeText(context, location, duration);
                 toast.show();
 
-                createEventInPhone(firstEvent.getString("name"), firstEvent.getString("location"), firstEvent.getString("description"), new Date(firstEvent.getString("startTime")), null);
+                createEventInPhone(firstEvent.getString("name"), firstEvent.getString("location"), firstEvent.getString("description"), null , null);
 
             } catch (JSONException e) {
                 e.printStackTrace();
