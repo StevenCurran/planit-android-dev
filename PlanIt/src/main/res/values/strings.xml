@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PlanIt</string>
+    <color name="planit_blue">#20AEFF</color>
+    <color name="white">#FFFFFF</color>
 </resources>

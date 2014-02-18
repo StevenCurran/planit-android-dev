@@ -56,6 +56,11 @@ public class MainActivity extends Activity {
 
     }
 
+    public void goToLoginScreen(View view){
+        Intent intent = new Intent(context, LoginActivity.class);
+        startActivity(intent);
+    }
+
 
     public void getFacebookEvents(View view){
 
