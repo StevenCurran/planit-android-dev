@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -22,10 +23,21 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        //set font for heading2
-        TextView txt = (TextView) findViewById(R.id.heading2);
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
-        txt.setTypeface(font);
+        //set fonts
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
+        TextView loginText = (TextView) findViewById(R.id.loginText);
+        loginText.setTypeface(titleFont);
+        TextView forgottenPasswordText = (TextView) findViewById(R.id.forgottenPasswordText);
+        forgottenPasswordText.setTypeface(titleFont);
+        TextView noAccountText = (TextView) findViewById(R.id.noAccountText);
+        noAccountText.setTypeface(titleFont);
+
+        Typeface loginBoxFont = Typeface.createFromAsset(getAssets(), "fonts/segoeui.ttf");
+        EditText planItIDBox = (EditText) findViewById(R.id.planitIDTextBox);
+        planItIDBox.setTypeface(loginBoxFont);
+        EditText planItIDPassword = (EditText) findViewById(R.id.planitIDPasswordBox);
+        planItIDPassword.setTypeface(loginBoxFont);
+
     }
 
     public void doGoogleLogin(View view){

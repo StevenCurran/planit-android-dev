@@ -1,24 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@color/planit_blue">
+    android:background="@color/planit_blue"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_screen_titlebar" />
 
     <TextView
-        android:id="@+id/heading2"
-        android:layout_width="fill_parent"
+        android:id="@+id/loginText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:textColor="@color/white"
         android:textSize="10pt"
-        android:textAlignment="center"
+        android:gravity="center"
         android:text="Get started by signing in..." />
+
+    <ImageView
+        android:id="@+id/planitLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/small_planit_logo" />
+
+    <EditText
+        android:id="@+id/planitIDTextBox"
+        android:layout_width="280dp"
+        android:layout_weight="0.05"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:singleLine="true"
+        android:textSize="7pt"
+        android:textColor="@color/planit_grey"
+        android:background="@drawable/login_name_box"
+        android:hint="PlanIt ID" />
+
+    <EditText
+        android:id="@+id/planitIDPasswordBox"
+        android:layout_width="280dp"
+        android:layout_weight="0.05"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:singleLine="true"
+        android:textSize="7pt"
+        android:textColor="@color/planit_grey"
+        android:background="@drawable/login_password_box"
+        android:hint="Password" />
+
+    <TextView
+        android:id="@+id/forgottenPasswordText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:textSize="7pt"
+        android:gravity="center"
+        android:text="Forgotten your password?" />
+
+    <TextView
+        android:id="@+id/noAccountText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/white"
+        android:textSize="7pt"
+        android:gravity="center"
+        android:text="Don't have a PlanIt account? Create one." />
 
     <ImageButton
         android:id="@+id/googleLoginButton"
         style="?android:borderlessButtonStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
         android:src="@drawable/google_login_image"
         android:background="@null"
         android:onClick="doGoogleLogin" />
@@ -26,8 +96,9 @@
     <ImageButton
         android:id="@+id/facebookLoginButton"
         style="?android:borderlessButtonStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:src="@drawable/facebook_login_image"
         android:background="@null"
         android:onClick="doFacebookLogin" />
