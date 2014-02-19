@@ -33,4 +33,3 @@ proguard/
 *.iws
 workspace.xml
 tasks.xml
-*.iml
