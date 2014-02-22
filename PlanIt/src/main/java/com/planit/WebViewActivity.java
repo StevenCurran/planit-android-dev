@@ -6,6 +6,7 @@ package com.planit;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.planit.constants.GlobalCookieStore;
@@ -23,10 +25,17 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 
 public class WebViewActivity extends Activity {
 
+    //This is shite and needs a re write... i will do it soononly use the webview ui if we need to login, otherwise its just annoying
+    // to get json back.
+
     final ValueCallback<String> valueCallback = new ValueCallback<String>() {
         @Override
         public void onReceiveValue(String s) {
-            Log.d("JS RESPONSE", s);
+            int duration = Toast.LENGTH_SHORT;
+            if(s.length() > 10){
+                Toast toast = Toast.makeText(getApplicationContext(), s, duration);
+                toast.show();
+            }
 
         }
     };
