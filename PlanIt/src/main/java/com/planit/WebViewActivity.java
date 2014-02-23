@@ -21,6 +21,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.planit.constants.GlobalCookieStore;
 import com.planit.constants.UrlServerConstants;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.http.impl.cookie.BasicClientCookie;
 
 public class WebViewActivity extends Activity {
@@ -32,6 +33,7 @@ public class WebViewActivity extends Activity {
         @Override
         public void onReceiveValue(String s) {
             int duration = Toast.LENGTH_SHORT;
+            s = StringEscapeUtils.unescapeJson(s);
             if(s.length() > 10){
                 Toast toast = Toast.makeText(getApplicationContext(), s, duration);
                 toast.show();
