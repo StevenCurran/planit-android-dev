@@ -17,6 +17,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.google.api.services.plus.model.Person;
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.planit.constants.GlobalCookieStore;
 import com.planit.constants.UrlServerConstants;
@@ -27,6 +29,7 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 public class WebViewActivity extends Activity {
 
     private String url = "";
+    private Gson gson = new Gson();
 
     final ValueCallback<String> valueCallback = new ValueCallback<String>() {
         @Override
@@ -34,7 +37,8 @@ public class WebViewActivity extends Activity {
             int duration = Toast.LENGTH_SHORT;
             s = StringEscapeUtils.unescapeJson(s);
             if(s.length() > 10 && !url.contains("about:blank") && !url.contains("google.com")){
-                Toast toast = Toast.makeText(getApplicationContext(), s, duration);
+                Person person = gson.fromJson(s, Person.class);
+                Toast toast = Toast.makeText(getApplicationContext(), "Welcome back " + person.getDisplayName(), duration);
                 toast.show();
             }
 

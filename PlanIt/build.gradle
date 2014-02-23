@@ -17,7 +17,7 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
@@ -28,4 +28,5 @@ dependencies {
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/restfb-1.6.14.jar')
     compile files('libs/commons-lang3-3.2.1.jar')
+    compile files('libs/google-api-services-plus-v1-rev118-1.17.0-rc.jar')
 }
