@@ -37,6 +37,8 @@ public class WebViewActivity extends Activity {
             int duration = Toast.LENGTH_SHORT;
             s = StringEscapeUtils.unescapeJson(s);
             if(s.length() > 10 && !url.contains("about:blank") && !url.contains("google.com")){
+
+                s = s.substring(1, s.length()-1); //remove the ""
                 Person person = gson.fromJson(s, Person.class);
                 Toast toast = Toast.makeText(getApplicationContext(), "Welcome back " + person.getDisplayName(), duration);
                 toast.show();

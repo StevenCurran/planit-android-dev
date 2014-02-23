@@ -71,10 +71,14 @@
     <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="android-async-http-1.4.4" level="project" />
+    <orderEntry type="library" exported="" name="google-http-client-1.17.0-rc" level="project" />
+    <orderEntry type="library" exported="" name="google-api-client-json-1.2.3-alpha" level="project" />
     <orderEntry type="library" exported="" name="google-api-services-plus-v1-rev118-1.17.0-rc" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
+    <orderEntry type="library" exported="" name="google-http-client-gson-1.17.0-rc" level="project" />
     <orderEntry type="library" exported="" name="restfb-1.6.14" level="project" />
     <orderEntry type="library" exported="" name="commons-lang3-3.2.1" level="project" />
+    <orderEntry type="library" exported="" name="google-api-client-gson-1.17.0-rc" level="project" />
   </component>
 </module>
 
