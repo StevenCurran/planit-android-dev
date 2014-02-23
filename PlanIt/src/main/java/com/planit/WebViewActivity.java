@@ -26,19 +26,28 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 
 public class WebViewActivity extends Activity {
 
+    private String url = "";
 
     final ValueCallback<String> valueCallback = new ValueCallback<String>() {
         @Override
         public void onReceiveValue(String s) {
             int duration = Toast.LENGTH_SHORT;
             s = StringEscapeUtils.unescapeJson(s);
-            if(s.length() > 10){
+            if(s.length() > 10 && !url.contains("about:blank") && !url.contains("google.com")){
                 Toast toast = Toast.makeText(getApplicationContext(), s, duration);
                 toast.show();
             }
 
         }
     };
+
+    final ValueCallback<String> URLCALLBACK = new ValueCallback<String>() {
+        @Override
+        public void onReceiveValue(String s) {
+           url = s;
+        }
+    };
+
     private WebView webView;
     private AsyncHttpClient client = new AsyncHttpClient();
 
@@ -49,6 +58,8 @@ public class WebViewActivity extends Activity {
 
         webView = (WebView) findViewById(R.id.webView1);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.setBackgroundColor(0x00000000);
+        webView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
 
         webView.setWebViewClient(new WebViewClient() {
 
@@ -56,8 +67,6 @@ public class WebViewActivity extends Activity {
             public void onPageStarted(WebView view, String url, Bitmap s) {
                 if ((url.contains(UrlServerConstants.GOOGLE_AUTH_REDIRECT) && !url.contains(UrlServerConstants.GOOGLE_HOME)) || url.contains(UrlServerConstants.FACEBOOK_AUTH_REDIRECT)) {
                     //Should we enter here we know that the user has been validated.
-                    webView.setBackgroundColor(0x00000000);
-                    webView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
                     //this should make the webview transparent, which is kinda cool.
                     BasicClientCookie clientCookie = new BasicClientCookie("JSESSIONID", getCookie(UrlServerConstants.PLANIT_ROOT, "JSESSIONID"));
                     clientCookie.setVersion(1);
@@ -78,7 +87,9 @@ public class WebViewActivity extends Activity {
                 if ((url.contains(UrlServerConstants.GOOGLE_AUTH_REDIRECT) && !url.contains(UrlServerConstants.GOOGLE_HOME)) || url.contains(UrlServerConstants.FACEBOOK_AUTH_REDIRECT)) {
                     super.onPageFinished(view, url);
                     // this is where we should read in the result of what is pulled back.
+                    webView.evaluateJavascript("javascript:location.href", URLCALLBACK);
                     webView.evaluateJavascript("javascript:document.documentElement.innerText", valueCallback);
+
                     finish();
                 }
             }
