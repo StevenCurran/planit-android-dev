@@ -73,8 +73,6 @@ public class WebViewActivity extends Activity {
 
         webView = (WebView) findViewById(R.id.webView1);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setBackgroundColor(0x00000000);
-        webView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
 
         webView.setWebViewClient(new WebViewClient() {
 
@@ -83,6 +81,9 @@ public class WebViewActivity extends Activity {
                 if ((url.contains(UrlServerConstants.GOOGLE_AUTH_REDIRECT) && !url.contains(UrlServerConstants.GOOGLE_HOME)) || url.contains(UrlServerConstants.FACEBOOK_AUTH_REDIRECT)) {
                     //Should we enter here we know that the user has been validated.
                     //this should make the webview transparent, which is kinda cool.
+                    webView.setBackgroundColor(0x00000000);
+                    webView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
+
                     BasicClientCookie clientCookie = new BasicClientCookie("JSESSIONID", getCookie(UrlServerConstants.PLANIT_ROOT, "JSESSIONID"));
                     clientCookie.setVersion(1);
                     clientCookie.setDomain("planit-dev.herokuapp.com");
