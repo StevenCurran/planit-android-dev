@@ -18,6 +18,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.plus.model.Person;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -27,22 +28,29 @@ import com.planit.constants.UrlServerConstants;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.http.impl.cookie.BasicClientCookie;
 
+import java.io.IOException;
+
 public class WebViewActivity extends Activity {
 
     private String url = "";
-    private Gson gson = new Gson();
+    private GsonFactory gson = new GsonFactory();
 
     final ValueCallback<String> valueCallback = new ValueCallback<String>() {
         @Override
         public void onReceiveValue(String s) {
             int duration = Toast.LENGTH_SHORT;
             s = StringEscapeUtils.unescapeJson(s);
-            if(s.length() > 10 && !url.contains("about:blank") && !url.contains("google.com")){
+            if (s.length() > 10 && !url.contains("about:blank") && !url.contains("google.com")) {
 
-                s = s.substring(1, s.length()-1); //remove the ""
-                Person person = gson.fromJson(s, Person.class);
-                Toast toast = Toast.makeText(getApplicationContext(), "Welcome back " + person.getDisplayName(), duration);
-                toast.show();
+                s = s.substring(1, s.length() - 1); //remove the ""
+                try {
+                    Person person = gson.fromString(s, Person.class);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Welcome back " + person.getDisplayName(), duration);
+                    toast.show();
+
+                } catch (IOException e) {
+                    //problem with the serialisation
+                }
             }
 
         }
@@ -51,7 +59,7 @@ public class WebViewActivity extends Activity {
     final ValueCallback<String> URLCALLBACK = new ValueCallback<String>() {
         @Override
         public void onReceiveValue(String s) {
-           url = s;
+            url = s;
         }
     };
 
