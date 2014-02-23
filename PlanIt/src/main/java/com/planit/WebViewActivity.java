@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.google.api.client.json.JsonFactory;
 import com.google.api.services.plus.model.Person;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
