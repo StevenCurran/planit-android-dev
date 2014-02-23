@@ -26,8 +26,6 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 
 public class WebViewActivity extends Activity {
 
-    //This is shite and needs a re write... i will do it soononly use the webview ui if we need to login, otherwise its just annoying
-    // to get json back.
 
     final ValueCallback<String> valueCallback = new ValueCallback<String>() {
         @Override
