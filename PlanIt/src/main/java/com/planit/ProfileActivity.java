@@ -31,10 +31,22 @@ public class ProfileActivity extends Activity {
         scheduleButton.setTypeface(uilFont);
         TextView title = (TextView) findViewById(R.id.screenTitle);
         title.setTypeface(uilFont);
+        TextView userNameText = (TextView) findViewById(R.id.userNameText);
+        userNameText.setTypeface(uilFont);
+        TextView userIdText = (TextView) findViewById(R.id.userIDText);
+        userIdText.setTypeface(uilFont);
         Button signOutButton = (Button) findViewById(R.id.signOutButton);
         signOutButton.setTypeface(uilFont);
+
         //set schedule button date
         scheduleButton.setText(getDayString());
+
+        //get user details
+        String[] userDetails = getUserDetails();
+
+        //set user details in UI
+        userNameText.setText(userDetails[0]);
+        userIdText.setText(userDetails[1]);
     }
 
     public String getDayString(){
@@ -54,5 +66,16 @@ public class ProfileActivity extends Activity {
 
     public void doSignOut(View view){
         //do fings
+    }
+
+    public String[] getUserDetails(){
+        String[] userDetails = new String[2];
+
+        //do server things here
+
+        userDetails[0] = "Gareth Smith";
+        userDetails[1] = "gas001@gmail.com";
+
+        return userDetails;
     }
 }
