@@ -14,12 +14,26 @@
 
         <TextView
             android:id="@+id/screenTitle"
-            android:layout_width="300px"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#FFFFFF"
-            android:textSize="13pt"
-            android:layout_gravity="center_vertical"
+            android:textSize="15pt"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="288px"
             android:text="Profile" />
+
+        <Button
+            android:id="@+id/signOutButton"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@null"
+            android:textColor="#FFFFFF"
+            android:textSize="9pt"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="142px"
+            android:text="Sign out"
+            />
 
     </LinearLayout>
 

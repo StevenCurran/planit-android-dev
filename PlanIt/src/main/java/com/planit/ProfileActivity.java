@@ -31,6 +31,8 @@ public class ProfileActivity extends Activity {
         scheduleButton.setTypeface(uilFont);
         TextView title = (TextView) findViewById(R.id.screenTitle);
         title.setTypeface(uilFont);
+        Button signOutButton = (Button) findViewById(R.id.signOutButton);
+        signOutButton.setTypeface(uilFont);
         //set schedule button date
         scheduleButton.setText(getDayString());
     }
