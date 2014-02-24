@@ -62,6 +62,10 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void goToProfileScreen(View view){
+        Intent intent = new Intent(context, ProfileActivity.class);
+        startActivity(intent);
+    }
 
     public void getFacebookEvents(View view){
         asyncHttpClient.setCookieStore(GlobalCookieStore.getCookieStore());

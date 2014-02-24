@@ -12,6 +12,13 @@
         android:onClick="goToLoginScreen"/>
 
     <Button
+        android:id="@+id/goToProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Profile Screen"
+        android:onClick="goToProfileScreen"/>
+
+    <Button
         android:id="@+id/buttonUrl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

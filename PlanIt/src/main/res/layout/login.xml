@@ -6,22 +6,6 @@
     android:background="@color/planit_blue"
     android:weightSum="1">
 
-    <!--<ImageView
-        android:id="@+id/titleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/login_screen_titlebar" />
-
-    <TextView
-        android:id="@+id/loginText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/white"
-        android:textSize="10pt"
-        android:gravity="center"
-        android:text="Get started by signing in..." />-->
-
     <ImageView
         android:id="@+id/planitLogo"
         android:layout_width="match_parent"
