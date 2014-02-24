@@ -25,8 +25,6 @@ public class LoginActivity extends Activity {
 
         //set fonts
         Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
-        TextView loginText = (TextView) findViewById(R.id.loginText);
-        loginText.setTypeface(titleFont);
         TextView forgottenPasswordText = (TextView) findViewById(R.id.forgottenPasswordText);
         forgottenPasswordText.setTypeface(titleFont);
         TextView noAccountText = (TextView) findViewById(R.id.noAccountText);
