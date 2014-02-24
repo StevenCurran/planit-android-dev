@@ -51,4 +51,8 @@ public class ProfileActivity extends Activity {
     public void goToNotifications(View view){
         //do fings
     }
+
+    public void doSignOut(View view){
+        //do fings
+    }
 }
