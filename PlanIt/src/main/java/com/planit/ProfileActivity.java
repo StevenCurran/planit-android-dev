@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -27,6 +28,8 @@ public class ProfileActivity extends Activity {
 
         //set fonts
         Typeface uilFont = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
+        Typeface uiFont = Typeface.createFromAsset(getAssets(), "fonts/segoeui.ttf");
+
         Button scheduleButton = (Button) findViewById(R.id.scheduleButton);
         scheduleButton.setTypeface(uilFont);
         TextView title = (TextView) findViewById(R.id.screenTitle);
@@ -37,6 +40,16 @@ public class ProfileActivity extends Activity {
         userIdText.setTypeface(uilFont);
         Button signOutButton = (Button) findViewById(R.id.signOutButton);
         signOutButton.setTypeface(uilFont);
+        Button editProfileButton = (Button) findViewById(R.id.editProfileButton);
+        editProfileButton.setTypeface(uilFont);
+        TextView linkedAccountsTitle = (TextView) findViewById(R.id.linkedAccountsTitle);
+        linkedAccountsTitle.setTypeface(uiFont);
+        TextView linkedAccount1Name = (TextView) findViewById(R.id.linkedAccount1UserName);
+        linkedAccount1Name.setTypeface(uilFont);
+        Button editAccount1Button = (Button) findViewById(R.id.editAccount1Button);
+        editAccount1Button.setTypeface(uilFont);
+        Button removeAccount1Button = (Button) findViewById(R.id.removeAccount1Button);
+        removeAccount1Button.setTypeface(uilFont);
 
         //set schedule button date
         scheduleButton.setText(getDayString());
@@ -47,6 +60,8 @@ public class ProfileActivity extends Activity {
         //set user details in UI
         userNameText.setText(userDetails[0]);
         userIdText.setText(userDetails[1]);
+        ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
+        userPicture.setImageResource(R.drawable.default_user_photo);
     }
 
     public String getDayString(){
@@ -65,6 +80,18 @@ public class ProfileActivity extends Activity {
     }
 
     public void doSignOut(View view){
+        //do fings
+    }
+
+    public void doEditProfile(View view){
+        //do fings
+    }
+
+    public void doEditLinkedAccount1(View view){
+        //do fings
+    }
+
+    public void doDeleteLinkedAccount1(View view){
         //do fings
     }
 
