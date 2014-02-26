@@ -101,7 +101,7 @@ public class ProfileActivity extends Activity {
         TextView userNameText = (TextView) findViewById(R.id.userNameText);
         TextView userIdText = (TextView) findViewById(R.id.userIDText);
 
-        User currentUser = getUserDetails();
+        User currentUser = GlobalUserStore.getUser();
 
         userNameText.setText(currentUser.getName());
         userIdText.setText(currentUser.getId());
@@ -109,17 +109,6 @@ public class ProfileActivity extends Activity {
         //STILL NEED TO FIX USER IMAGES - setting default for now
         ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
         userPicture.setImageDrawable(GlobalUserStore.getUser().getImage());
-    }
-
-    public User getUserDetails(){
-        User currentUser = new User();
-
-        //do server things here
-
-        currentUser.setName("");
-        currentUser.setId("");
-
-        return currentUser;
     }
 
     public List<LinkedAccount> getLinkedAccounts(){
