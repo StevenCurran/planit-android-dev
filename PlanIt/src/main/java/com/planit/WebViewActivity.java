@@ -8,6 +8,8 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,8 +24,11 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.plus.model.Person;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.planit.constants.GlobalCookieStore;
+import com.planit.constants.GlobalUserStore;
 import com.planit.constants.UrlServerConstants;
+import com.planit.utils.WebClient;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.http.impl.cookie.BasicClientCookie;
@@ -45,6 +50,9 @@ public class WebViewActivity extends Activity {
                 s = s.substring(1, s.length() - 1); //remove the ""
                 try {
                     Person person = gson.fromString(s, Person.class);
+                    User u = new User(person);
+                    GlobalUserStore.setUser(u);
+                    loadProfileImage(person.getImage().getUrl());
                     Toast toast = Toast.makeText(getApplicationContext(), "Welcome back " + person.getDisplayName(), duration);
                     toast.show();
 
@@ -55,6 +63,17 @@ public class WebViewActivity extends Activity {
 
         }
     };
+
+    private void loadProfileImage(String url) {
+        String[] allowedContentTypes = new String[] {"image/jpeg"};
+        WebClient.get(url.substring(0, url.length()-5), null, new BinaryHttpResponseHandler(allowedContentTypes) {
+            @Override
+            public void onSuccess(byte[] fileData) {
+                GlobalUserStore.getUser().setImage(new BitmapDrawable(getApplicationContext().getResources(), BitmapFactory.decodeByteArray(fileData, 0, fileData.length)));
+            }
+        });
+
+    }
 
     final ValueCallback<String> URLCALLBACK = new ValueCallback<String>() {
         @Override

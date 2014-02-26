@@ -25,6 +25,7 @@ public class UrlServerConstants {
 
     //end points
     public static final String FACEBOOK_EVENTS = PLANIT_ROOT + "/fbevents";
+    public static final String GOOGLE_EVENTS = PLANIT_ROOT + "/googlelogin/gcalEvents";
 
 
 
