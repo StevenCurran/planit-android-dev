@@ -24,6 +24,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login);
 
         //set fonts
+        /*
         Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
         TextView forgottenPasswordText = (TextView) findViewById(R.id.forgottenPasswordText);
         forgottenPasswordText.setTypeface(titleFont);
@@ -35,6 +36,7 @@ public class LoginActivity extends Activity {
         planItIDBox.setTypeface(loginBoxFont);
         EditText planItIDPassword = (EditText) findViewById(R.id.planitIDPasswordBox);
         planItIDPassword.setTypeface(loginBoxFont);
+        */
 
     }
 
