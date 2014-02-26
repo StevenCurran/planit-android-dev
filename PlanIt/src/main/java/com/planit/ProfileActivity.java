@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,8 +44,8 @@ public class ProfileActivity extends Activity {
         title.setTypeface(uilFont);
         TextView userNameText = (TextView) findViewById(R.id.userNameText);
         userNameText.setTypeface(uilFont);
-        TextView userIdText = (TextView) findViewById(R.id.userIDText);
-        userIdText.setTypeface(uilFont);
+        TextView userEmailText = (TextView) findViewById(R.id.userEmailText);
+        userEmailText.setTypeface(uilFont);
         Button signOutButton = (Button) findViewById(R.id.signOutButton);
         signOutButton.setTypeface(uilFont);
         Button editProfileButton = (Button) findViewById(R.id.editProfileButton);
@@ -99,16 +100,17 @@ public class ProfileActivity extends Activity {
 
     public void setUserDetails(){
         TextView userNameText = (TextView) findViewById(R.id.userNameText);
-        TextView userIdText = (TextView) findViewById(R.id.userIDText);
+        TextView userEmailText = (TextView) findViewById(R.id.userEmailText);
 
         User currentUser = GlobalUserStore.getUser();
 
         userNameText.setText(currentUser.getName());
-        userIdText.setText(currentUser.getId());
+        userEmailText.setText(currentUser.getEmail());
 
-        //STILL NEED TO FIX USER IMAGES - setting default for now
         ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
         userPicture.setImageDrawable(GlobalUserStore.getUser().getImage());
+        LinearLayout.LayoutParams userPictureParams= new LinearLayout.LayoutParams(120,120);
+        userPicture.setLayoutParams(userPictureParams);
     }
 
     public List<LinkedAccount> getLinkedAccounts(){

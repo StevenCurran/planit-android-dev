@@ -41,20 +41,22 @@
         android:orientation="horizontal"
         android:paddingLeft="40dp">
 
-        <ImageView android:id="@+id/googleProviderIcon"
+        <ImageButton android:id="@+id/googleProviderIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/google_logo"
-            android:alpha="0.5"/>
+            android:alpha="0.5"
+            android:clickable="true"
+            android:onClick="setProvider"/>
 
-        <ImageView android:id="@+id/facebookProviderIcon"
+        <ImageButton android:id="@+id/facebookProviderIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="65dp"
             android:src="@drawable/facebook_logo"
             android:alpha="0.5"/>
 
-        <ImageView android:id="@+id/outlookProviderIcon"
+        <ImageButton android:id="@+id/outlookProviderIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="65dp"
@@ -69,5 +71,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@color/planit_grey"/>
+
+    <Button android:id="@+id/signInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"/>
 
 </LinearLayout>

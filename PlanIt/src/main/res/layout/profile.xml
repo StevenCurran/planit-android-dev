@@ -56,7 +56,7 @@
             android:id="@+id/userAccountDetailsView"
             android:layout_width="420px"
             android:layout_height="match_parent"
-            android:paddingLeft="15dp"
+            android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:orientation="vertical">
 
@@ -69,7 +69,7 @@
                 android:gravity="center_horizontal" />
 
             <TextView
-                android:id="@+id/userIDText"
+                android:id="@+id/userEmailText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
@@ -117,7 +117,7 @@
 
     <ScrollView android:id="@+id/linkedAccountScrollView"
         android:layout_width="fill_parent"
-        android:layout_height="629px"
+        android:layout_height="623px"
         android:background="@color/white"
         android:layout_above="@+id/navigationBarView">
 

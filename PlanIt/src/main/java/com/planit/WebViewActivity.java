@@ -7,6 +7,7 @@ package com.planit;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -39,6 +40,7 @@ public class WebViewActivity extends Activity {
 
     private String url = "";
     private GsonFactory gson = new GsonFactory();
+    final Context context = this;
 
     final ValueCallback<String> valueCallback = new ValueCallback<String>() {
         @Override
@@ -53,7 +55,9 @@ public class WebViewActivity extends Activity {
                     User u = new User(person);
                     GlobalUserStore.setUser(u);
                     loadProfileImage(person.getImage().getUrl());
-                    Toast toast = Toast.makeText(getApplicationContext(), "Welcome back " + person.getDisplayName(), duration);
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    startActivity(intent);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Hi " + person.getDisplayName() +"!", duration);
                     toast.show();
 
                 } catch (IOException e) {

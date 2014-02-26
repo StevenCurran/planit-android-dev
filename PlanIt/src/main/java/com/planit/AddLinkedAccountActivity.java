@@ -39,4 +39,9 @@ public class AddLinkedAccountActivity extends Activity {
         startActivity(intent);
     }
 
+    public void setProvider(View view){
+        //do fings
+        int i;
+    }
+
 }
