@@ -100,6 +100,11 @@ public class ProfileActivity extends Activity {
         //do fings
     }
 
+    public void addLinkedAccount(){
+        //do fings
+
+    }
+
     public void setUserDetails(){
         TextView userNameText = (TextView) findViewById(R.id.userNameText);
         TextView userIdText = (TextView) findViewById(R.id.userIDText);
@@ -156,6 +161,7 @@ public class ProfileActivity extends Activity {
 
         List<LinkedAccount> linkedAccounts = getLinkedAccounts();
 
+        //Add all the linked accounts to the container
         for(LinkedAccount la : linkedAccounts){
 
             //Create a linked account element
@@ -280,6 +286,41 @@ public class ProfileActivity extends Activity {
             //Add the linked account element to the accounts container
             linkedAccountsContainer.addView(linkedAccountElement);
         }
+
+        //Add the "Add Account" option to the container
+
+        //Create the add account element
+        LinearLayout addAccountElement = new LinearLayout(this);
+        addAccountElement.setOrientation(LinearLayout.HORIZONTAL);
+        addAccountElement.setPadding(convertDPToPixel(15),0,0,convertDPToPixel(10));
+
+        //Set the image
+        ImageView addAccountIcon = new ImageView(this);
+        addAccountIcon.setImageResource(R.drawable.add_account_button);
+        addAccountIcon.setPadding(0,convertDPToPixel(4),0,0);
+        addAccountIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addLinkedAccount();
+            }
+        });
+
+        //Add the image view to the element
+        addAccountElement.addView(addAccountIcon);
+
+        //Create the text for the add account element
+        TextView addAccountMessage = new TextView(this);
+        addAccountMessage.setTextColor(Color.BLACK);
+        addAccountMessage.setTextSize(18);
+        addAccountMessage.setTypeface(uilFont);
+        addAccountMessage.setPadding(convertDPToPixel(15),convertDPToPixel(15),0,0);
+        addAccountMessage.setText("Add Account");
+
+        //Add text to the add account element
+        addAccountElement.addView(addAccountMessage);
+
+        //Add the add account element to the accounts container
+        linkedAccountsContainer.addView(addAccountElement);
 
     }
 
