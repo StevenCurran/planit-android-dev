@@ -20,8 +20,54 @@
             android:textColor="#FFFFFF"
             android:textSize="15pt"
             android:gravity="center_vertical"
-            android:paddingLeft="150dp"
+            android:paddingLeft="100dp"
             android:text="Link Account" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/accountProviderTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/planit_blue"
+        android:textSize="10pt"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:text="Account Provider"/>
+
+    <LinearLayout android:id="@+id/ProvidersContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="40dp">
+
+        <ImageView android:id="@+id/googleProviderIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/google_logo"
+            android:alpha="0.5"/>
+
+        <ImageView android:id="@+id/facebookProviderIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="65dp"
+            android:src="@drawable/facebook_logo"
+            android:alpha="0.5"/>
+
+        <ImageView android:id="@+id/outlookProviderIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="65dp"
+            android:src="@drawable/outlook_logo"
+            android:alpha="0.5"/>
 
     </LinearLayout>
+
+    <View android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/planit_grey"/>
+
 </LinearLayout>

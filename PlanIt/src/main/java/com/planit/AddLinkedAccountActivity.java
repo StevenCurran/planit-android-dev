@@ -30,6 +30,8 @@ public class AddLinkedAccountActivity extends Activity {
 
         TextView title = (TextView) findViewById(R.id.screenTitle);
         title.setTypeface(uilFont);
+        TextView accountProviderTitle = (TextView) findViewById(R.id.accountProviderTitle);
+        accountProviderTitle.setTypeface(uiFont);
     }
 
     public void goBack(View view){

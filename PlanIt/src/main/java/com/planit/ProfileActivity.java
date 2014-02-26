@@ -172,7 +172,7 @@ public class ProfileActivity extends Activity {
                     accountProviderIcon.setImageResource(R.drawable.facebook_logo);
                     break;
             }
-            accountProviderIcon.setPadding(0,convertDPToPixel(4),0,0);
+            accountProviderIcon.setPadding(0,convertDPToPixel(5),0,0);
             //Add the image view to the element
             linkedAccountElement.addView(accountProviderIcon);
 
