@@ -111,8 +111,8 @@ public class ProfileActivity extends Activity {
 
         User currentUser = getUserDetails();
 
-        userNameText.setText(currentUser.name);
-        userIdText.setText(currentUser.id);
+        userNameText.setText(currentUser.getName());
+        userIdText.setText(currentUser.getId());
 
         //STILL NEED TO FIX USER IMAGES - setting default for now
         ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
@@ -124,8 +124,8 @@ public class ProfileActivity extends Activity {
 
         //do server things here
 
-        currentUser.name = "Gareth Smith";
-        currentUser.id = "gas001@gmail.com";
+        currentUser.setName("");
+        currentUser.setId("");
 
         return currentUser;
     }
