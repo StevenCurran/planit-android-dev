@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.planit.constants.GlobalUserStore;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -106,7 +108,7 @@ public class ProfileActivity extends Activity {
 
         //STILL NEED TO FIX USER IMAGES - setting default for now
         ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
-        userPicture.setImageResource(R.drawable.default_user_photo);
+        userPicture.setImageDrawable(GlobalUserStore.getUser().getImage());
     }
 
     public User getUserDetails(){
