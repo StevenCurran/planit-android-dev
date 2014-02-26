@@ -54,10 +54,10 @@
 
         <LinearLayout
             android:id="@+id/userAccountDetailsView"
-            android:layout_width="415px"
+            android:layout_width="420px"
             android:layout_height="match_parent"
             android:paddingLeft="15dp"
-            android:paddingRight="30dp"
+            android:paddingRight="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:textSize="10pt"
+                android:textSize="9pt"
                 android:gravity="center_horizontal" />
 
             <TextView
@@ -110,92 +110,22 @@
         android:layout_height="wrap_content"
         android:textColor="@color/planit_blue"
         android:textSize="10pt"
-        android:padding="15dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
         android:text="Linked Accounts"/>
 
     <ScrollView android:id="@+id/linkedAccountScrollView"
         android:layout_width="fill_parent"
-        android:layout_height="600px"
+        android:layout_height="629px"
         android:background="@color/white"
         android:layout_above="@+id/navigationBarView">
 
-     <!--       <LinearLayout
-                android:id="@+id/linkedAccount1"
-                android:layout_above="@+id/navigationBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:orientation="horizontal">
+        <LinearLayout android:id="@+id/linkedAccountsContainer"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"/>
 
-            <ImageView android:id="@+id/linkedAccount1ProviderIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:id="@+id/linkedAccount1Details"
-                android:layout_width="465px"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="30dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/linkedAccount1UserName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:textSize="7pt"
-                    android:gravity="center_horizontal"/>
-
-                <LinearLayout android:id="@+id/linkedAccount1EditPanel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:id="@+id/editAccount1Button"
-                        style="?android:borderlessButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/small_blue_button"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginTop="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="25dp"
-                        android:paddingRight="25dp"
-                        android:textSize="8pt"
-                        android:gravity="center_vertical"
-                        android:text="Edit"
-                        android:onClick="doEditLinkedAccount"
-                        />
-
-                    <Button
-                        android:id="@+id/removeAccount1Button"
-                        style="?android:borderlessButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/small_red_button"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:textSize="8pt"
-                        android:gravity="center_vertical"
-                        android:text="Remove"
-                        android:onClick="doDeleteLinkedAccount"
-                        />
-                    </LinearLayout>
-            </LinearLayout>
-          <ToggleButton
-              android:layout_marginTop="30dp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              style="@style/planit_toggleButton"
-              android:background="@drawable/planit_toggle_bg"/>
-        </LinearLayout> -->
     </ScrollView>
 
     <LinearLayout

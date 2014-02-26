@@ -15,10 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.zip.Inflater;
 
 /**
  * Created by Garf on 24/02/2014.
@@ -38,7 +40,6 @@ public class ProfileActivity extends Activity {
         Typeface uilFont = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
         Typeface uiFont = Typeface.createFromAsset(getAssets(), "fonts/segoeui.ttf");
 
-
         Button scheduleButton = (Button) findViewById(R.id.scheduleButton);
         scheduleButton.setTypeface(uilFont);
         TextView title = (TextView) findViewById(R.id.screenTitle);
@@ -53,12 +54,6 @@ public class ProfileActivity extends Activity {
         editProfileButton.setTypeface(uilFont);
         TextView linkedAccountsTitle = (TextView) findViewById(R.id.linkedAccountsTitle);
         linkedAccountsTitle.setTypeface(uiFont);
-//        TextView linkedAccount1Name = (TextView) findViewById(R.id.linkedAccount1UserName);
-//        linkedAccount1Name.setTypeface(uilFont);
-//        Button editAccount1Button = (Button) findViewById(R.id.editAccount1Button);
-//        editAccount1Button.setTypeface(uilFont);
-//        Button removeAccount1Button = (Button) findViewById(R.id.removeAccount1Button);
-//        removeAccount1Button.setTypeface(uilFont);
 
         //set schedule button date
         scheduleButton.setText(getDayString());
@@ -67,10 +62,7 @@ public class ProfileActivity extends Activity {
         setUserDetails();
 
         //set linked accounts stuff
-//        setLinkedAccounts();
-
-        //test
-        dynamicSetLinkedAccounts();
+        setLinkedAccounts();
     }
 
     public String getDayString(){
@@ -104,6 +96,10 @@ public class ProfileActivity extends Activity {
         //do fings
     }
 
+    public void changeDisplayInCalValue(View view){
+        //do fings
+    }
+
     public void setUserDetails(){
         TextView userNameText = (TextView) findViewById(R.id.userNameText);
         TextView userIdText = (TextView) findViewById(R.id.userIDText);
@@ -113,7 +109,7 @@ public class ProfileActivity extends Activity {
         userNameText.setText(currentUser.name);
         userIdText.setText(currentUser.id);
 
-        //STILL NEED TO FIX IMAGES
+        //STILL NEED TO FIX USER IMAGES - setting default for now
         ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
         userPicture.setImageResource(R.drawable.default_user_photo);
     }
@@ -129,54 +125,35 @@ public class ProfileActivity extends Activity {
         return currentUser;
     }
 
-//    public void setLinkedAccounts(){
-//
-//        List<LinkedAccount> linkedAccounts = getLinkedAccounts();
-//
-//        for(LinkedAccount la : linkedAccounts){
-//            TextView linkedAccount1UserName = (TextView) findViewById(R.id.linkedAccount1UserName);
-//            ImageView account1ProviderIcon = (ImageView) findViewById(R.id.linkedAccount1ProviderIcon);
-//
-//            linkedAccount1UserName.setText(la.accountId);
-//            switch (la.accountProvider) {
-//                case "Google":
-//                    account1ProviderIcon.setImageResource(R.drawable.google_logo);
-//                    break;
-//                case "Outlook":
-//                    account1ProviderIcon.setImageResource(R.drawable.outlook_logo);
-//                    break;
-//                case "Facebook":
-//                    account1ProviderIcon.setImageResource(R.drawable.facebook_logo);
-//                    break;
-//            }
-//        }
-//
-//    }
-
     public List<LinkedAccount> getLinkedAccounts(){
 
         List<LinkedAccount> linkedAccounts = new ArrayList<LinkedAccount>();
 
-        //find all the linked accounts and add them to list
+        //find all the linked accounts and add them to list - need to add checks for no linked accounts etc.
         //do le server fings and process server results
 
-        for(int i = 0; i < 1; i++){
-            LinkedAccount linkedAccount = new LinkedAccount();
-            linkedAccount.accountId = "gas001@gmail.com";
-            linkedAccount.accountProvider = "Google";
+        LinkedAccount testlinkedAccount1 = new LinkedAccount();
+        testlinkedAccount1.accountId = "gas001@gmail.com";
+        testlinkedAccount1.accountProvider = "Google";
+        testlinkedAccount1.displayInCal = true;
 
-            linkedAccounts.add(linkedAccount);
-        }
+        LinkedAccount testlinkedAccount2 = new LinkedAccount();
+        testlinkedAccount2.accountId = "gsmith28@facebook.com";
+        testlinkedAccount2.accountProvider = "Facebook";
+        testlinkedAccount2.displayInCal = false;
+
+        linkedAccounts.add(testlinkedAccount1);
+        linkedAccounts.add(testlinkedAccount2);
 
         return linkedAccounts;
     }
 
-    public void dynamicSetLinkedAccounts(){
+    public void setLinkedAccounts(){
 
         Typeface uilFont = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
         Typeface uiFont = Typeface.createFromAsset(getAssets(), "fonts/segoeui.ttf");
+        LinearLayout linkedAccountsContainer = (LinearLayout) findViewById(R.id.linkedAccountsContainer);
 
-        ScrollView sv = (ScrollView) findViewById(R.id.linkedAccountScrollView);
         List<LinkedAccount> linkedAccounts = getLinkedAccounts();
 
         for(LinkedAccount la : linkedAccounts){
@@ -184,7 +161,7 @@ public class ProfileActivity extends Activity {
             //Create a linked account element
             LinearLayout linkedAccountElement = new LinearLayout(this);
             linkedAccountElement.setOrientation(LinearLayout.HORIZONTAL);
-            linkedAccountElement.setPadding(convertDPToPixel(15),0,0,0);
+            linkedAccountElement.setPadding(convertDPToPixel(15),0,0,convertDPToPixel(10));
 
             //Set the appropriate provider icon for the image view
             ImageView accountProviderIcon = new ImageView(this);
@@ -199,19 +176,19 @@ public class ProfileActivity extends Activity {
                     accountProviderIcon.setImageResource(R.drawable.facebook_logo);
                     break;
             }
+            accountProviderIcon.setPadding(0,convertDPToPixel(4),0,0);
             //Add the image view to the element
             linkedAccountElement.addView(accountProviderIcon);
 
             //Create an account details container
             LinearLayout accountDetailsContainer = new LinearLayout(this);
             accountDetailsContainer.setOrientation(LinearLayout.VERTICAL);
-            accountDetailsContainer.setPadding(convertDPToPixel(15),0,convertDPToPixel(30),0);
+            accountDetailsContainer.setPadding(convertDPToPixel(15), 0, 0, 0);
 
             //Create text view for account id
             TextView accountID = new TextView(this);
             accountID.setTextColor(Color.BLACK);
-            accountID.setTextSize(18);
-            accountID.setGravity(Gravity.CENTER_HORIZONTAL);
+            accountID.setTextSize(16);
             accountID.setTypeface(uilFont);
 
             //Set the value for the user name
@@ -223,7 +200,6 @@ public class ProfileActivity extends Activity {
             //Add account edit panel
             LinearLayout editPanel = new LinearLayout(this);
             editPanel.setOrientation(LinearLayout.HORIZONTAL);
-            editPanel.setPadding(0,convertDPToPixel(5),0,0);
 
             //Create an edit button
             Button editButton = new Button(this, null, android.R.attr.borderlessButtonStyle);
@@ -238,6 +214,16 @@ public class ProfileActivity extends Activity {
                     doEditLinkedAccount(view);
                 }
             });
+
+            //Create layout params for edit button
+            LinearLayout.LayoutParams editBtnParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            editBtnParams.setMargins(0, 0, convertDPToPixel(10), 0);
+
+            //Set layout params on button
+            editButton.setLayoutParams(editBtnParams);
 
             //Add the edit button to the edit panel
             editPanel.addView(editButton);
@@ -259,21 +245,44 @@ public class ProfileActivity extends Activity {
             //Add the remove button to the edit panel
             editPanel.addView(removeButton);
 
+            //Create the inCal toggle switch and set it's checked value
+            ToggleButton displayInCalToggle = new ToggleButton(this);
+            displayInCalToggle.setBackgroundResource(R.drawable.planit_toggle_bg);
+            displayInCalToggle.setTextOn("");
+            displayInCalToggle.setTextOff("");
+            displayInCalToggle.setChecked(la.displayInCal);
+            displayInCalToggle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    changeDisplayInCalValue(view);
+                }
+            });
+
+            //Create layout params for the toggle
+            LinearLayout.LayoutParams toggleParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            toggleParams.setMargins(convertDPToPixel(25), 0, 0, 0);
+
+            //Set layout params on toggle
+            displayInCalToggle.setLayoutParams(toggleParams);
+
+            //Add the toggle switch to the edit panel
+            editPanel.addView(displayInCalToggle);
+
             //Add the edit panel to the details container
             accountDetailsContainer.addView(editPanel);
 
             //Add the account details container to the element
             linkedAccountElement.addView(accountDetailsContainer);
 
-
-
-
-            // Add the linked account element to the ScrollView
-            sv.addView(linkedAccountElement);
+            //Add the linked account element to the accounts container
+            linkedAccountsContainer.addView(linkedAccountElement);
         }
 
     }
-      
+
     public int convertDPToPixel(int dpValue){
         float scale = getResources().getDisplayMetrics().density;
         return (int) (dpValue*scale + 0.5f);

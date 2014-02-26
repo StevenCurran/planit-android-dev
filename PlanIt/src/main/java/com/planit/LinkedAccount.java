@@ -7,5 +7,6 @@ public class LinkedAccount {
 
     String accountId;
     String accountProvider;
+    Boolean displayInCal;
 
 }
