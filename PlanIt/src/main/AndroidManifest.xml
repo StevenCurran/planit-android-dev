@@ -21,6 +21,9 @@
             android:name=".ProfileActivity" />
 
         <activity
+            android:name=".AddLinkedAccountActivity" />
+
+        <activity
             android:label="@string/app_name"
             android:name=".MainActivity" >
             <intent-filter >

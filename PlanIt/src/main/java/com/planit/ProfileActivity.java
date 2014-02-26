@@ -291,7 +291,7 @@ public class ProfileActivity extends Activity {
         addAccountIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, MainActivity.class);
+                Intent intent = new Intent(context, AddLinkedAccountActivity.class);
                 startActivity(intent);
             }
         });
