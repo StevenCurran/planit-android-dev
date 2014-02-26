@@ -6,21 +6,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by Garf on 24/02/2014.
@@ -98,11 +93,6 @@ public class ProfileActivity extends Activity {
 
     public void changeDisplayInCalValue(View view){
         //do fings
-    }
-
-    public void addLinkedAccount(){
-        //do fings
-
     }
 
     public void setUserDetails(){
@@ -301,7 +291,8 @@ public class ProfileActivity extends Activity {
         addAccountIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addLinkedAccount();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
             }
         });
 
