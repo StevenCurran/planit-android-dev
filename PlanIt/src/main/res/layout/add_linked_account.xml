@@ -23,7 +23,7 @@
             android:textSize="18pt"
             android:gravity="center_vertical"
             android:paddingLeft="25dp"
-            android:text="<"
+            android:text="Hi"
             android:onClick="goBack" />
 
         <TextView
