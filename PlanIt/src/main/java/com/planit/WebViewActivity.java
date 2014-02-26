@@ -65,7 +65,7 @@ public class WebViewActivity extends Activity {
     };
 
     private void loadProfileImage(String url) {
-        String[] allowedContentTypes = new String[] {"image/jpeg"};
+        String[] allowedContentTypes = new String[] {"image/jpeg", "image/png"};
         WebClient.get(url.substring(0, url.length()-5), null, new BinaryHttpResponseHandler(allowedContentTypes) {
             @Override
             public void onSuccess(byte[] fileData) {
