@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Garf on 24/02/2014.
@@ -53,14 +55,8 @@ public class ProfileActivity extends Activity {
         //set schedule button date
         scheduleButton.setText(getDayString());
 
-        //get user details
-        String[] userDetails = getUserDetails();
-
-        //set user details in UI
-        userNameText.setText(userDetails[0]);
-        userIdText.setText(userDetails[1]);
-        ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
-        userPicture.setImageResource(R.drawable.default_user_photo);
+        //set user details
+        setUserDetails();
 
         //set linked accounts stuff
         setLinkedAccounts();
@@ -89,29 +85,76 @@ public class ProfileActivity extends Activity {
         //do fings
     }
 
-    public void doEditLinkedAccount1(View view){
+    public void doEditLinkedAccount(View view){
         //do fings
     }
 
-    public void doDeleteLinkedAccount1(View view){
+    public void doDeleteLinkedAccount(View view){
         //do fings
     }
 
-    public String[] getUserDetails(){
-        String[] userDetails = new String[2];
+    public void setUserDetails(){
+        TextView userNameText = (TextView) findViewById(R.id.userNameText);
+        TextView userIdText = (TextView) findViewById(R.id.userIDText);
+
+        User currentUser = getUserDetails();
+
+        userNameText.setText(currentUser.name);
+        userIdText.setText(currentUser.id);
+        ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
+        userPicture.setImageResource(R.drawable.default_user_photo);
+    }
+
+    public User getUserDetails(){
+        User currentUser = new User();
 
         //do server things here
 
-        userDetails[0] = "Gareth Smith";
-        userDetails[1] = "gas001@gmail.com";
+        currentUser.name = "Gareth Smith";
+        currentUser.id = "gas001@gmail.com";
 
-        return userDetails;
+        return currentUser;
     }
 
     public void setLinkedAccounts(){
 
-        //temp stuff
-        ImageView providerIcon = (ImageView) findViewById(R.id.linkedAccount1ProviderIcon);
-        providerIcon.setImageResource(R.drawable.google_logo);
+        List<LinkedAccount> linkedAccounts = getLinkedAccounts();
+
+        for(LinkedAccount la : linkedAccounts){
+            TextView linkedAccount1UserName = (TextView) findViewById(R.id.linkedAccount1UserName);
+            ImageView account1ProviderIcon = (ImageView) findViewById(R.id.linkedAccount1ProviderIcon);
+
+            linkedAccount1UserName.setText(la.accountId);
+            switch (la.accountProvider) {
+                case "Google":
+                    account1ProviderIcon.setImageResource(R.drawable.google_logo);
+                    break;
+                case "Outlook":
+                    account1ProviderIcon.setImageResource(R.drawable.outlook_logo);
+                    break;
+                case "Facebook":
+                    account1ProviderIcon.setImageResource(R.drawable.facebook_logo);
+                    break;
+            }
+        }
+
+    }
+
+    public List<LinkedAccount> getLinkedAccounts(){
+
+        List<LinkedAccount> linkedAccounts = new ArrayList<LinkedAccount>();
+
+        //find all the linked accounts and add them to list
+        //do le server fings and process server results
+
+        for(int i = 0; i < 1; i++){
+            LinkedAccount linkedAccount = new LinkedAccount();
+            linkedAccount.accountId = "gas001@gmail.com";
+            linkedAccount.accountProvider = "Google";
+
+            linkedAccounts.add(linkedAccount);
+        }
+
+        return linkedAccounts;
     }
 }
