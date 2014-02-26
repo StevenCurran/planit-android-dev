@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Garf on 24/02/2014.
@@ -62,6 +61,9 @@ public class ProfileActivity extends Activity {
         userIdText.setText(userDetails[1]);
         ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
         userPicture.setImageResource(R.drawable.default_user_photo);
+
+        //set linked accounts stuff
+        setLinkedAccounts();
     }
 
     public String getDayString(){
@@ -104,5 +106,12 @@ public class ProfileActivity extends Activity {
         userDetails[1] = "gas001@gmail.com";
 
         return userDetails;
+    }
+
+    public void setLinkedAccounts(){
+
+        //temp stuff
+        ImageView providerIcon = (ImageView) findViewById(R.id.linkedAccount1ProviderIcon);
+        providerIcon.setImageResource(R.drawable.google_logo);
     }
 }

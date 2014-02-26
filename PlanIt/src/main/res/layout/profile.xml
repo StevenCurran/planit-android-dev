@@ -30,7 +30,7 @@
             android:layout_height="fill_parent"
             android:background="@null"
             android:textColor="#FFFFFF"
-            android:textSize="8pt"
+            android:textSize="9pt"
             android:gravity="center_vertical"
             android:layout_marginLeft="135px"
             android:text="Sign out"
@@ -89,7 +89,7 @@
             android:paddingBottom="5dp"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
-            android:textSize="10pt"
+            android:textSize="9pt"
             android:gravity="center_vertical"
             android:text="Edit"
             android:onClick="doEditProfile"
@@ -132,14 +132,13 @@
                     android:paddingLeft="15dp"
                     android:orientation="horizontal">
 
-                <ImageView
+                <ImageView android:id="@+id/linkedAccount1ProviderIcon"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/google_logo"/>
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:id="@+id/linkedAccount1Details"
-                    android:layout_width="500px"
+                    android:layout_width="465px"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
                     android:paddingRight="30dp"
@@ -150,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
-                        android:textSize="8pt"
+                        android:textSize="7pt"
                         android:gravity="center_horizontal"
                         android:text="gas001@gmail.com"/>
 
@@ -197,8 +196,11 @@
                         </LinearLayout>
                 </LinearLayout>
               <ToggleButton
+                  android:layout_marginTop="30dp"
                   android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" />
+                  android:layout_height="wrap_content"
+                  style="@style/planit_toggleButton"
+                  android:background="@drawable/planit_toggle_bg"/>
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>
