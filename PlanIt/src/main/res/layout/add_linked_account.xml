@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textColor="#000000"
-        android:textSize="8pt"
+        android:textSize="9pt"
         android:background="@null"/>
 
     <LinearLayout android:id="@+id/tagsContainer"
