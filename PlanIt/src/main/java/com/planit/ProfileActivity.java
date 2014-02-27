@@ -3,7 +3,11 @@ package com.planit;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -108,9 +112,13 @@ public class ProfileActivity extends Activity {
         userEmailText.setText(currentUser.getEmail());
 
         ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
-        userPicture.setImageDrawable(GlobalUserStore.getUser().getImage());
-        LinearLayout.LayoutParams userPictureParams= new LinearLayout.LayoutParams(120,120);
-        userPicture.setLayoutParams(userPictureParams);
+        //if there is a user image, make it circley, if there isn't, use the default image
+        if(GlobalUserStore.getUser().getImage() != null){
+            Bitmap userImage = GlobalUserStore.getUser().getImage().getBitmap();
+            userPicture.setImageBitmap(getRoundedShape(userImage));
+        }else{
+            userPicture.setImageResource(R.drawable.default_user_photo);
+        }
     }
 
     public List<LinkedAccount> getLinkedAccounts(){
@@ -311,6 +319,31 @@ public class ProfileActivity extends Activity {
     public int convertDPToPixel(int dpValue){
         float scale = getResources().getDisplayMetrics().density;
         return (int) (dpValue*scale + 0.5f);
+    }
+
+    public Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
+        // TODO Auto-generated method stub
+        int targetWidth = 114;
+        int targetHeight = 114;
+        Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
+                targetHeight,Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(targetBitmap);
+        Path path = new Path();
+        path.addCircle(((float) targetWidth - 1) / 2,
+                ((float) targetHeight - 1) / 2,
+                (Math.min(((float) targetWidth),
+                        ((float) targetHeight)) / 2),
+                Path.Direction.CCW);
+
+        canvas.clipPath(path);
+        Bitmap sourceBitmap = scaleBitmapImage;
+        canvas.drawBitmap(sourceBitmap,
+                new Rect(0, 0, sourceBitmap.getWidth(),
+                        sourceBitmap.getHeight()),
+                new Rect(0, 0, targetWidth,
+                        targetHeight), null);
+        return targetBitmap;
     }
 
 }
