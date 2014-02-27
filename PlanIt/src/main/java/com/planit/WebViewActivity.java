@@ -57,7 +57,7 @@ public class WebViewActivity extends Activity {
                     loadProfileImage(person.getImage().getUrl());
                     Intent intent = new Intent(context, ProfileActivity.class);
                     startActivity(intent);
-                    Toast toast = Toast.makeText(getApplicationContext(), "Hi " + person.getDisplayName() +"!", duration);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Hi " + person.getDisplayName().substring(0, person.getDisplayName().indexOf(' ')) +"!", duration);
                     toast.show();
 
                 } catch (IOException e) {
