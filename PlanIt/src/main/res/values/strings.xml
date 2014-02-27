@@ -3,5 +3,6 @@
     <color name="planit_blue">#20AEFF</color>
     <color name="planit_grey">#808080</color>
     <color name="planit_red">#FF5C5C</color>
-    <color name="white">#FFFFFF</color>#
+    <color name="planit_green">#63E749</color>
+    <color name="white">#FFFFFF</color>
 </resources>

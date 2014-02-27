@@ -41,40 +41,91 @@
         android:orientation="horizontal"
         android:paddingLeft="40dp">
 
-        <ImageButton android:id="@+id/googleProviderIcon"
+        <Button android:id="@+id/googleProviderIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/google_logo"
+            android:background="@drawable/google_logo"
             android:alpha="0.5"
-            android:clickable="true"
             android:onClick="setProvider"/>
 
-        <ImageButton android:id="@+id/facebookProviderIcon"
+        <Button android:id="@+id/facebookProviderIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="65dp"
-            android:src="@drawable/facebook_logo"
-            android:alpha="0.5"/>
+            android:layout_marginLeft="65dp"
+            android:background="@drawable/facebook_logo"
+            android:alpha="0.5"
+            android:onClick="setProvider"/>
 
-        <ImageButton android:id="@+id/outlookProviderIcon"
+        <Button android:id="@+id/outlookProviderIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="65dp"
-            android:src="@drawable/outlook_logo"
-            android:alpha="0.5"/>
+            android:layout_marginLeft="65dp"
+            android:background="@drawable/outlook_logo"
+            android:alpha="0.5" />
 
     </LinearLayout>
 
     <View android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@color/planit_grey"/>
 
-    <Button android:id="@+id/signInButton"
+    <Button android:id="@+id/accountLinkSignInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"/>
+        android:layout_gravity="center_horizontal"
+        android:textColor="#000000"
+        android:textSize="8pt"
+        android:background="@null"/>
+
+    <LinearLayout android:id="@+id/tagsContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/tagTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/planit_blue"
+            android:textSize="10pt"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:text="Tags"/>
+
+        <LinearLayout android:id="@+id/tagList"
+            android:layout_width="fill_parent"
+            android:layout_height="457px"
+            android:background="@color/planit_grey"
+            android:orientation="vertical">
+
+
+            </LinearLayout>
+
+        <Button
+            android:id="@+id/linkButton"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/green_button"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:textSize="11pt"
+            android:gravity="center_vertical"
+            android:text="Link"
+            android:onClick="doLink"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>

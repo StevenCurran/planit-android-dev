@@ -17,7 +17,7 @@ public class User {
     public User(Person person) {
         this.id = person.getId();
         this.name = person.getDisplayName();
-        this.email= person.getEmails().get(0).getValue().toString();
+        this.email = person.getEmails().get(0).getValue().toString();
     }
 
     public User(){
