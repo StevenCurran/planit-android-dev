@@ -5,24 +5,26 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
-    <application android:allowBackup="true"
-        android:label="PlanIt"
+    <application
+        android:name=".constants.GlobalApplicationContext"
+        android:allowBackup="true"
         android:icon="@drawable/planit_app_logo"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-        android:name=".constants.GlobalApplicationContext">
+        android:label="PlanIt"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 
         <activity android:name=".activities.WebViewActivity" />
 
-        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.MainActivity" />
 
         <activity android:name=".activities.ProfileActivity" />
 
         <activity android:name=".activities.AddLinkedAccountActivity" />
 
         <activity
-            android:label="@string/app_name"
-            android:name=".activities.MainActivity">
-        <intent-filter >
+            android:name=".activities.LoginActivity"
+            android:label="@string/app_name">
+
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
