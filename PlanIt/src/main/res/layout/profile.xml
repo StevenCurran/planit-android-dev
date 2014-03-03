@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout
     android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    android:weightSum="1">
-    
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
         android:id="@+id/profileBar"
         android:layout_width="match_parent"
@@ -74,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:textSize="7pt"
+                android:textSize="6pt"
                 android:gravity="center_horizontal" />
         </LinearLayout>
 
@@ -105,29 +104,11 @@
         android:layout_marginRight="20dp"
         android:background="@color/planit_grey"/>
 
-    <TextView
-        android:id="@+id/linkedAccountsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/planit_blue"
-        android:textSize="10pt"
-        android:paddingLeft="15dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="10dp"
-        android:text="Linked Accounts"/>
-
-    <ScrollView android:id="@+id/linkedAccountScrollView"
-        android:layout_width="fill_parent"
-        android:layout_height="629px"
-        android:background="@color/white"
-        android:layout_above="@+id/navigationBarView">
-
-        <LinearLayout android:id="@+id/linkedAccountsContainer"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"/>
-
-    </ScrollView>
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="738px">
+    </android.support.v4.view.ViewPager>
 
     <LinearLayout
         android:id="@+id/navigationBarView"
@@ -165,6 +146,5 @@
             android:background="@null"
             android:onClick="goToNotifications" />
     </LinearLayout>
-
 
 </LinearLayout>
