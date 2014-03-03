@@ -5,8 +5,8 @@ package com.planit;
  */
 public class LinkedAccount {
 
-    String accountId;
-    String accountProvider;
-    Boolean displayInCal;
+    public String accountId;
+    public String accountProvider;
+    public Boolean displayInCal;
 
 }

@@ -1,4 +1,4 @@
-package com.planit;
+package com.planit.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,13 +11,15 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.planit.LinkedAccount;
+import com.planit.R;
+import com.planit.User;
 import com.planit.constants.GlobalUserStore;
 
 import java.util.ArrayList;
@@ -132,6 +134,7 @@ public class ProfileActivity extends Activity {
         testlinkedAccount1.accountId = "gas001@gmail.com";
         testlinkedAccount1.accountProvider = "Google";
         testlinkedAccount1.displayInCal = true;
+
 
         LinkedAccount testlinkedAccount2 = new LinkedAccount();
         testlinkedAccount2.accountId = "gsmith28@facebook.com";

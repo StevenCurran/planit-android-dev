@@ -1,4 +1,4 @@
-package com.planit;
+package com.planit.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.planit.R;
 
 /**
  * Created by Garf on 18/02/2014.
@@ -40,14 +42,14 @@ public class LoginActivity extends Activity {
 
     }
 
-    public void doGoogleLogin(View view){
+    public void doGoogleLogin(View view) {
         Intent intent = new Intent(context, WebViewActivity.class);
         b.putString("login_type", "google");
         intent.putExtras(b);
         startActivity(intent);
     }
 
-    public void doFacebookLogin(View view){
+    public void doFacebookLogin(View view) {
         Intent intent = new Intent(context, WebViewActivity.class);
         b.putString("login_type", "facebook");
         intent.putExtras(b);

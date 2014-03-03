@@ -1,4 +1,4 @@
-package com.planit;
+package com.planit.activities;
 
 /**
  * Created by Steven on 17/02/14.
@@ -10,21 +10,17 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.CookieManager;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.ResponseHandlerInterface;
+import com.planit.R;
 import com.planit.constants.GlobalCookieStore;
 import com.planit.constants.UrlServerConstants;
-import com.restfb.types.Event;
 
 import org.apache.http.Header;
-import org.apache.http.impl.cookie.BasicClientCookie;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

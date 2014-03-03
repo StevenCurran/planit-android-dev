@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: google-api-client-json-1.2.3-alpha">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/PlanIt/libs/google-api-client-json-1.2.3-alpha.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

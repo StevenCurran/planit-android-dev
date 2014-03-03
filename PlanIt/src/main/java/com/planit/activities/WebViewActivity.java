@@ -1,4 +1,4 @@
-package com.planit;
+package com.planit.activities;
 
 /**
  * Created by Steven on 17/02/14.
@@ -13,19 +13,18 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.plus.model.Person;
-import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.planit.R;
+import com.planit.User;
 import com.planit.constants.GlobalCookieStore;
 import com.planit.constants.GlobalUserStore;
 import com.planit.constants.UrlServerConstants;
@@ -74,6 +73,11 @@ public class WebViewActivity extends Activity {
             @Override
             public void onSuccess(byte[] fileData) {
                 GlobalUserStore.getUser().setImage(new BitmapDrawable(getApplicationContext().getResources(), BitmapFactory.decodeByteArray(fileData, 0, fileData.length)));
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
             }
         });
 

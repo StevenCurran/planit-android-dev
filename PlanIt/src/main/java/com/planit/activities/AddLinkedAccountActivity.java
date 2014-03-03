@@ -1,14 +1,15 @@
-package com.planit;
+package com.planit.activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.planit.R;
 
 
 /**
@@ -48,18 +49,17 @@ public class AddLinkedAccountActivity extends Activity {
         linkButton.setTypeface(uilFont);
 
 
-
     }
 
-    public void setProvider(View view){
+    public void setProvider(View view) {
         Button googleButton = (Button) findViewById(R.id.googleProviderIcon);
         Button facebookButton = (Button) findViewById(R.id.facebookProviderIcon);
 
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.googleProviderIcon:
                 //set button alpha values
                 googleButton.setAlpha(1);
-                facebookButton.setAlpha((float)0.5);
+                facebookButton.setAlpha((float) 0.5);
                 tagContainer.setVisibility(View.INVISIBLE);
                 accountLinkSignInButton.setText("");
 
@@ -68,7 +68,7 @@ public class AddLinkedAccountActivity extends Activity {
                 break;
             case R.id.facebookProviderIcon:
                 //set button alpha values
-                googleButton.setAlpha((float)0.5);
+                googleButton.setAlpha((float) 0.5);
                 facebookButton.setAlpha(1);
                 tagContainer.setVisibility(View.INVISIBLE);
                 accountLinkSignInButton.setText("");
@@ -81,9 +81,9 @@ public class AddLinkedAccountActivity extends Activity {
         setLoginButton();
     }
 
-    public void setLoginButton(){
+    public void setLoginButton() {
 
-        switch(provider) {
+        switch (provider) {
             case "Google":
                 accountLinkSignInButton.setBackgroundResource(R.drawable.google_login_image);
                 accountLinkSignInButton.setOnClickListener(new View.OnClickListener() {
@@ -105,9 +105,9 @@ public class AddLinkedAccountActivity extends Activity {
         }
     }
 
-    public void doLogin(){
+    public void doLogin() {
 
-        switch(provider) {
+        switch (provider) {
             case "Google":
                 //login to google, wait for response, when we've got details back, do fings below
 
@@ -127,7 +127,7 @@ public class AddLinkedAccountActivity extends Activity {
 
     }
 
-    public void doLink(View view){
+    public void doLink(View view) {
         //do fings
     }
 

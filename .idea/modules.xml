@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PlanIt/PlanIt.iml" filepath="$PROJECT_DIR$/PlanIt/PlanIt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/planit-dev-android.iml" filepath="$PROJECT_DIR$/planit-dev-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/planit-android-dev.iml" filepath="$PROJECT_DIR$/planit-android-dev.iml" />
     </modules>
   </component>
 </project>
