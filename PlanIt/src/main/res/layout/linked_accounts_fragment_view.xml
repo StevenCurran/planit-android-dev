@@ -4,28 +4,33 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/linkedAccountsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/planit_blue"
-        android:textSize="10pt"
-        android:paddingLeft="15dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="10dp"
-        android:text="Linked Accounts"/>
-
-    <ScrollView android:id="@+id/linkedAccountScrollView"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/white"
-        android:layout_above="@+id/navigationBarView">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:layout_marginBottom="15dp">
 
-        <LinearLayout android:id="@+id/linkedAccountsContainer"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"/>
+        <TextView
+            android:id="@+id/linkedAccountsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/planit_blue"
+            android:textSize="10pt"
+            android:paddingLeft="15dp"
+            android:text="Linked Accounts"/>
 
-    </ScrollView>
+        <Button android:id="@+id/addLinkedAccountButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="155dp"
+            android:background="@drawable/small_plus_button" />
+
+    </LinearLayout>
+
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linkedAccountsList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
 </LinearLayout>

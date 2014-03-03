@@ -9,4 +9,22 @@ public class LinkedAccount {
     public String accountProvider;
     public Boolean displayInCal;
 
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String name) {
+        this.accountId = accountId;
+    }
+
+    public String getAccountProvider() { return accountProvider;  }
+
+    public void setAccountProvider(String name) {
+        this.accountProvider = accountProvider;
+    }
+
+    public Boolean getDisplayInCal() { return displayInCal; }
+
+    public void setDisplayInCal(Boolean displayInCal) { this.displayInCal = displayInCal; }
+
 }
