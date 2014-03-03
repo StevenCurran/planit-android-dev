@@ -27,8 +27,7 @@
         <LinearLayout android:id="@+id/linkedAccountControls"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="5dp">
+            android:orientation="horizontal">
             
             <Button android:id="@+id/editLinkedAccountButton"
                 android:layout_width="80dp"

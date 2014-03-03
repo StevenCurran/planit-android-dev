@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,10 +37,18 @@ public class RulesFragment extends Fragment {
         TextView rulesTitle = (TextView) rootView.findViewById(R.id.schedulingRulesTitle);
         rulesTitle.setTypeface(uiFont);
 
+        //set on click for add account button
+        Button addRuleButton = (Button) rootView.findViewById(R.id.addRuleButton);
+        addRuleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doAddRule();
+            }
+        });
+
         ListView listview = (ListView) rootView.findViewById(R.id.rulesList);
         adapter = new RulesArrayAdapter(context, getRules());
         listview.setAdapter(adapter);
-        listview.setDivider(null);
 
         return rootView;
     }
@@ -49,17 +58,23 @@ public class RulesFragment extends Fragment {
         ArrayList<Rule> rules = new ArrayList<>();
 
         Rule testRule1 = new Rule();
-        testRule1.setName("Rule 1");
-        testRule1.setDescription("Rule 1 Description");
+        testRule1.setName("No work after 6");
+        testRule1.setDescription("No events tagged with 'Work' will be accepted after 18:00.");
+        testRule1.setActive(false);
 
         Rule testRule2 = new Rule();
-        testRule2.setName("Rule 2");
-        testRule2.setDescription("Rule 2 Description");
+        testRule2.setName("Tuesday lunchtime tennis");
+        testRule2.setDescription("No events will be accepted on Tuesdays between 12:30 and 13:30.");
+        testRule2.setActive(true);
 
         rules.add(testRule1);
         rules.add(testRule2);
 
         return rules;
+    }
+
+    public void doAddRule(){
+        //do fings
     }
 
 }

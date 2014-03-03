@@ -4,20 +4,35 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/schedulingRulesTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/planit_blue"
-        android:textSize="10pt"
-        android:paddingLeft="15dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="10dp"
-        android:text="Scheduling Preferences"/>
+        android:paddingTop="10dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/schedulingRulesTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/planit_blue"
+            android:textSize="10pt"
+            android:paddingLeft="15dp"
+            android:text="Scheduling Preferences"/>
+
+        <Button android:id="@+id/addRuleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="87dp"
+            android:background="@drawable/small_plus_button" />
+
+    </LinearLayout>
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rulesList"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:listSelector="@android:color/transparent" />
 
 </LinearLayout>
