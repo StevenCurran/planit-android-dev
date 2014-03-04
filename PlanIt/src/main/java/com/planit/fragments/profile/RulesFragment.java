@@ -1,6 +1,7 @@
 package com.planit.fragments.profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 import com.planit.R;
 import com.planit.Rule;
+import com.planit.activities.AddLinkedAccountActivity;
+import com.planit.activities.AddRuleActivity;
 import com.planit.adapters.RulesArrayAdapter;
 
 import java.util.ArrayList;
@@ -67,14 +70,21 @@ public class RulesFragment extends Fragment {
         testRule2.setDescription("No events will be accepted on Tuesdays between 12:30 and 13:30.");
         testRule2.setActive(true);
 
+        Rule testRule3 = new Rule();
+        testRule3.setName("Finish early on Friday");
+        testRule3.setDescription("No events tagged with 'Work' that have a priority lower than 1 will be accepted on Friday after 16:00.");
+        testRule3.setActive(true);
+
         rules.add(testRule1);
         rules.add(testRule2);
+        rules.add(testRule3);
 
         return rules;
     }
 
     public void doAddRule(){
-        //do fings
+        Intent intent = new Intent(context, AddRuleActivity.class);
+        startActivity(intent);
     }
 
 }
