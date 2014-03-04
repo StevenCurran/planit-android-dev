@@ -43,6 +43,7 @@ public class LoginActivity extends Activity {
     }
 
     public void doGoogleLogin(View view) {
+        setContentView(R.layout.loading_screen);
         Intent intent = new Intent(context, WebViewActivity.class);
         b.putString("login_type", "google");
         intent.putExtras(b);
@@ -50,6 +51,7 @@ public class LoginActivity extends Activity {
     }
 
     public void doFacebookLogin(View view) {
+        setContentView(R.layout.loading_screen);
         Intent intent = new Intent(context, WebViewActivity.class);
         b.putString("login_type", "facebook");
         intent.putExtras(b);

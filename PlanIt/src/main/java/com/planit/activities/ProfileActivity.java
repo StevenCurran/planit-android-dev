@@ -1,5 +1,7 @@
 package com.planit.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Path;
@@ -24,6 +26,7 @@ public class ProfileActivity extends FragmentActivity {
 
     private ViewPager viewPager;
     private ProfileTabPagerAdapter profilePagerAdapter;
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +113,8 @@ public class ProfileActivity extends FragmentActivity {
     }
 
     public void doSignOut(View view){
-        //do sign out
+        Intent intent = new Intent(context, LoginActivity.class);
+        startActivity(intent);
     }
 
     public void doEditProfile(View view){
@@ -124,5 +128,11 @@ public class ProfileActivity extends FragmentActivity {
     public void goToNotifications(View view){
         //go to notification
     }
+
+    //disabling back button on profile activity to prevent going back to login loading screen
+    @Override
+    public void onBackPressed() {
+    }
+
 
 }
