@@ -3,7 +3,14 @@ package com.planit.gcm;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.planit.R;
+import com.planit.User;
+import com.planit.constants.GlobalCookieStore;
+import com.planit.constants.GlobalUserStore;
+import com.planit.constants.UrlServerConstants;
+import com.planit.utils.WebClient;
 
 import android.app.Activity;
 import android.content.Context;
@@ -50,10 +57,6 @@ public class DemoActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.gcmmain);
-        mDisplay = (TextView) findViewById(R.id.display);
-
         context = getApplicationContext();
 
         // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
@@ -251,6 +254,12 @@ public class DemoActivity extends Activity {
      * to a server that echoes back the message using the 'from' address in the message.
      */
     private void sendRegistrationIdToBackend() {
-        // Your implementation here.
+        User user = GlobalUserStore.getUser();
+        String providerId = user.getId();
+        RequestParams params = new RequestParams();
+        params.put("providerid", providerId);
+        params.put("deviceid", this.regid);
+        WebClient.post(UrlServerConstants.DEVICE_GCM_REG, params, new AsyncHttpResponseHandler());
+
     }
 }

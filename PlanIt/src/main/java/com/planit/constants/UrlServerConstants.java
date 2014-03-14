@@ -28,6 +28,5 @@ public class UrlServerConstants {
     public static final String GOOGLE_EVENTS = PLANIT_ROOT + "/googlelogin/gcalEvents";
 
 
-
-
+    public static final String DEVICE_GCM_REG = "/googlelogin/deviceregistration";
 }
