@@ -159,18 +159,23 @@ public class WebViewActivity extends Activity {
     }
 
     public String getCookie(String siteName, String cookieName) {
-        String CookieValue = null;
+        try{
+            String CookieValue = null;
 
-        CookieManager cookieManager = CookieManager.getInstance();
-        String cookies = cookieManager.getCookie(siteName);
-        String[] temp = cookies.split("[;]");
-        for (String ar1 : temp) {
-            if (ar1.contains(cookieName)) {
-                String[] temp1 = ar1.split("[=]");
-                CookieValue = temp1[1];
+            CookieManager cookieManager = CookieManager.getInstance();
+            String cookies = cookieManager.getCookie(siteName);
+            String[] temp = cookies.split("[;]");
+            for (String ar1 : temp) {
+                if (ar1.contains(cookieName)) {
+                    String[] temp1 = ar1.split("[=]");
+                    CookieValue = temp1[1];
+                }
             }
+            return CookieValue;
+        }catch(Exception e){
+
         }
-        return CookieValue;
+       return  "907F2912219B37EF490A820D3E473FE2";
     }
 
     @Override
