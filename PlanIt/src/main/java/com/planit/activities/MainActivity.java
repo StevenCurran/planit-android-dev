@@ -55,10 +55,10 @@ public class MainActivity extends Activity {
     }
 
     public void goToLoginScreen(View view){
-        Intent intent = new Intent(getApplicationContext(), DemoActivity.class);
-        startActivity(intent);
-       // Intent intent = new Intent(context, LoginActivity.class);
+        //Intent intent = new Intent(getApplicationContext(), DemoActivity.class);
         //startActivity(intent);
+       Intent intent = new Intent(context, LoginActivity.class);
+       startActivity(intent);
     }
 
     public void goToProfileScreen(View view){

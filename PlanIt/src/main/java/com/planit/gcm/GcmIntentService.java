@@ -54,7 +54,7 @@ public class GcmIntentService extends IntentService {
                 // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // This loop represents the service doing some work.
-                sendNotification("Received: " + extras.toString());
+                sendNotification("Received: " + extras.getString("data"));
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }
@@ -74,8 +74,8 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_stat_gcm)
-                        .setContentTitle("GCM Notification")
+                        .setSmallIcon(R.drawable.planit_app_logo)
+                        .setContentTitle("PlanIt Notification")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
                         .setContentText(msg);
