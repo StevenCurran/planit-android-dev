@@ -19,6 +19,7 @@ import com.loopj.android.http.ResponseHandlerInterface;
 import com.planit.R;
 import com.planit.constants.GlobalCookieStore;
 import com.planit.constants.UrlServerConstants;
+import com.planit.gcm.DemoActivity;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -54,8 +55,10 @@ public class MainActivity extends Activity {
     }
 
     public void goToLoginScreen(View view){
-        Intent intent = new Intent(context, LoginActivity.class);
+        Intent intent = new Intent(getApplicationContext(), DemoActivity.class);
         startActivity(intent);
+       // Intent intent = new Intent(context, LoginActivity.class);
+        //startActivity(intent);
     }
 
     public void goToProfileScreen(View view){
