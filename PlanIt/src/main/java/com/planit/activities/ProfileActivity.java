@@ -23,6 +23,7 @@ import com.planit.User;
 import com.planit.adapters.ProfileTabPagerAdapter;
 import com.planit.constants.GlobalUserStore;
 import com.planit.tasks.AsyncDeviceRegistrationTask;
+import com.planit.utils.ImageTransformer;
 import com.planit.utils.WebClient;
 
 import java.util.Calendar;
@@ -99,41 +100,14 @@ public class ProfileActivity extends FragmentActivity {
             public void onSuccess(byte[] fileData) {
                 BitmapDrawable bitmapDrawable = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(fileData, 0, fileData.length));
                 GlobalUserStore.getUser().setImage(bitmapDrawable);
-                userPicture.setImageBitmap(getRoundedShape(bitmapDrawable.getBitmap()));
+                userPicture.setImageBitmap(ImageTransformer.getRoundedShape(bitmapDrawable.getBitmap()));
             }
         });
 
-        System.out.println("Wait here...");
-//        ImageLoadingTask imageLoad = new ImageLoadingTask(context, currentUser.getImageUrl());
-//        Future<BitmapDrawable> image = imageExecService.submit(imageLoad);
 
     }
 
-    public Bitmap getRoundedShape(Bitmap sourceBitmap) {
-        int targetWidth = 114;
-        int targetHeight = 114;
-        Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
-                targetHeight, Bitmap.Config.ARGB_8888);
 
-        Canvas canvas = new Canvas(targetBitmap);
-        Path path = new Path();
-        path.addCircle(((float) targetWidth - 1) / 2,
-                ((float) targetHeight - 1) / 2,
-                (Math.min(((float) targetWidth),
-                        ((float) targetHeight)) / 2),
-                Path.Direction.CCW
-        );
-
-        canvas.clipPath(path);
-
-        canvas.drawBitmap(sourceBitmap,
-                new Rect(0, 0, sourceBitmap.getWidth(),
-                        sourceBitmap.getHeight()),
-                new Rect(0, 0, targetWidth,
-                        targetHeight), null
-        );
-        return targetBitmap;
-    }
 
     public void doSignOut(View view) {
         Intent intent = new Intent(context, LoginActivity.class);
