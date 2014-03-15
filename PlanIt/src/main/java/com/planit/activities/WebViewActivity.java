@@ -14,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -28,6 +29,7 @@ import com.planit.User;
 import com.planit.constants.GlobalCookieStore;
 import com.planit.constants.GlobalUserStore;
 import com.planit.constants.UrlServerConstants;
+import com.planit.gcm.DemoActivity;
 import com.planit.utils.WebClient;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -37,17 +39,18 @@ import java.io.IOException;
 
 public class WebViewActivity extends Activity {
 
-    private String url = "";
-    private GsonFactory gson = new GsonFactory();
     final Context context = this;
 
     final ValueCallback<String> valueCallback = new ValueCallback<String>() {
         @Override
         public void onReceiveValue(String s) {
             int duration = Toast.LENGTH_SHORT;
-            s = StringEscapeUtils.unescapeJson(s);
-            if (s.length() > 10 && !url.contains("about:blank") && !url.contains("google.com")) {
+            if(s.contains("loading...")){
+                return;
+            };
 
+            if (s.length() > 10 && !url.contains("about:blank") && !url.contains("google.com")) {
+                s = StringEscapeUtils.unescapeJson(s);
                 s = s.substring(1, s.length() - 1); //remove the ""
                 try {
                     Person person = gson.fromString(s, Person.class);
@@ -56,7 +59,11 @@ public class WebViewActivity extends Activity {
                     loadProfileImage(person.getImage().getUrl());
                     Intent intent = new Intent(context, ProfileActivity.class);
                     startActivity(intent);
-                    Toast toast = Toast.makeText(getApplicationContext(), "Hi " + person.getDisplayName().substring(0, person.getDisplayName().indexOf(' ')) +"!", duration);
+
+//
+
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "Hi " + person.getDisplayName().substring(0, person.getDisplayName().indexOf(' ')) + "!", duration);
                     toast.show();
 
                 } catch (IOException e) {
@@ -66,10 +73,20 @@ public class WebViewActivity extends Activity {
 
         }
     };
+    private String url = "";
+    final ValueCallback<String> URLCALLBACK = new ValueCallback<String>() {
+        @Override
+        public void onReceiveValue(String s) {
+            url = s;
+        }
+    };
+    private GsonFactory gson = new GsonFactory();
+    private WebView webView;
+    private AsyncHttpClient client = new AsyncHttpClient();
 
     private void loadProfileImage(String url) {
-        String[] allowedContentTypes = new String[] {"image/jpeg", "image/png"};
-        WebClient.get(url.substring(0, url.length()-5), null, new BinaryHttpResponseHandler(allowedContentTypes) {
+        String[] allowedContentTypes = new String[]{"image/jpeg", "image/png"};
+        WebClient.get(url.substring(0, url.length() - 5), null, new BinaryHttpResponseHandler(allowedContentTypes) {
             @Override
             public void onSuccess(byte[] fileData) {
                 GlobalUserStore.getUser().setImage(new BitmapDrawable(getApplicationContext().getResources(), BitmapFactory.decodeByteArray(fileData, 0, fileData.length)));
@@ -83,23 +100,18 @@ public class WebViewActivity extends Activity {
 
     }
 
-    final ValueCallback<String> URLCALLBACK = new ValueCallback<String>() {
-        @Override
-        public void onReceiveValue(String s) {
-            url = s;
-        }
-    };
-
-    private WebView webView;
-    private AsyncHttpClient client = new AsyncHttpClient();
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
 
+        CookieSyncManager.createInstance(this);
+        CookieSyncManager.getInstance().startSync();
+
 
         webView = (WebView) findViewById(R.id.webView1);
         webView.getSettings().setJavaScriptEnabled(true);
+
+
 
         webView.setWebViewClient(new WebViewClient() {
 
@@ -145,6 +157,9 @@ public class WebViewActivity extends Activity {
 
         });
 
+
+
+
         if (getIntent().getExtras() != null) {
             if (getIntent().getExtras().getString("login_type").equals("google")) {
                 webView.loadUrl(UrlServerConstants.GOOGLE_LOGIN);
@@ -159,23 +174,26 @@ public class WebViewActivity extends Activity {
     }
 
     public String getCookie(String siteName, String cookieName) {
-        try{
+        try {
             String CookieValue = null;
 
             CookieManager cookieManager = CookieManager.getInstance();
             String cookies = cookieManager.getCookie(siteName);
             String[] temp = cookies.split("[;]");
-            for (String ar1 : temp) {
-                if (ar1.contains(cookieName)) {
-                    String[] temp1 = ar1.split("[=]");
-                    CookieValue = temp1[1];
+            if (temp.length > 0) {
+                for (String ar1 : temp) {
+                    if (ar1.contains(cookieName)) {
+                        String[] temp1 = ar1.split("[=]");
+                        CookieValue = temp1[1];
+                    }
                 }
+                return CookieValue;
+
             }
-            return CookieValue;
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
-       return  "907F2912219B37EF490A820D3E473FE2";
+        return GlobalCookieStore.getCookieStore().getCookies().get(0).getValue();
     }
 
     @Override

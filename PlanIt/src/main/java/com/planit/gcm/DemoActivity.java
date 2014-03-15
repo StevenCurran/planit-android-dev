@@ -1,17 +1,5 @@
 package com.planit.gcm;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.planit.R;
-import com.planit.User;
-import com.planit.constants.GlobalCookieStore;
-import com.planit.constants.GlobalUserStore;
-import com.planit.constants.UrlServerConstants;
-import com.planit.utils.WebClient;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,6 +11,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.planit.R;
+import com.planit.User;
+import com.planit.constants.GlobalUserStore;
+import com.planit.constants.UrlServerConstants;
+import com.planit.utils.WebClient;
+
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -33,29 +32,34 @@ public class DemoActivity extends Activity {
 
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
+    static final String TAG = "GCM Demo";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-
-    /**
-     * Substitute you own sender ID here. This is the project number you got
-     * from the API Console, as described in "Getting Started."
-     */
     String SENDER_ID = "115023261213";
-
-    /**
-     * Tag used on log messages.
-     */
-    static final String TAG = "GCM Demo";
-
-    TextView mDisplay;
+    //TextView mDisplay;
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     Context context;
 
     String regid;
 
+    /**
+     * @return Application's version code from the {@code PackageManager}.
+     */
+    private static int getAppVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (NameNotFoundException e) {
+            // should never happen
+            throw new RuntimeException("Could not get package name: " + e);
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
 
@@ -104,7 +108,7 @@ public class DemoActivity extends Activity {
      * {@code SharedPreferences}.
      *
      * @param context application's context.
-     * @param regId registration ID
+     * @param regId   registration ID
      */
     private void storeRegistrationId(Context context, String regId) {
         final SharedPreferences prefs = getGcmPreferences(context);
@@ -118,11 +122,11 @@ public class DemoActivity extends Activity {
 
     /**
      * Gets the current registration ID for application on GCM service, if there is one.
-     * <p>
+     * <p/>
      * If result is empty, the app needs to register.
      *
      * @return registration ID, or empty string if there is no existing
-     *         registration ID.
+     * registration ID.
      */
     private String getRegistrationId(Context context) {
         final SharedPreferences prefs = getGcmPreferences(context);
@@ -145,7 +149,7 @@ public class DemoActivity extends Activity {
 
     /**
      * Registers the application with GCM servers asynchronously.
-     * <p>
+     * <p/>
      * Stores the registration ID and the app versionCode in the application's
      * shared preferences.
      */
@@ -182,7 +186,8 @@ public class DemoActivity extends Activity {
 
             @Override
             protected void onPostExecute(String msg) {
-                mDisplay.append(msg + "\n");
+
+                //mDisplay.append(msg + "\n");
             }
         }.execute(null, null, null);
     }
@@ -211,11 +216,12 @@ public class DemoActivity extends Activity {
 
                 @Override
                 protected void onPostExecute(String msg) {
-                    mDisplay.append(msg + "\n");
+
+                    //mDisplay.append(msg + "\n");
                 }
             }.execute(null, null, null);
         } else if (view == findViewById(R.id.clear)) {
-            mDisplay.setText("");
+            //mDisplay.setText("");
         }
 
     }
@@ -223,20 +229,6 @@ public class DemoActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    /**
-     * @return Application's version code from the {@code PackageManager}.
-     */
-    private static int getAppVersion(Context context) {
-        try {
-            PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), 0);
-            return packageInfo.versionCode;
-        } catch (NameNotFoundException e) {
-            // should never happen
-            throw new RuntimeException("Could not get package name: " + e);
-        }
     }
 
     /**
@@ -248,6 +240,7 @@ public class DemoActivity extends Activity {
         return getSharedPreferences(DemoActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
     }
+
     /**
      * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP or CCS to send
      * messages to your app. Not needed for this demo since the device sends upstream messages

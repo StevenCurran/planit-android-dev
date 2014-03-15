@@ -19,14 +19,15 @@ import com.planit.R;
 import com.planit.User;
 import com.planit.adapters.ProfileTabPagerAdapter;
 import com.planit.constants.GlobalUserStore;
+import com.planit.gcm.DemoActivity;
 
 import java.util.Calendar;
 
 public class ProfileActivity extends FragmentActivity {
 
+    final Context context = this;
     private ViewPager viewPager;
     private ProfileTabPagerAdapter profilePagerAdapter;
-    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +60,20 @@ public class ProfileActivity extends FragmentActivity {
 
         //set user details
         setUserDetails();
+
+
+        Intent registrationIntent = new Intent(getApplicationContext(), DemoActivity.class);
+        startActivity(registrationIntent);
     }
 
-    public String getDayString(){
+    public String getDayString() {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DATE);
 
         return Integer.toString(day);
     }
 
-    public void setUserDetails(){
+    public void setUserDetails() {
         TextView userNameText = (TextView) findViewById(R.id.userNameText);
         TextView userEmailText = (TextView) findViewById(R.id.userEmailText);
 
@@ -79,10 +84,10 @@ public class ProfileActivity extends FragmentActivity {
 
         ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
         //if there is a user image, make it circley, if there isn't, use the default image
-        if(GlobalUserStore.getUser().getImage() != null){
+        if (GlobalUserStore.getUser().getImage() != null) {
             Bitmap userImage = GlobalUserStore.getUser().getImage().getBitmap();
             userPicture.setImageBitmap(getRoundedShape(userImage));
-        }else{
+        } else {
             userPicture.setImageResource(R.drawable.default_user_photo);
         }
     }
@@ -92,7 +97,7 @@ public class ProfileActivity extends FragmentActivity {
         int targetWidth = 114;
         int targetHeight = 114;
         Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
-                targetHeight,Bitmap.Config.ARGB_8888);
+                targetHeight, Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(targetBitmap);
         Path path = new Path();
@@ -100,7 +105,8 @@ public class ProfileActivity extends FragmentActivity {
                 ((float) targetHeight - 1) / 2,
                 (Math.min(((float) targetWidth),
                         ((float) targetHeight)) / 2),
-                Path.Direction.CCW);
+                Path.Direction.CCW
+        );
 
         canvas.clipPath(path);
 
@@ -108,24 +114,25 @@ public class ProfileActivity extends FragmentActivity {
                 new Rect(0, 0, sourceBitmap.getWidth(),
                         sourceBitmap.getHeight()),
                 new Rect(0, 0, targetWidth,
-                        targetHeight), null);
+                        targetHeight), null
+        );
         return targetBitmap;
     }
 
-    public void doSignOut(View view){
+    public void doSignOut(View view) {
         Intent intent = new Intent(context, LoginActivity.class);
         startActivity(intent);
     }
 
-    public void doEditProfile(View view){
+    public void doEditProfile(View view) {
         //do edit profile
     }
 
-    public void goToSchedule(View view){
+    public void goToSchedule(View view) {
         //go to schedule
     }
 
-    public void goToNotifications(View view){
+    public void goToNotifications(View view) {
         //go to notification
     }
 

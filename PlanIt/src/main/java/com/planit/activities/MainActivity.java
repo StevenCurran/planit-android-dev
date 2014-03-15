@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class MainActivity extends Activity {
     final Context context = this;
 
     public void onCreate(Bundle savedInstanceState) {
-
+        CookieSyncManager.createInstance(context);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -55,10 +56,8 @@ public class MainActivity extends Activity {
     }
 
     public void goToLoginScreen(View view){
-        Intent intent = new Intent(getApplicationContext(), DemoActivity.class);
-        startActivity(intent);
-       //Intent intent = new Intent(context, LoginActivity.class);
-       //startActivity(intent);
+     Intent intent = new Intent(context, LoginActivity.class);
+       startActivity(intent);
     }
 
     public void goToProfileScreen(View view){
