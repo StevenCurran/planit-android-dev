@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.planit.R;
 import com.planit.Rule;
-import com.planit.activities.AddLinkedAccountActivity;
 import com.planit.activities.AddRuleActivity;
 import com.planit.adapters.RulesArrayAdapter;
 

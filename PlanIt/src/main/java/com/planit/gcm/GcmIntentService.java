@@ -3,8 +3,6 @@ package com.planit.gcm;
 /**
  * Created by Steven on 14/03/14.
  */
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.planit.R;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -12,9 +10,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.planit.R;
 
 /**
  * This {@code IntentService} does the actual handling of the GCM message.

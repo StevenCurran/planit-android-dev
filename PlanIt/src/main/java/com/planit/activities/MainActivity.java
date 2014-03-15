@@ -3,6 +3,7 @@ package com.planit.activities;
 /**
  * Created by Steven on 17/02/14.
  */
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +21,6 @@ import com.loopj.android.http.ResponseHandlerInterface;
 import com.planit.R;
 import com.planit.constants.GlobalCookieStore;
 import com.planit.constants.UrlServerConstants;
-import com.planit.gcm.DemoActivity;
 
 import org.apache.http.Header;
 import org.json.JSONArray;

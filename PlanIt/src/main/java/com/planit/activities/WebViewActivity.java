@@ -29,7 +29,6 @@ import com.planit.User;
 import com.planit.constants.GlobalCookieStore;
 import com.planit.constants.GlobalUserStore;
 import com.planit.constants.UrlServerConstants;
-import com.planit.gcm.DemoActivity;
 import com.planit.utils.WebClient;
 
 import org.apache.commons.lang3.StringEscapeUtils;

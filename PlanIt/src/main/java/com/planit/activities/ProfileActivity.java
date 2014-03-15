@@ -19,6 +19,7 @@ import com.planit.R;
 import com.planit.User;
 import com.planit.adapters.ProfileTabPagerAdapter;
 import com.planit.constants.GlobalUserStore;
+import com.planit.gcm.AsyncDeviceRegistrationTask;
 import com.planit.gcm.DemoActivity;
 
 import java.util.Calendar;
@@ -61,9 +62,8 @@ public class ProfileActivity extends FragmentActivity {
         //set user details
         setUserDetails();
 
+        new Thread(new AsyncDeviceRegistrationTask(context, this)).start();
 
-        Intent registrationIntent = new Intent(getApplicationContext(), DemoActivity.class);
-        startActivity(registrationIntent);
     }
 
     public String getDayString() {
