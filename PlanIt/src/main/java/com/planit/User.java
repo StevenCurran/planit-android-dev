@@ -13,22 +13,30 @@ public class User {
     private String id;
     private String email;
     private BitmapDrawable image;
+    private String imageUrl;
 
     public User(Person person) {
         this.id = person.getId();
         this.name = person.getDisplayName();
         this.email = person.getEmails().get(0).getValue().toString();
+        this.imageUrl = person.getImage().getUrl();
     }
 
-    public User(){
+    public User() {
 
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getId() {
         return id;

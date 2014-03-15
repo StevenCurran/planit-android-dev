@@ -44,9 +44,10 @@ public class WebViewActivity extends Activity {
         @Override
         public void onReceiveValue(String s) {
             int duration = Toast.LENGTH_SHORT;
-            if(s.contains("loading...")){
+            if (s.contains("loading...")) {
                 return;
-            };
+            }
+            ;
 
             if (s.length() > 10 && !url.contains("about:blank") && !url.contains("google.com")) {
                 s = StringEscapeUtils.unescapeJson(s);
@@ -55,13 +56,11 @@ public class WebViewActivity extends Activity {
                     Person person = gson.fromString(s, Person.class);
                     User u = new User(person);
                     GlobalUserStore.setUser(u);
-                    loadProfileImage(person.getImage().getUrl());
+//                    loadProfileImage(person.getImage().getUrl());
                     Intent intent = new Intent(context, ProfileActivity.class);
                     startActivity(intent);
 
 //
-
-
                     Toast toast = Toast.makeText(getApplicationContext(), "Hi " + person.getDisplayName().substring(0, person.getDisplayName().indexOf(' ')) + "!", duration);
                     toast.show();
 
@@ -111,7 +110,6 @@ public class WebViewActivity extends Activity {
         webView.getSettings().setJavaScriptEnabled(true);
 
 
-
         webView.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -155,8 +153,6 @@ public class WebViewActivity extends Activity {
             }
 
         });
-
-
 
 
         if (getIntent().getExtras() != null) {

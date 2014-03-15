@@ -3,10 +3,12 @@ package com.planit.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -15,18 +17,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.planit.R;
 import com.planit.User;
 import com.planit.adapters.ProfileTabPagerAdapter;
 import com.planit.constants.GlobalUserStore;
-import com.planit.gcm.AsyncDeviceRegistrationTask;
-import com.planit.gcm.DemoActivity;
+import com.planit.tasks.AsyncDeviceRegistrationTask;
+import com.planit.utils.WebClient;
 
 import java.util.Calendar;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ProfileActivity extends FragmentActivity {
 
     final Context context = this;
+    final ExecutorService imageExecService = Executors.newFixedThreadPool(1);
     private ViewPager viewPager;
     private ProfileTabPagerAdapter profilePagerAdapter;
 
@@ -82,18 +88,28 @@ public class ProfileActivity extends FragmentActivity {
         userNameText.setText(currentUser.getName());
         userEmailText.setText(currentUser.getEmail());
 
-        ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
+        final ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
         //if there is a user image, make it circley, if there isn't, use the default image
-        if (GlobalUserStore.getUser().getImage() != null) {
-            Bitmap userImage = GlobalUserStore.getUser().getImage().getBitmap();
-            userPicture.setImageBitmap(getRoundedShape(userImage));
-        } else {
-            userPicture.setImageResource(R.drawable.default_user_photo);
-        }
+
+        String imageUrl = currentUser.getImageUrl();
+        String[] allowedContentTypes = new String[]{"image/jpeg", "image/png"};
+
+        WebClient.get(imageUrl.substring(0, imageUrl.length() - 5), null, new BinaryHttpResponseHandler(allowedContentTypes) {
+            @Override
+            public void onSuccess(byte[] fileData) {
+                BitmapDrawable bitmapDrawable = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(fileData, 0, fileData.length));
+                GlobalUserStore.getUser().setImage(bitmapDrawable);
+                userPicture.setImageBitmap(getRoundedShape(bitmapDrawable.getBitmap()));
+            }
+        });
+
+        System.out.println("Wait here...");
+//        ImageLoadingTask imageLoad = new ImageLoadingTask(context, currentUser.getImageUrl());
+//        Future<BitmapDrawable> image = imageExecService.submit(imageLoad);
+
     }
 
     public Bitmap getRoundedShape(Bitmap sourceBitmap) {
-        // TODO Auto-generated method stub
         int targetWidth = 114;
         int targetHeight = 114;
         Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,

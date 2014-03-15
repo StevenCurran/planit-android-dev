@@ -12,21 +12,13 @@ public class UrlServerConstants {
     public static final String GOOGLE_LOGIN = PLANIT_ROOT + "/googlelogin/login";
 
 
-
     //redirects
-    public static final String GOOGLE_AUTH_REDIRECT  = PLANIT_ROOT + "/googlelogin/oauthCallback";
-    public static final String FACEBOOK_AUTH_REDIRECT  = PLANIT_ROOT + "/authSuccess";
-
-
-
-    //public urls
-    public static final String GOOGLE_HOME = "google.com";
-
-
+    public static final String GOOGLE_AUTH_REDIRECT = PLANIT_ROOT + "/googlelogin/oauthCallback";
+    public static final String FACEBOOK_AUTH_REDIRECT = PLANIT_ROOT + "/authSuccess";
     //end points
     public static final String FACEBOOK_EVENTS = PLANIT_ROOT + "/fbevents";
     public static final String GOOGLE_EVENTS = PLANIT_ROOT + "/googlelogin/gcalEvents";
-
-
     public static final String DEVICE_GCM_REG = PLANIT_ROOT + "/googlelogin/deviceregistration";
+    //public urls
+    public static final String GOOGLE_HOME = "google.com";
 }

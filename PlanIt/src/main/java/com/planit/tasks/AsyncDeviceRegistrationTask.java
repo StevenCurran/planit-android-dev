@@ -1,4 +1,4 @@
-package com.planit.gcm;
+package com.planit.tasks;
 
 import android.app.Activity;
 import android.content.Context;
