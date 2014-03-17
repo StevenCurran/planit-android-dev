@@ -2,8 +2,10 @@ package com.planit.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.planit.R;
@@ -26,6 +28,11 @@ public class AddRuleActivity extends Activity {
 
         TextView title = (TextView) findViewById(R.id.screenTitle);
         title.setTypeface(uilFont);
+    }
+
+    public void addParticipant(View view) {
+        Intent intent = new Intent(context, AddParticipantActivity.class);
+        startActivity(intent);
     }
 
 }

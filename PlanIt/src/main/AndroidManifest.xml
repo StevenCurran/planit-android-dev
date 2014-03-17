@@ -36,6 +36,8 @@
 
         <activity android:name=".activities.AddRuleActivity" />
 
+        <activity android:name=".activities.AddParticipantActivity" />
+
         <activity android:name=".gcm.DemoActivity" />
 
         <!--

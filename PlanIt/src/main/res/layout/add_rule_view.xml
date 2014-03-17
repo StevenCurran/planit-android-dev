@@ -24,4 +24,10 @@
             android:text="Add Rule" />
     </LinearLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add participant"
+        android:onClick="addParticipant"/>
+
 </LinearLayout>
