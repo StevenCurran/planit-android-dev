@@ -8,18 +8,34 @@
     <LinearLayout
         android:id="@+id/scheduleBar"
         android:layout_width="match_parent"
-        android:layout_height="142px"
+        android:layout_height="120px"
         android:orientation="horizontal"
         android:background="@color/planit_blue">
+
+        <Button
+            android:id="@+id/goToTodayButton"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_button"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="15dp"
+            android:paddingRight="25dp"
+            android:textSize="9pt"
+            android:gravity="top"
+            android:text="Today"
+            android:onClick="goToToday"
+            />
 
         <TextView
             android:id="@+id/screenTitle"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
+            android:paddingTop="22px"
             android:textColor="#FFFFFF"
             android:textSize="15pt"
             android:gravity="center_vertical"
-            android:layout_marginLeft="130dp"
+            android:layout_marginLeft="35dp"
             android:text="Schedule" />
 
         <Button
@@ -36,21 +52,45 @@
             android:text="+"
             android:onClick="doNewEvent"
             />
-
     </LinearLayout>
 
     <LinearLayout android:id="@+id/scheduleContainer"
         android:layout_width="fill_parent"
-        android:layout_height="924px"
+        android:layout_height="946px"
         android:orientation="vertical">
 
-        <View android:id="@+id/seperator"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@color/planit_grey"/>
+        <CalendarView android:id="@+id/scheduleCal"
+            android:layout_width="match_parent"
+            android:layout_height="425px"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:background="@color/planit_blue"
+            android:selectedDateVerticalBar="@color/planit_green"
+            android:selectedWeekBackgroundColor="@color/planit_blue"
+            android:showWeekNumber="false"
+            android:weekSeparatorLineColor="@color/planit_light_grey"
+            android:focusedMonthDateColor="@color/white"
+            android:unfocusedMonthDateColor="@color/planit_light_grey"
+            android:weekDayTextAppearance="@color/white"/>
+
+        <LinearLayout android:id="@+id/selectedDayBanner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/planit_green">
+
+            <TextView
+                android:id="@+id/selectedDayTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="10pt"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
 
     </LinearLayout>
 

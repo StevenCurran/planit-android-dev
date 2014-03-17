@@ -126,10 +126,4 @@ public class ProfileActivity extends FragmentActivity {
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 
-    //disabling back button on profile activity to prevent going back to login loading screen
-    @Override
-    public void onBackPressed() {
-    }
-
-
 }
