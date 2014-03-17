@@ -1,0 +1,70 @@
+<LinearLayout
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/notificationBar"
+        android:layout_width="match_parent"
+        android:layout_height="142px"
+        android:orientation="horizontal"
+        android:background="@color/planit_blue">
+
+        <TextView
+            android:id="@+id/screenTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:textColor="#FFFFFF"
+            android:textSize="15pt"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="110dp"
+            android:text="Notifications" />
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/notificationsContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="924px"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navigationBarView"
+        android:layout_width="match_parent"
+        android:layout_height="118px"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/profileButton"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="256px"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profile_button"
+            android:background="@null"
+            android:onClick="goToProfile"/>
+
+        <Button
+            android:id="@+id/scheduleButton"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="256px"
+            android:layout_height="wrap_content"
+            android:background="@drawable/schedule_button"
+            android:textColor="#FFFFFF"
+            android:textSize="9pt"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="10dp"
+            android:onClick="goToSchedule"/>
+
+        <ImageButton
+            android:id="@+id/notificationsButton"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="256px"
+            android:layout_height="wrap_content"
+            android:src="@drawable/notifications_button_selected"
+            android:background="@null"/>
+    </LinearLayout>
+
+</LinearLayout>

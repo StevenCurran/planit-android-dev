@@ -30,9 +30,4 @@ public class AddRuleActivity extends Activity {
         title.setTypeface(uilFont);
     }
 
-    public void addParticipant(View view) {
-        Intent intent = new Intent(context, AddParticipantActivity.class);
-        startActivity(intent);
-    }
-
 }

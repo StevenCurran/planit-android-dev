@@ -57,7 +57,7 @@ public class WebViewActivity extends Activity {
                     User u = new User(person);
                     GlobalUserStore.setUser(u);
 //                    loadProfileImage(person.getImage().getUrl());
-                    Intent intent = new Intent(context, ProfileActivity.class);
+                    Intent intent = new Intent(context, ScheduleActivity.class);
                     startActivity(intent);
 
 //

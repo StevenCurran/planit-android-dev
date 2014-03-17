@@ -32,6 +32,10 @@
 
         <activity android:name=".activities.ProfileActivity" />
 
+        <activity android:name=".activities.ScheduleActivity" />
+
+        <activity android:name=".activities.NotificationsActivity" />
+
         <activity android:name=".activities.AddLinkedAccountActivity" />
 
         <activity android:name=".activities.AddRuleActivity" />

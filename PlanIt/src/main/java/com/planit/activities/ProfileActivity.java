@@ -2,11 +2,7 @@ package com.planit.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Path;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -119,11 +115,15 @@ public class ProfileActivity extends FragmentActivity {
     }
 
     public void goToSchedule(View view) {
-        //go to schedule
+        Intent intent = new Intent(context, ScheduleActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 
     public void goToNotifications(View view) {
-        //go to notification
+        Intent intent = new Intent(context, NotificationsActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 
     //disabling back button on profile activity to prevent going back to login loading screen

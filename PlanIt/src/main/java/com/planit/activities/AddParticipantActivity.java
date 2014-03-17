@@ -2,24 +2,16 @@ package com.planit.activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.planit.Participant;
 import com.planit.R;
-import com.planit.User;
 import com.planit.adapters.ParticipantsArrayAdapter;
-import com.planit.constants.GlobalUserStore;
-import com.planit.utils.ImageTransformer;
-import com.planit.utils.WebClient;
-
 import java.util.ArrayList;
 
 /**
@@ -86,6 +78,8 @@ public class AddParticipantActivity extends Activity {
 
 
     public void doAddParticipants(View view) {
-        //do fings
+
+       //get all attending participants, update the event object(?)
+
     }
 }

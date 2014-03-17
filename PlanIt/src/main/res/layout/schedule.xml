@@ -1,0 +1,94 @@
+<LinearLayout
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/scheduleBar"
+        android:layout_width="match_parent"
+        android:layout_height="142px"
+        android:orientation="horizontal"
+        android:background="@color/planit_blue">
+
+        <TextView
+            android:id="@+id/screenTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:textColor="#FFFFFF"
+            android:textSize="15pt"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="130dp"
+            android:text="Schedule" />
+
+        <Button
+            android:id="@+id/newEventButton"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@null"
+            android:textColor="#FFFFFF"
+            android:textSize="45dp"
+            android:paddingBottom="5dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="80dp"
+            android:text="+"
+            android:onClick="doNewEvent"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/scheduleContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="924px"
+        android:orientation="vertical">
+
+        <View android:id="@+id/seperator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/planit_grey"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navigationBarView"
+        android:layout_width="match_parent"
+        android:layout_height="118px"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/profileButton"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="256px"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profile_button"
+            android:background="@null"
+            android:onClick="goToProfile"/>
+
+        <Button
+            android:id="@+id/scheduleButton"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="256px"
+            android:layout_height="wrap_content"
+            android:background="@drawable/schedule_button_selected"
+            android:textColor="#FFFFFF"
+            android:textSize="9pt"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="10dp"/>
+
+        <ImageButton
+            android:id="@+id/notificationsButton"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="256px"
+            android:layout_height="wrap_content"
+            android:src="@drawable/notifications_button"
+            android:background="@null"
+            android:onClick="goToNotifications" />
+    </LinearLayout>
+
+</LinearLayout>

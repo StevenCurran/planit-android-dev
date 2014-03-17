@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
 
     private final Context context;
-    private final ArrayList<Participant> participants;
+    public final ArrayList<Participant> participants;
 
     public ParticipantsArrayAdapter(Context context, ArrayList<Participant> participants) {
         super(context, R.layout.participant_list_item, participants);
@@ -72,6 +72,7 @@ public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
     }
 
     public void doChangeAttendingStatus(View view) {
-        //do fings
+        //change status
     }
 }
+
