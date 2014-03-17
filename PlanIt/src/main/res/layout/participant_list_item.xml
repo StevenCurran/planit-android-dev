@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"/>
 
-    <LinearLayout android:id="@+id/linkedAccountDetailsContainer"
+    <LinearLayout android:id="@+id/ParticipantDetailsContainer"
         android:layout_width="475px"
         android:layout_height="wrap_content"
         android:orientation="vertical"

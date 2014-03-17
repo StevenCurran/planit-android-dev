@@ -7,4 +7,9 @@
     <color name="planit_green">#63E749</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="priority_one">#C81B1B</color>
+    <color name="priority_two">#F13434</color>
+    <color name="priority_three">#F18834</color>
+    <color name="priority_four">#F1C734</color>
+    <color name="priority_five">#63e749</color>
 </resources>
