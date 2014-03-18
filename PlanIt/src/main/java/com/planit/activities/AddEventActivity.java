@@ -10,17 +10,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
+import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 import com.google.gson.Gson;
 import com.planit.R;
 import com.planit.User;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
  * Created by Gareth on 18/03/2014.
  */
-public class AddEventActivity extends Activity {
+public class AddEventActivity extends Activity implements DatePickerDialogFragment.DatePickerDialogHandler {
 
     final Context context = this;
     private Bundle b = new Bundle();
@@ -53,6 +56,15 @@ public class AddEventActivity extends Activity {
     }
 
 
+    public void openStartWindowPicker(View view) {
+
+        Calendar c = Calendar.getInstance();
+        int firstDayOfWeek = c.getFirstDayOfWeek();
+        DatePickerBuilder dpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(2014).setDayOfMonth(firstDayOfWeek).addDatePickerDialogHandler(this);
+        dpb.show();
+
+    }
+
     public void addAttendees(View view) {
         Intent intent = new Intent(context, AddParticipantActivity.class);
         //startActivity(intent);
@@ -72,5 +84,10 @@ public class AddEventActivity extends Activity {
     public void doCreateEvent(View view) {
         //create the event and scheduling stuff - might want to go to view showing
         //free slots? or are we doing this automated way, it reschedules were nessecary?
+    }
+
+    @Override
+    public void onDialogDateSet(int i, int i2, int i3, int i4) {
+        System.out.println(i + i2 + i + i4);
     }
 }

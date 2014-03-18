@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="142px"
         android:orientation="horizontal"
-        android:background="@color/planit_blue">
+        android:background="@color/planit_blue"
+        android:layout_weight="0.13">
 
         <TextView
             android:id="@+id/screenTitle"
@@ -27,7 +28,7 @@
     <EditText
         android:id="@+id/eventNameBox"
         android:layout_width="350dp"
-        android:layout_weight="0.05"
+        android:layout_weight="0.13"
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
@@ -44,7 +45,7 @@
     <EditText
         android:id="@+id/eventLocationBox"
         android:layout_width="350dp"
-        android:layout_weight="0.05"
+        android:layout_weight="0.13"
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:paddingLeft="10dp"
@@ -57,29 +58,29 @@
         android:background="@drawable/bottom_curve_box"
         android:hint="Location" />
 
-    <TextView
+    <Button android:id="@+id/addStartWindowButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/planit_blue"
-        android:textSize="10pt"
-        android:paddingTop="10dp"
-        android:paddingLeft="15dp"
-        android:text="start date/time and end date/time selectors go here!!!!!!!!"/>
+        android:layout_marginLeft="219dp"
+        android:background="@drawable/small_plus_button"
+        android:onClick="openStartWindowPicker"/>
 
     <TextView
         android:id="@+id/priorityTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textColor="@color/planit_blue"
         android:textSize="10pt"
         android:paddingTop="10dp"
         android:paddingLeft="15dp"
-        android:text="Priority"/>
+        android:text="Priority"
+        android:layout_weight="0.13" />
 
     <LinearLayout android:id="@+id/attendeesContainer"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.13">
 
         <LinearLayout android:id="@+id/attendeesHeaderContainer"
             android:layout_width="fill_parent"
@@ -111,18 +112,19 @@
     <TextView
         android:id="@+id/tagsTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textColor="@color/planit_blue"
         android:textSize="10pt"
         android:paddingTop="10dp"
         android:paddingLeft="15dp"
-        android:text="Tags"/>
+        android:text="Tags"
+        android:layout_weight="0.13" />
 
     <Button
         android:id="@+id/createEventButton"
         style="?android:borderlessButtonStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@drawable/green_button"
         android:textColor="#FFFFFF"
         android:layout_gravity="center_horizontal"
@@ -135,6 +137,6 @@
         android:gravity="center_vertical"
         android:text="Create"
         android:onClick="doCreateEvent"
-        />
+        android:layout_weight="0.13" />
 
 </LinearLayout>
