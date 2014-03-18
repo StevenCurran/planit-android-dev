@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.planit.Participant;
 import com.planit.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by Gareth on 18/03/2014.
@@ -47,7 +50,17 @@ public class AddEventActivity extends Activity {
 
     public void addAttendees(View view) {
         Intent intent = new Intent(context, AddParticipantActivity.class);
-        startActivity(intent);
+        //startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+            //ArrayList<Participant> attendees = (ArrayList<Participant>) data.getParcelableArrayListExtra("attendees");
+        }
+        ///get the result of the selection of the contacts
+
     }
 
     public void doCreateEvent(View view) {
