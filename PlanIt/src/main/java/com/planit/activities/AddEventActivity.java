@@ -10,8 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.planit.Participant;
 import com.planit.R;
+import com.planit.User;
+import com.planit.constants.UrlServerConstants;
+import com.planit.utils.WebClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -46,6 +54,30 @@ public class AddEventActivity extends Activity {
         Button createEventButton = (Button) findViewById(R.id.createEventButton);
         createEventButton.setTypeface(uilFont);
 
+        loadAttendees();
+
+    }
+
+    private void loadAttendees() {
+        WebClient.get(UrlServerConstants.ATTENDEES, null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(JSONArray response) {
+
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        String result = jsonObject.toString();
+                        // parse out here/
+
+                        User u = new User();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        });
     }
 
     public void addAttendees(View view) {
@@ -56,8 +88,9 @@ public class AddEventActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             //ArrayList<Participant> attendees = (ArrayList<Participant>) data.getParcelableArrayListExtra("attendees");
+
         }
         ///get the result of the selection of the contacts
 

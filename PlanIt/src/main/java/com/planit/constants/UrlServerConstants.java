@@ -21,4 +21,5 @@ public class UrlServerConstants {
     public static final String DEVICE_GCM_REG = PLANIT_ROOT + "/googlelogin/deviceregistration";
     //public urls
     public static final String GOOGLE_HOME = "google.com";
+    public static final String ATTENDEES = PLANIT_ROOT + "/getAttendees";
 }

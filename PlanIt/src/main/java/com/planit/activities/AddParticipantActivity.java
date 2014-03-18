@@ -39,6 +39,8 @@ public class AddParticipantActivity extends Activity {
         ListView listview = (ListView) findViewById(R.id.participantsList);
         adapter = new ParticipantsArrayAdapter(context, getParticipants());
         listview.setAdapter(adapter);
+
+
     }
 
     private ArrayList<Participant> getParticipants(){
@@ -48,6 +50,7 @@ public class AddParticipantActivity extends Activity {
 
         ArrayList<Participant> participants = new ArrayList<>();
 
+        /*
         Participant testContact1 = new Participant();
         testContact1.setName("Steven Curran");
         testContact1.setEmail("scurran10@hotmail.com");
@@ -72,7 +75,7 @@ public class AddParticipantActivity extends Activity {
         participants.add(testContact2);
         participants.add(testContact3);
         participants.add(testContact4);
-
+*/
         return participants;
     }
 
