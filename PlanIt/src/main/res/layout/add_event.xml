@@ -65,6 +65,13 @@
         android:background="@drawable/small_plus_button"
         android:onClick="openStartWindowPicker"/>
 
+    <Button android:id="@+id/addEndWindowButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="219dp"
+        android:background="@drawable/small_plus_button"
+        android:onClick="openEndWindowPicker"/>
+
     <TextView
         android:id="@+id/priorityTitle"
         android:layout_width="wrap_content"

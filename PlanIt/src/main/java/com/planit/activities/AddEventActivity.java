@@ -30,7 +30,8 @@ public class AddEventActivity extends FragmentActivity {
     private Bundle b = new Bundle();
     private Gson gson = new Gson();
     private List<User> attendees = new ArrayList<>();
-    private DatePickerBuilder dpb;
+    private DatePickerBuilder startDpb;
+    private DatePickerBuilder endDpb;
 
     private Date startWindow;
     private Date endWindow;
@@ -58,39 +59,19 @@ public class AddEventActivity extends FragmentActivity {
         Button createEventButton = (Button) findViewById(R.id.createEventButton);
         createEventButton.setTypeface(uilFont);
 
-        dpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(new Date().getYear()).setFragmentManager(getSupportFragmentManager());
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        startDpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(year).setFragmentManager(getSupportFragmentManager()).addDatePickerDialogHandler(START_WINDOW_HANDLER);
+        endDpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(year).setFragmentManager(getSupportFragmentManager()).addDatePickerDialogHandler(END_WINDOW_HANDLER);
 
     }
 
 
     public void openStartWindowPicker(View view) {
-
-        final Calendar c = Calendar.getInstance();
-
-        dpb.addDatePickerDialogHandler(new DatePickerDialogFragment.DatePickerDialogHandler() {
-            @Override
-            public void onDialogDateSet(int i, int i2, int i3, int i4) {
-                c.set(i2, i3, i4);
-                startWindow = c.getTime();
-            }
-        });
-        dpb.show();
-
+        startDpb.show();
     }
 
     public void openEndWindowPicker(View view) {
-
-        final Calendar c = Calendar.getInstance();
-
-        dpb.addDatePickerDialogHandler(new DatePickerDialogFragment.DatePickerDialogHandler() {
-            @Override
-            public void onDialogDateSet(int i, int i2, int i3, int i4) {
-                c.set(i2, i3, i4);
-                endWindow = c.getTime();
-            }
-        });
-        dpb.show();
-
+        endDpb.show();
     }
 
     public void addAttendees(View view) {
@@ -113,5 +94,28 @@ public class AddEventActivity extends FragmentActivity {
         //create the event and scheduling stuff - might want to go to view showing
         //free slots? or are we doing this automated way, it reschedules were nessecary?
     }
+
+    private DatePickerDialogFragment.DatePickerDialogHandler START_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
+
+        final Calendar c = Calendar.getInstance();
+
+        @Override
+        public void onDialogDateSet(int i, int i2, int i3, int i4) {
+            c.set(i2, i3, i4);
+            startWindow = c.getTime();
+        }
+    };
+
+    private DatePickerDialogFragment.DatePickerDialogHandler END_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
+
+        final Calendar c = Calendar.getInstance();
+
+        @Override
+        public void onDialogDateSet(int i, int i2, int i3, int i4) {
+            c.set(i2, i3, i4);
+            endWindow = c.getTime();
+        }
+    };
+
 
 }
