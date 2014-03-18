@@ -11,14 +11,25 @@ import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.planit.Event;
 import com.planit.R;
 import com.planit.adapters.ScheduleArrayAdaptor;
+import com.planit.constants.UrlServerConstants;
+import com.planit.utils.WebClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Semaphore;
 
 /**
  * Created by Gareth on 17/03/2014.
@@ -31,6 +42,9 @@ public class ScheduleActivity extends Activity {
     ScheduleArrayAdaptor adapter;
     ListView listview;
     SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd MMMM yyyy");
+
+    private ConcurrentHashMap<Date, ArrayList<Event>> eventsMap = new ConcurrentHashMap<>();
+    private Semaphore lock = new Semaphore(1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,25 +82,50 @@ public class ScheduleActivity extends Activity {
         calView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int i, int i2, int i3) {
-                Date selectedDate = new Date(i-1900,i2,i3);
+                Date selectedDate = new Date(i - 1900, i2, i3);
                 //set title
                 selectedDayTitle.setText(sdf.format(selectedDate));
                 //update schedule list
-                adapter = new ScheduleArrayAdaptor(context, getSchedule(selectedDate));
+                adapter = new ScheduleArrayAdaptor(context, filterSchedule(selectedDate));
                 listview.setAdapter(adapter);
             }
         });
+
+
     }
 
     public void doNewEvent(View view) {
         //do new event
     }
 
-    private ArrayList<Event> getSchedule(Date date){
+    private ArrayList<Event> getSchedule(Date date) {
+
+        final ArrayList<Event> events = new ArrayList<>();
+
+        WebClient.get(UrlServerConstants.GOOGLE_EVENTS, null, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(JSONArray response) {
+
+
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject o = response.getJSONObject(i);
+                        Event e = new Event();
+                        e.setId(o.getInt("id"));
+                        events.add(e);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
 
         //do server things here - get all available events for selected day
 
-        ArrayList<Event> events = new ArrayList<>();
 
         Event testEvent = new Event();
         testEvent.setStartDate(new Date(114, 2, 28, 9, 0));
@@ -131,6 +170,12 @@ public class ScheduleActivity extends Activity {
 
         return events;
     }
+
+    private ArrayList<Event> filterSchedule(Date selectedDate) {
+        return eventsMap.get(selectedDate);
+    }
+
+
 
 
     public void goToToday(View view) {
