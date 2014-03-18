@@ -41,8 +41,8 @@ public class ProfileActivity extends FragmentActivity {
         //set fonts
         Typeface uilFont = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
 
-        //Button scheduleButton = (Button) findViewById(R.id.scheduleButton);
-        //scheduleButton.setTypeface(uilFont);
+        Button scheduleButton = (Button) findViewById(R.id.scheduleButton);
+        scheduleButton.setTypeface(uilFont);
         TextView title = (TextView) findViewById(R.id.screenTitle);
         title.setTypeface(uilFont);
         TextView userNameText = (TextView) findViewById(R.id.userNameText);
@@ -60,7 +60,7 @@ public class ProfileActivity extends FragmentActivity {
         viewPager.setAdapter(profilePagerAdapter);
 
         //set schedule button date
-        //scheduleButton.setText(getDayString());
+        scheduleButton.setText(getDayString());
 
         //set user details
         setUserDetails();
