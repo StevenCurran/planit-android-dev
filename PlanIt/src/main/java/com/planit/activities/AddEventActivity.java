@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
+import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
+import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
+import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 import com.google.gson.Gson;
 import com.planit.R;
 import com.planit.User;
@@ -32,6 +35,7 @@ public class AddEventActivity extends FragmentActivity {
     private List<User> attendees = new ArrayList<>();
     private DatePickerBuilder startDpb;
     private DatePickerBuilder endDpb;
+    private RadialTimePickerDialog timePicker;
 
     private Date startWindow;
     private Date endWindow;
@@ -63,6 +67,8 @@ public class AddEventActivity extends FragmentActivity {
         startDpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(year).setFragmentManager(getSupportFragmentManager()).addDatePickerDialogHandler(START_WINDOW_HANDLER);
         endDpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(year).setFragmentManager(getSupportFragmentManager()).addDatePickerDialogHandler(END_WINDOW_HANDLER);
 
+        Calendar instance = Calendar.getInstance();
+        timePicker = RadialTimePickerDialog.newInstance(TIME_CALLBACK,  instance.get(Calendar.HOUR), instance.get(Calendar.MINUTE), true);
     }
 
 
@@ -72,6 +78,10 @@ public class AddEventActivity extends FragmentActivity {
 
     public void openEndWindowPicker(View view) {
         endDpb.show();
+    }
+
+    public void openTimePicker(View view) {
+        timePicker.show(getSupportFragmentManager(), "Pick Time");
     }
 
     public void addAttendees(View view) {
@@ -117,5 +127,11 @@ public class AddEventActivity extends FragmentActivity {
         }
     };
 
+    private RadialTimePickerDialog.OnTimeSetListener TIME_CALLBACK = new RadialTimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
+            System.out.println(i + " " + i2);
+        }
+    };
 
 }
