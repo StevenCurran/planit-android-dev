@@ -1,12 +1,13 @@
 package com.planit;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  * Created by Gareth on 17/03/2014.
  */
-public class Event {
+public class Event implements Comparable<Event>{
     private int id;
     private String title;
     private String location;
@@ -74,5 +75,15 @@ public class Event {
 
     public void setParticipants(ArrayList<Participant> participants) {
         this.participants = participants;
+    }
+
+    @Override
+    public int compareTo(Event event) {
+        if(this.getStartDate().before(event.getStartDate())){
+            return -1;
+        }else if(this.getStartDate().after(event.getStartDate())){
+            return 1;
+        }
+        return 0;
     }
 }
