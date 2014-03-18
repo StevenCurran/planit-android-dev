@@ -94,6 +94,7 @@ public class MainActivity extends Activity {
         intent.setData(CalendarContract.Events.CONTENT_URI);
         startActivity(intent);
 
+
     }
 
 
@@ -109,6 +110,8 @@ public class MainActivity extends Activity {
                 int duration = Toast.LENGTH_LONG;
                 Toast toast = Toast.makeText(context, location, duration);
                 toast.show();
+
+
 
                 createEventInPhone(firstEvent.getString("name"), firstEvent.getString("location"), firstEvent.getString("description"), null , null);
 
