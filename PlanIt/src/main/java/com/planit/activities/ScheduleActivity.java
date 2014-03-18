@@ -137,7 +137,13 @@ public class ScheduleActivity extends Activity {
                 }
 
                 eventsMap.addAll(events);
+
+                java.util.Calendar cal = java.util.Calendar.getInstance();
+                cal.add(java.util.Calendar.DATE, 1);
+                calView.setDate(cal.getTime().getTime());
                 calView.setDate(new Date().getTime());
+
+
             }
         });
 
