@@ -10,18 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.planit.Participant;
+import com.google.gson.Gson;
 import com.planit.R;
 import com.planit.User;
-import com.planit.constants.UrlServerConstants;
-import com.planit.utils.WebClient;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Gareth on 18/03/2014.
@@ -30,6 +24,8 @@ public class AddEventActivity extends Activity {
 
     final Context context = this;
     private Bundle b = new Bundle();
+    private Gson gson = new Gson();
+    private List<User> attendees = new ArrayList<>();
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -54,31 +50,8 @@ public class AddEventActivity extends Activity {
         Button createEventButton = (Button) findViewById(R.id.createEventButton);
         createEventButton.setTypeface(uilFont);
 
-        loadAttendees();
-
     }
 
-    private void loadAttendees() {
-        WebClient.get(UrlServerConstants.ATTENDEES, null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(JSONArray response) {
-
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject jsonObject = response.getJSONObject(i);
-                        String result = jsonObject.toString();
-                        // parse out here/
-
-                        User u = new User();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-
-        });
-    }
 
     public void addAttendees(View view) {
         Intent intent = new Intent(context, AddParticipantActivity.class);

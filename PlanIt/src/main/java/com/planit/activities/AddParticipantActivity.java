@@ -9,9 +9,18 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.planit.Participant;
 import com.planit.R;
 import com.planit.adapters.ParticipantsArrayAdapter;
+import com.planit.constants.UrlServerConstants;
+import com.planit.utils.WebClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -20,8 +29,11 @@ import java.util.ArrayList;
 public class AddParticipantActivity extends Activity {
 
     final Context context = this;
-    private Bundle b = new Bundle();
     ParticipantsArrayAdapter adapter;
+    private Bundle b = new Bundle();
+    private Gson gson = new Gson();
+    ArrayList<Participant> participants = new ArrayList<>();
+
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -43,46 +55,48 @@ public class AddParticipantActivity extends Activity {
 
     }
 
-    private ArrayList<Participant> getParticipants(){
+    private ArrayList<Participant> getParticipants() {
+
+        final ArrayList<Participant> p = new ArrayList<>();
 
         //do server things here - get all available contacts and check whether they
         //have already been added to this event, need to include getting profile pics
+        WebClient.get(UrlServerConstants.ATTENDEES, null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(JSONArray response) {
 
-        ArrayList<Participant> participants = new ArrayList<>();
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        Participant user = gson.fromJson(jsonObject.toString(), Participant.class);
+                        user.setAttending(false);
+                        p.add(user);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-        /*
-        Participant testContact1 = new Participant();
-        testContact1.setName("Steven Curran");
-        testContact1.setEmail("scurran10@hotmail.com");
-        testContact1.setAttending(false);
+                participants.clear();
+                participants.addAll(p);
 
-        Participant testContact2 = new Participant();
-        testContact2.setName("Josh Lockhart");
-        testContact2.setEmail("jlockhart92@qub.ac.uk");
-        testContact2.setAttending(true);
+                adapter.clear();
+                for (Participant participant : p) {
+                    adapter.add(participant);
+                }
+                adapter.notifyDataSetChanged();
+            }
 
-        Participant testContact3 = new Participant();
-        testContact3.setName("Stephen Madden");
-        testContact3.setEmail("smadden_88@gmail.com");
-        testContact3.setAttending(false);
 
-        Participant testContact4 = new Participant();
-        testContact4.setName("Jordan Tonni");
-        testContact4.setEmail("jtonni27@qub.ac.uk");
-        testContact4.setAttending(true);
+        });
 
-        participants.add(testContact1);
-        participants.add(testContact2);
-        participants.add(testContact3);
-        participants.add(testContact4);
-*/
         return participants;
+
     }
 
 
     public void doAddParticipants(View view) {
 
-       //get all attending participants, update the event object(?)
+        //get all attending participants, update the event object(?)
 
     }
 }

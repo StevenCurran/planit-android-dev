@@ -9,21 +9,49 @@ import com.google.api.services.plus.model.Person;
  */
 public class User {
 
-    private String name;
-    private String id;
+    private String lastName;
+    private String firstName;
+    private String providerId;
     private String email;
-    private BitmapDrawable image;
     private String imageUrl;
+    private String deviceId;
+
+    private transient BitmapDrawable image;
 
     public User(Person person) {
-        this.id = person.getId();
-        this.name = person.getDisplayName();
+        this.providerId = person.getId();
+        this.firstName = person.getName().getGivenName();
+        this.lastName = person.getName().getFamilyName();
         this.email = person.getEmails().get(0).getValue().toString();
         this.imageUrl = person.getImage().getUrl();
     }
 
     public User() {
 
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getUserId() {
+        return providerId;
+    }
+
+    public void setUserId(String userId) {
+        this.providerId = userId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getImageUrl() {
@@ -39,11 +67,11 @@ public class User {
     }
 
     public String getId() {
-        return id;
+        return providerId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.providerId = id;
     }
 
     public BitmapDrawable getImage() {
@@ -55,12 +83,19 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return firstName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.firstName = name;
     }
 
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }
