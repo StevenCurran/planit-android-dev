@@ -36,6 +36,8 @@
 
         <activity android:name=".activities.NotificationsActivity" />
 
+        <activity android:name=".activities.AddEventActivity" />
+
         <activity android:name=".activities.AddLinkedAccountActivity" />
 
         <activity android:name=".activities.AddRuleActivity" />

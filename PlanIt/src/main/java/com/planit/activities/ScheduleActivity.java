@@ -79,7 +79,6 @@ public class ScheduleActivity extends Activity {
 
         //do calendar view stuff and set onClick
         calView = (CalendarView) findViewById(R.id.scheduleCal);
-
         calView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int i, int i2, int i3) {
@@ -101,7 +100,8 @@ public class ScheduleActivity extends Activity {
     }
 
     public void doNewEvent(View view) {
-        //do new event
+        Intent intent = new Intent(context, AddEventActivity.class);
+        startActivity(intent);
     }
 
     private synchronized ArrayList<Event> getSchedule(Date date) {
