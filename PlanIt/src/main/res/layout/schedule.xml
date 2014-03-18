@@ -98,6 +98,7 @@
             android:paddingRight="10dp"
             android:layout_width="fill_parent"
             android:layout_height="219dp"
+            android:background="@drawable/no_events_placeholder"
             android:listSelector="@android:color/transparent" />
 
     </LinearLayout>
