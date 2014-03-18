@@ -1,10 +1,10 @@
 package com.planit.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,17 +18,22 @@ import com.planit.User;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Gareth on 18/03/2014.
  */
-public class AddEventActivity extends Activity implements DatePickerDialogFragment.DatePickerDialogHandler {
+public class AddEventActivity extends FragmentActivity {
 
     final Context context = this;
     private Bundle b = new Bundle();
     private Gson gson = new Gson();
     private List<User> attendees = new ArrayList<>();
+    private DatePickerBuilder dpb;
+
+    private Date startWindow;
+    private Date endWindow;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -53,14 +58,37 @@ public class AddEventActivity extends Activity implements DatePickerDialogFragme
         Button createEventButton = (Button) findViewById(R.id.createEventButton);
         createEventButton.setTypeface(uilFont);
 
+        dpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(new Date().getYear()).setFragmentManager(getSupportFragmentManager());
+
     }
 
 
     public void openStartWindowPicker(View view) {
 
-        Calendar c = Calendar.getInstance();
-        int firstDayOfWeek = c.getFirstDayOfWeek();
-        DatePickerBuilder dpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(2014).setDayOfMonth(firstDayOfWeek).addDatePickerDialogHandler(this);
+        final Calendar c = Calendar.getInstance();
+
+        dpb.addDatePickerDialogHandler(new DatePickerDialogFragment.DatePickerDialogHandler() {
+            @Override
+            public void onDialogDateSet(int i, int i2, int i3, int i4) {
+                c.set(i2, i3, i4);
+                startWindow = c.getTime();
+            }
+        });
+        dpb.show();
+
+    }
+
+    public void openEndWindowPicker(View view) {
+
+        final Calendar c = Calendar.getInstance();
+
+        dpb.addDatePickerDialogHandler(new DatePickerDialogFragment.DatePickerDialogHandler() {
+            @Override
+            public void onDialogDateSet(int i, int i2, int i3, int i4) {
+                c.set(i2, i3, i4);
+                endWindow = c.getTime();
+            }
+        });
         dpb.show();
 
     }
@@ -86,8 +114,4 @@ public class AddEventActivity extends Activity implements DatePickerDialogFragme
         //free slots? or are we doing this automated way, it reschedules were nessecary?
     }
 
-    @Override
-    public void onDialogDateSet(int i, int i2, int i3, int i4) {
-        System.out.println(i + i2 + i + i4);
-    }
 }
