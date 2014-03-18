@@ -27,7 +27,7 @@
         android:singleLine="true"
         android:textSize="7pt"
         android:textColor="@color/planit_grey"
-        android:background="@drawable/login_name_box"
+        android:background="@drawable/top_curve_box"
         android:hint="PlanIt ID" />
 
     <EditText
@@ -44,7 +44,7 @@
         android:singleLine="true"
         android:textSize="7pt"
         android:textColor="@color/planit_grey"
-        android:background="@drawable/login_password_box"
+        android:background="@drawable/bottom_curve_box"
         android:hint="Password" />
 
     <TextView

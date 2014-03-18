@@ -20,8 +20,8 @@
             android:textColor="#FFFFFF"
             android:textSize="15pt"
             android:gravity="center_vertical"
-            android:paddingLeft="105dp"
-            android:text="Participants" />
+            android:paddingLeft="120dp"
+            android:text="Attendees" />
 
         <Button
             android:id="@+id/addParticipantsButton"
