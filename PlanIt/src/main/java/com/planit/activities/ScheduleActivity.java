@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -44,7 +45,7 @@ public class ScheduleActivity extends Activity {
     ListView listview;
     SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd MMMM yyyy");
 
-    private ConcurrentHashMap<String, ArrayList<Event>> eventsMap = new ConcurrentHashMap<>();
+    private List<Event> eventsMap = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,90 +128,32 @@ public class ScheduleActivity extends Activity {
                         e.setEndDate(new Date(o.getLong("endDate")));
                         e.setTitle(o.getString("name"));
 
-
-                        if (eventsMap.contains(new Date(o.getLong("startDate")))) {
-                            eventsMap.get(sdf.format(new Date(o.getLong("startDate")))).add(e);
-                        } else {
-                            ArrayList<Event> list = new ArrayList<>();
-                            list.add(e);
-                            eventsMap.put(sdf.format(new Date(o.getLong("startDate"))), list);
-                        }
-
-                        // events.add(e);
+                        events.add(e);
                     }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                if (eventsMap.contains(localDate)) {
-                    events.addAll(eventsMap.get(localDate));
-                }
-
+                eventsMap.addAll(events);
             }
         });
 
         return events;
 
-
-        //do server things here - get all available events for selected day
-
-/*
-        Event testEvent = new Event();
-        testEvent.setStartDate(new Date(114, 2, 28, 9, 0));
-        testEvent.setEndDate(new Date(114, 2, 28, 10, 30));
-        testEvent.setTitle("Meeting with Barry");
-        testEvent.setLocation("BCB Room 04/001");
-        testEvent.setPriority(1);
-
-        Event testEvent2 = new Event();
-        testEvent2.setStartDate(new Date(114, 2, 28, 13, 0));
-        testEvent2.setEndDate(new Date(114, 2, 28, 16, 00));
-        testEvent2.setTitle("Group Work");
-        testEvent2.setLocation("16 Malone Road");
-        testEvent2.setPriority(3);
-
-        Event testEvent3 = new Event();
-        testEvent3.setStartDate(new Date(114, 2, 28, 17, 0));
-        testEvent3.setEndDate(new Date(114, 2, 28, 18, 00));
-        testEvent3.setTitle("HPC Assignment");
-        testEvent3.setLocation("Home");
-        testEvent3.setPriority(2);
-
-        Event testEvent4 = new Event();
-        testEvent4.setStartDate(new Date(114, 2, 28, 18, 30));
-        testEvent4.setEndDate(new Date(114, 2, 28, 21, 00));
-        testEvent4.setTitle("Tennis");
-        testEvent4.setLocation("Newry Tennis Club");
-        testEvent4.setPriority(4);
-
-        Event testEvent5 = new Event();
-        testEvent5.setStartDate(new Date(114, 2, 28, 22, 0));
-        testEvent5.setEndDate(new Date(114, 2, 28, 23, 00));
-        testEvent5.setTitle("Reading Work");
-        testEvent5.setLocation("Home");
-        testEvent5.setPriority(5);
-
-        events.add(testEvent);
-        events.add(testEvent2);
-        events.add(testEvent3);
-        events.add(testEvent4);
-        events.add(testEvent5);
-
-        */
-
     }
 
     private ArrayList<Event> filterSchedule(Date selectedDate) {
-        Enumeration<String> keys = eventsMap.keys();
-        for (String s : eventsMap.keySet()) {
-            if(s.equals(sdf.format(selectedDate))){
-                return eventsMap.get(s);
+        ArrayList<Event> returnEvents = new ArrayList<>();
+        for (Event event : eventsMap) {
+            if (sdf.format(event.getStartDate()).equals(sdf.format(selectedDate))) {
+                returnEvents.add(event);
             }
         }
-        return new ArrayList<>();
-    }
 
+        return returnEvents;
+    }
 
     public void goToToday(View view) {
         long date = System.currentTimeMillis();
