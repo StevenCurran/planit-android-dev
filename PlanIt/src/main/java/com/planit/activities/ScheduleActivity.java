@@ -152,6 +152,7 @@ public class ScheduleActivity extends Activity {
             }
         }
 
+        Collections.sort(returnEvents);
         return returnEvents;
     }
 
