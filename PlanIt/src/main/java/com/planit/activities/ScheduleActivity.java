@@ -137,6 +137,7 @@ public class ScheduleActivity extends Activity {
                 }
 
                 eventsMap.addAll(events);
+                calView.setDate(new Date().getTime());
             }
         });
 
