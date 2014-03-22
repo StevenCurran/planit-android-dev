@@ -48,7 +48,10 @@ public class AddEventActivity extends FragmentActivity {
     private TextView preferredTextView;
     private Date startWindow;
     private Date endWindow;
+    private Date preferredTime;
+    private EventDuration eventDuration;
     private SimpleDateFormat df = new SimpleDateFormat("E d MMM yyy");
+    private SimpleDateFormat tf = new SimpleDateFormat("kk:mm");
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -99,7 +102,7 @@ public class AddEventActivity extends FragmentActivity {
         durationPicker.setFragmentManager(getSupportFragmentManager());
         durationPicker.addHmsPickerDialogHandler(EVENT_DURATION_HANDLER);
         Calendar instance = Calendar.getInstance();
-        timePicker = RadialTimePickerDialog.newInstance(TIME_CALLBACK,  instance.get(Calendar.HOUR), instance.get(Calendar.MINUTE), true);
+        timePicker = RadialTimePickerDialog.newInstance(TIME_CALLBACK,  instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
 
     }
 
@@ -149,6 +152,9 @@ public class AddEventActivity extends FragmentActivity {
         public void onDialogHmsSet(int i, int i2, int i3, int i4) {
             e.setHours(i2);
             e.setMinutes(i3);
+
+            eventDuration = e;
+
             String hoursString;
             String minutesString;
             String durationSeperator;
@@ -207,9 +213,14 @@ public class AddEventActivity extends FragmentActivity {
     };
 
     private RadialTimePickerDialog.OnTimeSetListener TIME_CALLBACK = new RadialTimePickerDialog.OnTimeSetListener() {
+
+        final Calendar c = Calendar.getInstance();
+
         @Override
         public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
-            System.out.println(i + " " + i2);
+            c.set(0,0,0,i,i2);
+            preferredTime = c.getTime();
+            preferredTextView.setText(tf.format(preferredTime));
         }
     };
 
