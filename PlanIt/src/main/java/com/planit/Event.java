@@ -13,9 +13,19 @@ public class Event implements Comparable<Event>{
     private String location;
     private Date startDate;
     private Date endDate;
+    private Date preferredTime;
     private int priority;
     private ArrayList<EventTag> tags;
     private ArrayList<Participant> participants;
+    private EventDuration duration;
+
+    public EventDuration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(EventDuration duration) {
+        this.duration = duration;
+    }
 
     public int getId() {
         return id;
@@ -67,6 +77,14 @@ public class Event implements Comparable<Event>{
 
     public void setTags(ArrayList<EventTag> tags) {
         this.tags = tags;
+    }
+
+    public Date getPreferredTime() {
+        return preferredTime;
+    }
+
+    public void setPreferredTime(Date preferredTime) {
+        this.preferredTime = preferredTime;
     }
 
     public ArrayList<Participant> getParticipants() {

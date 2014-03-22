@@ -5,26 +5,27 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
-import com.doomonafireball.betterpickers.hmspicker.HmsPicker;
 import com.doomonafireball.betterpickers.hmspicker.HmsPickerBuilder;
 import com.doomonafireball.betterpickers.hmspicker.HmsPickerDialogFragment;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
-import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.planit.Event;
 import com.planit.EventDuration;
 import com.planit.Participant;
 import com.planit.R;
-import com.planit.User;
 import com.planit.adapters.AttendeesArrayAdapter;
 import com.planit.constants.UrlServerConstants;
 import com.planit.utils.WebClient;
@@ -33,11 +34,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Gareth on 18/03/2014.
@@ -55,6 +56,8 @@ public class AddEventActivity extends FragmentActivity {
     private TextView endDateTextView;
     private TextView durationTextView;
     private TextView preferredTextView;
+    EditText eventNameBox;
+    EditText eventLocationBox;
     private Date startWindow;
     private Date endWindow;
     private Date preferredTime;
@@ -64,6 +67,8 @@ public class AddEventActivity extends FragmentActivity {
     private int eventPriority;
     AttendeesArrayAdapter adapter;
     ArrayList<Participant> attendees = new ArrayList<>();
+    Typeface uilFont;
+    Typeface uiFont;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -71,7 +76,8 @@ public class AddEventActivity extends FragmentActivity {
         setContentView(R.layout.add_event);
 
         //set fonts
-        Typeface uilFont = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
+        uilFont = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
+        uiFont = Typeface.createFromAsset(getAssets(), "fonts/segoeui.ttf");
 
         TextView title = (TextView) findViewById(R.id.screenTitle);
         title.setTypeface(uilFont);
@@ -97,9 +103,9 @@ public class AddEventActivity extends FragmentActivity {
         priorityTitle.setTypeface(uilFont);
         TextView attendeesTitle = (TextView) findViewById(R.id.attendeesTitle);
         attendeesTitle.setTypeface(uilFont);
-        EditText eventNameBox = (EditText) findViewById(R.id.eventNameBox);
+        eventNameBox = (EditText) findViewById(R.id.eventNameBox);
         eventNameBox.setTypeface(uilFont);
-        EditText eventLocationBox = (EditText) findViewById(R.id.eventLocationBox);
+        eventLocationBox = (EditText) findViewById(R.id.eventLocationBox);
         eventLocationBox.setTypeface(uilFont);
         Button createEventButton = (Button) findViewById(R.id.createEventButton);
         createEventButton.setTypeface(uilFont);
@@ -151,11 +157,6 @@ public class AddEventActivity extends FragmentActivity {
         }
         ///get the result of the selection of the contacts
 
-    }
-
-    public void doCreateEvent(View view) {
-        //create the event and scheduling stuff - might want to go to view showing
-        //free slots? or are we doing this automated way, it reschedules were nessecary?
     }
 
     private HmsPickerDialogFragment.HmsPickerDialogHandler EVENT_DURATION_HANDLER = new HmsPickerDialogFragment.HmsPickerDialogHandler() {
@@ -343,4 +344,69 @@ public class AddEventActivity extends FragmentActivity {
 
     }
 
+    private PopupWindow conflictsPopup;
+    private void initiateConflictPopupWindow(String message) {
+        try {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.event_conflict_popup, (ViewGroup) findViewById(R.layout.add_event) ,false);
+            conflictsPopup = new PopupWindow(layout,600,400);
+            conflictsPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+            TextView conflictTitle = (TextView) layout.findViewById(R.id.conflictTitle);
+            conflictTitle.setTypeface(uilFont);
+            TextView conflictDetails = (TextView) layout.findViewById(R.id.conflictDetails);
+            conflictDetails.setTypeface(uilFont);
+            conflictDetails.setText(message);
+
+            Button proceedBtn = (Button) layout.findViewById(R.id.proceedWithEventCreationButton);
+            proceedBtn.setTypeface(uilFont);
+            proceedBtn.setOnClickListener(proceed_button_click_listener);
+            Button cancelBtn = (Button) layout.findViewById(R.id.cancelEventCreationButtton);
+            cancelBtn.setTypeface(uilFont);
+            cancelBtn.setOnClickListener(cancel_button_click_listener);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private View.OnClickListener cancel_button_click_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            conflictsPopup.dismiss();
+        }
+    };
+
+    private View.OnClickListener proceed_button_click_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            //server fings
+            conflictsPopup.dismiss();
+            Intent intent = new Intent(context, ScheduleActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    public void doCreateEvent(View view) {
+        Event e = new Event();
+        e.setTitle(eventNameBox.getText().toString());
+        e.setLocation(eventLocationBox.getText().toString());
+        e.setStartDate(startWindow);
+        e.setEndDate(endWindow);
+        e.setDuration(eventDuration);
+        e.setPreferredTime(preferredTime);
+        e.setPriority(eventPriority);
+        e.setParticipants(attendees);
+
+        //do server stuff - find if there if other people's schedules will have to be changed
+        Boolean schedulesHaveToChange = true;
+
+        if (schedulesHaveToChange)
+        {
+            String conflictMessage = "Gareth will have to reschedule a high priority event.\n\nAre you sure you want to continue?";
+            initiateConflictPopupWindow(conflictMessage);
+
+        } else {
+            Intent intent = new Intent(context, ScheduleActivity.class);
+            startActivity(intent);
+        }
+    }
 }
