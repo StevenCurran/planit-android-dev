@@ -52,6 +52,7 @@ public class AddEventActivity extends FragmentActivity {
     private EventDuration eventDuration;
     private SimpleDateFormat df = new SimpleDateFormat("E d MMM yyy");
     private SimpleDateFormat tf = new SimpleDateFormat("kk:mm");
+    private int eventPriority;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -85,8 +86,6 @@ public class AddEventActivity extends FragmentActivity {
         priorityTitle.setTypeface(uilFont);
         TextView attendeesTitle = (TextView) findViewById(R.id.attendeesTitle);
         attendeesTitle.setTypeface(uilFont);
-        TextView tagsTitle = (TextView) findViewById(R.id.tagsTitle);
-        tagsTitle.setTypeface(uilFont);
         EditText eventNameBox = (EditText) findViewById(R.id.eventNameBox);
         eventNameBox.setTypeface(uilFont);
         EditText eventLocationBox = (EditText) findViewById(R.id.eventLocationBox);
@@ -223,5 +222,71 @@ public class AddEventActivity extends FragmentActivity {
             preferredTextView.setText(tf.format(preferredTime));
         }
     };
+
+    public void setPriority(View view) {
+        Button p1 = (Button) findViewById(R.id.priorityOneButton);
+        Button p2 = (Button) findViewById(R.id.priorityTwoButton);
+        Button p3 = (Button) findViewById(R.id.priorityThreeButton);
+        Button p4 = (Button) findViewById(R.id.priorityFourButton);
+        Button p5 = (Button) findViewById(R.id.priorityFiveButton);
+
+        switch (view.getId()) {
+            case R.id.priorityOneButton:
+                //set button alpha values
+                p1.setAlpha(1);
+                p2.setAlpha((float) 0.5);
+                p3.setAlpha((float) 0.5);
+                p4.setAlpha((float) 0.5);
+                p5.setAlpha((float) 0.5);
+
+                //set priority value
+                eventPriority = 1;
+                break;
+            case R.id.priorityTwoButton:
+                //set button alpha values
+                p1.setAlpha((float) 0.5);
+                p2.setAlpha(1);
+                p3.setAlpha((float) 0.5);
+                p4.setAlpha((float) 0.5);
+                p5.setAlpha((float) 0.5);
+
+                //set priority value
+                eventPriority = 2;
+                break;
+            case R.id.priorityThreeButton:
+                //set button alpha values
+                p1.setAlpha((float) 0.5);
+                p2.setAlpha((float) 0.5);
+                p3.setAlpha(1);
+                p4.setAlpha((float) 0.5);
+                p5.setAlpha((float) 0.5);
+
+                //set priority value
+                eventPriority = 3;
+                break;
+            case R.id.priorityFourButton:
+                //set button alpha values
+                p1.setAlpha((float) 0.5);
+                p2.setAlpha((float) 0.5);
+                p3.setAlpha((float) 0.5);
+                p4.setAlpha(1);
+                p5.setAlpha((float) 0.5);
+
+                //set priority value
+                eventPriority = 4;
+                break;
+            case R.id.priorityFiveButton:
+                //set button alpha values
+                p1.setAlpha((float) 0.5);
+                p2.setAlpha((float) 0.5);
+                p3.setAlpha((float) 0.5);
+                p4.setAlpha((float) 0.5);
+                p5.setAlpha(1);
+
+                //set priority value
+                eventPriority = 5;
+                break;
+        }
+    }
 
 }

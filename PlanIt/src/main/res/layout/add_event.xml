@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/planit_blue"
         android:textSize="10pt"
-        android:paddingTop="10dp"
+        android:paddingTop="5dp"
         android:paddingLeft="15dp"
         android:text="Date Range" />
 
@@ -193,8 +193,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="7pt"
-                android:layout_marginLeft="26dp"
-                android:text="N/A"/>
+                android:layout_marginLeft="26dp"/>
 
         </LinearLayout>
 
@@ -220,74 +219,113 @@
     <LinearLayout android:id="@+id/priorityContainer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="16dp">
 
-        <Button android:id="@+id/decreasePriorityButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
-            android:background="@drawable/small_minus_button"
-            android:onClick="decreasePriority"/>
+        <Button android:id="@+id/priorityOneButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="0dp"
+            android:background="@drawable/priority_one_button"
+            android:textColor="@color/white"
+            android:text="1"
+            android:textSize="20dp"
+            android:alpha="0.5"
+            android:onClick="setPriority"/>
 
-        <TextView
-            android:id="@+id/priorityText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/priority_three"
-            android:textSize="11pt"
-            android:text="3" />
+        <Button android:id="@+id/priorityTwoButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="37dp"
+            android:background="@drawable/priority_two_button"
+            android:textColor="@color/white"
+            android:text="2"
+            android:textSize="20dp"
+            android:alpha="0.5"
+            android:onClick="setPriority"/>
 
-        <Button android:id="@+id/increasePriorityButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/small_plus_button"
-            android:onClick="increasePriority"/>
+        <Button android:id="@+id/priorityThreeButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="37dp"
+            android:background="@drawable/priority_three_button"
+            android:textColor="@color/white"
+            android:text="3"
+            android:textSize="20dp"
+            android:alpha="0.5"
+            android:onClick="setPriority"/>
 
+        <Button android:id="@+id/priorityFourButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="37dp"
+            android:background="@drawable/priority_four_button"
+            android:textColor="@color/white"
+            android:text="4"
+            android:textSize="20dp"
+            android:alpha="0.5"
+            android:onClick="setPriority"/>
 
-    </LinearLayout>
-
-    <LinearLayout android:id="@+id/attendeesContainer"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:orientation="vertical">
-
-        <LinearLayout android:id="@+id/attendeesHeaderContainer"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/attendeesTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/planit_blue"
-                android:textSize="10pt"
-                android:paddingTop="10dp"
-                android:paddingLeft="15dp"
-                android:text="Attendees"/>
-
-            <Button android:id="@+id/addAttendeeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="219dp"
-                android:background="@drawable/small_plus_button"
-                android:onClick="addAttendees"/>
-        </LinearLayout>
-
-       <!-- need to do horizontal listview -look here: http://profi.co/android-horizontal-list-view-library-with-item-scroll/ -->
+        <Button android:id="@+id/priorityFiveButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="37dp"
+            android:background="@drawable/priority_five_button"
+            android:textColor="@color/white"
+            android:text="5"
+            android:textSize="20dp"
+            android:alpha="0.5"
+            android:onClick="setPriority"/>
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tagsTitle"
+        android:id="@+id/attendeesTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/planit_blue"
         android:textSize="10pt"
         android:paddingTop="10dp"
         android:paddingLeft="15dp"
-        android:text="Tags"/>
+        android:text="Attendees"/>
+
+    <LinearLayout android:id="@+id/attendeesContainer"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:layout_marginTop="5dp">
+
+        <LinearLayout
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/default_user_photo"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/default_user_photo"/>
+
+        </LinearLayout>
+
+        <Button android:id="@+id/addAttendeeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/small_plus_button"
+            android:onClick="addAttendees"/>
+
+
+       <!-- need to do horizontal listview -look here: http://profi.co/android-horizontal-list-view-library-with-item-scroll/ -->
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/createEventButton"
@@ -297,7 +335,7 @@
         android:background="@drawable/green_button"
         android:textColor="#FFFFFF"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="35dp"
