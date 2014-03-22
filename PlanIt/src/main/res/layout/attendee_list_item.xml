@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingRight="15dp">
+
+    <Button
+        android:id="@+id/attendeePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/default_user_photo"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/attendeeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/planit_grey"
+        android:paddingTop="0dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="11dp"/>
+
+</LinearLayout>

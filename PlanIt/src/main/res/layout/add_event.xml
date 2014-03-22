@@ -296,23 +296,11 @@
         android:paddingLeft="15dp"
         android:layout_marginTop="5dp">
 
-        <LinearLayout
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/attendeesList"
             android:layout_width="312dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/default_user_photo"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/default_user_photo"/>
-
-        </LinearLayout>
+            android:layout_height="72dp"
+            android:listSelector="@android:color/transparent" />
 
         <Button android:id="@+id/addAttendeeButton"
             android:layout_width="wrap_content"
@@ -334,7 +322,7 @@
         android:background="@drawable/green_button"
         android:textColor="#FFFFFF"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="35dp"

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
@@ -19,9 +20,18 @@ import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 import com.google.gson.Gson;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.planit.EventDuration;
+import com.planit.Participant;
 import com.planit.R;
 import com.planit.User;
+import com.planit.adapters.AttendeesArrayAdapter;
+import com.planit.constants.UrlServerConstants;
+import com.planit.utils.WebClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,7 +47,6 @@ public class AddEventActivity extends FragmentActivity {
     final Context context = this;
     private Bundle b = new Bundle();
     private Gson gson = new Gson();
-    private List<User> attendees = new ArrayList<>();
     private DatePickerBuilder startDpb;
     private DatePickerBuilder endDpb;
     private RadialTimePickerDialog timePicker;
@@ -53,6 +62,8 @@ public class AddEventActivity extends FragmentActivity {
     private SimpleDateFormat df = new SimpleDateFormat("E d MMM yyy");
     private SimpleDateFormat tf = new SimpleDateFormat("kk:mm");
     private int eventPriority;
+    AttendeesArrayAdapter adapter;
+    ArrayList<Participant> attendees = new ArrayList<>();
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -102,6 +113,10 @@ public class AddEventActivity extends FragmentActivity {
         durationPicker.addHmsPickerDialogHandler(EVENT_DURATION_HANDLER);
         Calendar instance = Calendar.getInstance();
         timePicker = RadialTimePickerDialog.newInstance(TIME_CALLBACK,  instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
+
+        ListView listview = (ListView) findViewById(R.id.attendeesList);
+        adapter = new AttendeesArrayAdapter(context, getAttendees());
+        listview.setAdapter(adapter);
 
     }
 
@@ -287,6 +302,45 @@ public class AddEventActivity extends FragmentActivity {
                 eventPriority = 5;
                 break;
         }
+
+    }
+
+    private ArrayList<Participant> getAttendees() {
+
+        final ArrayList<Participant> a = new ArrayList<>();
+
+        //using code from add participants screen, just to test!!!!!!
+        WebClient.get(UrlServerConstants.ATTENDEES, null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(JSONArray response) {
+
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        Participant user = gson.fromJson(jsonObject.toString(), Participant.class);
+                        user.setAttending(false);
+                        a.add(user);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                attendees.clear();
+                attendees.addAll(a);
+
+                adapter.clear();
+                for (Participant participant : a) {
+                    adapter.add(participant);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+
+        });
+
+
+        return attendees;
+
     }
 
 }
