@@ -114,7 +114,7 @@ public class AddEventActivity extends FragmentActivity {
         Calendar instance = Calendar.getInstance();
         timePicker = RadialTimePickerDialog.newInstance(TIME_CALLBACK,  instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
 
-        ListView listview = (ListView) findViewById(R.id.attendeesList);
+        it.sephiroth.android.library.widget.HListView listview = (it.sephiroth.android.library.widget.HListView) findViewById(R.id.attendeesList);
         adapter = new AttendeesArrayAdapter(context, getAttendees());
         listview.setAdapter(adapter);
 

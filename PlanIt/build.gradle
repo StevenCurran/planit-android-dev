@@ -2,7 +2,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.1"
+    buildToolsVersion '19.0.1'
 
     defaultConfig {
         minSdkVersion 16
@@ -31,8 +31,8 @@ dependencies {
     compile files('libs/google-api-services-plus-v1-rev118-1.17.0-rc.jar')
     compile files('libs/google-api-client-1.4.1-beta.jar')
     compile files('libs/guava-15.0.jar')
-    compile "com.google.android.gms:play-services:4.2.42"
-    compile "com.android.support:support-v4:19.0.+"
+    compile 'com.google.android.gms:play-services:4.2.42'
+    compile 'com.android.support:support-v4:19.0.+'
     compile 'com.doomonafireball.betterpickers:library:1.5.2'
-
+    compile 'it.sephiroth.android.library.horizontallistview:library:+'
 }

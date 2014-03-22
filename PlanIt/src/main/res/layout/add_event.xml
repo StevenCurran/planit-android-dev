@@ -296,7 +296,7 @@
         android:paddingLeft="15dp"
         android:layout_marginTop="5dp">
 
-        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        <it.sephiroth.android.library.widget.HListView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/attendeesList"
             android:layout_width="312dp"
             android:layout_height="72dp"
@@ -305,12 +305,9 @@
         <Button android:id="@+id/addAttendeeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/small_plus_button"
             android:onClick="addAttendees"/>
-
-
-       <!-- need to do horizontal listview -look here: http://profi.co/android-horizontal-list-view-library-with-item-scroll/ -->
 
     </LinearLayout>
 
