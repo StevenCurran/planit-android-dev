@@ -171,9 +171,9 @@ public class AddEventActivity extends FragmentActivity {
             if(i3 == 0) {
                 minutesString = "";
             } else if (i3 == 1) {
-                minutesString = "1 minute";
+                minutesString = "1 min";
             } else {
-                minutesString = Integer.toString(i3) + " minutes";
+                minutesString = Integer.toString(i3) + " mins";
             }
 
             //set duration seperator string
