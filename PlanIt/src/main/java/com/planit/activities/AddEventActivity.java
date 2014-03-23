@@ -1,9 +1,13 @@
 package com.planit.activities;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -43,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by Gareth on 18/03/2014.
@@ -399,9 +404,9 @@ public class AddEventActivity extends FragmentActivity {
         params.put("startDate", UrlParamUtils.addDate(startWindow));
         params.put("endDate", UrlParamUtils.addDate(endWindow));
         params.put("duration", UrlParamUtils.addDuration(eventDuration));
-        params.put("priority", eventPriority+"");
+        params.put("priority", eventPriority + "");
 
-        WebClient.post(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler(){
+        WebClient.post(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler() {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
@@ -425,8 +430,45 @@ public class AddEventActivity extends FragmentActivity {
 
         } else {
             //add the event to server etc.
-         //   Intent intent = new Intent(context, ScheduleActivity.class);
-         //   startActivity(intent);
+            //   Intent intent = new Intent(context, ScheduleActivity.class);
+            //   startActivity(intent);
         }
+    }
+
+    public void addEventToAndroidCal() {
+        Event e = new Event();
+        e.setTitle(eventNameBox.getText().toString());
+        e.setLocation(eventLocationBox.getText().toString());
+        e.setStartDate(startWindow);
+        e.setEndDate(endWindow);
+        e.setDuration(eventDuration);
+        e.setPreferredTime(preferredTime);
+        e.setPriority(eventPriority);
+        e.setParticipants(attendees);
+
+        ContentResolver cr = getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Events.DTSTART, startWindow.getTime());
+        values.put(CalendarContract.Events.DTEND, endWindow.getTime());
+        values.put(CalendarContract.Events.TITLE, eventNameBox.getText().toString());
+        values.put(CalendarContract.Events.CALENDAR_ID, 0);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+
+        long eventID = Long.parseLong(uri.getLastPathSegment());
+
+        for (Participant attendee : attendees) {
+
+            ContentValues attendeeValues = new ContentValues();
+            attendeeValues.put(CalendarContract.Attendees.ATTENDEE_NAME, attendee.getFirstName());
+            attendeeValues.put(CalendarContract.Attendees.ATTENDEE_EMAIL, attendee.getEmail());
+            attendeeValues.put(CalendarContract.Attendees.ATTENDEE_RELATIONSHIP, CalendarContract.Attendees.RELATIONSHIP_ATTENDEE);
+            attendeeValues.put(CalendarContract.Attendees.ATTENDEE_TYPE, CalendarContract.Attendees.TYPE_OPTIONAL);
+            attendeeValues.put(CalendarContract.Attendees.ATTENDEE_STATUS, CalendarContract.Attendees.ATTENDEE_STATUS_INVITED);
+            attendeeValues.put(CalendarContract.Attendees.EVENT_ID, eventID);
+            cr.insert(CalendarContract.Attendees.CONTENT_URI, attendeeValues);
+        }
+
+
     }
 }
