@@ -22,4 +22,6 @@ public class UrlServerConstants {
     public static final String ATTENDEES = PLANIT_ROOT + "/googlelogin/getAttendees";
     //public urls
     public static final String GOOGLE_HOME = "google.com";
+    public static final String PLANIT = PLANIT_ROOT + "/events/planit";
+    public static final String ADD_EVENT = PLANIT_ROOT + "/events/addevent";
 }

@@ -21,21 +21,26 @@ import com.doomonafireball.betterpickers.hmspicker.HmsPickerDialogFragment;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.planit.Event;
 import com.planit.EventDuration;
 import com.planit.Participant;
 import com.planit.R;
 import com.planit.adapters.AttendeesArrayAdapter;
 import com.planit.constants.UrlServerConstants;
+import com.planit.utils.UrlParamUtils;
 import com.planit.utils.WebClient;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -388,6 +393,29 @@ public class AddEventActivity extends FragmentActivity {
         e.setPriority(eventPriority);
         e.setParticipants(attendees);
 
+
+        RequestParams params = new RequestParams();
+        params.put("attendees", UrlParamUtils.addAttendees(attendees));
+        params.put("startDate", UrlParamUtils.addDate(startWindow));
+        params.put("endDate", UrlParamUtils.addDate(endWindow));
+        params.put("duration", UrlParamUtils.addDuration(eventDuration));
+        params.put("priority", eventPriority+"");
+
+        WebClient.post(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler(){
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                System.out.println(responseBody);
+                super.onFailure(statusCode, headers, responseBody, error);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String s2 = new String(responseBody);
+                System.out.println(s2);
+            }
+
+        });
         //do server stuff - find if there if other people's schedules will have to be changed
         Boolean schedulesHaveToChange = true;
 
@@ -397,8 +425,8 @@ public class AddEventActivity extends FragmentActivity {
 
         } else {
             //add the event to server etc.
-            Intent intent = new Intent(context, ScheduleActivity.class);
-            startActivity(intent);
+         //   Intent intent = new Intent(context, ScheduleActivity.class);
+         //   startActivity(intent);
         }
     }
 }
