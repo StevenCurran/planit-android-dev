@@ -44,7 +44,7 @@ public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
         TextView participantName = (TextView) rowView.findViewById(R.id.participantName);
         TextView participantEmail = (TextView) rowView.findViewById(R.id.participantEmail);
 
-        participantName.setText(participants.get(position).getName());
+        participantName.setText(participants.get(position).getFirstName() + " " + participants.get(position).getLastName());
         participantName.setTypeface(uilFont);
         participantEmail.setText(participants.get(position).getEmail());
         participantEmail.setTypeface(uilFont);

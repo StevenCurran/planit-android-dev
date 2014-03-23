@@ -82,7 +82,7 @@ public class ProfileActivity extends FragmentActivity {
 
         User currentUser = GlobalUserStore.getUser();
 
-        userNameText.setText(currentUser.getName());
+        userNameText.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
         userEmailText.setText(currentUser.getEmail());
 
         final ImageView userPicture = (ImageView) findViewById(R.id.userPicture);

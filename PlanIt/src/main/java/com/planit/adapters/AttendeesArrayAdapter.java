@@ -42,7 +42,7 @@ public class AttendeesArrayAdapter extends ArrayAdapter<Participant> {
         //set text and font
         TextView attendeeName = (TextView) rowView.findViewById(R.id.attendeeName);
 
-        attendeeName.setText(attendees.get(position).getName());
+        attendeeName.setText(attendees.get(position).getFirstName() + " " + attendees.get(position).getLastName().substring(0,1) + ".");
         attendeeName.setTypeface(uiFont);
 
         //proper way to get user image when server stuff is in
