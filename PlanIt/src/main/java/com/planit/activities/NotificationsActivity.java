@@ -55,7 +55,7 @@ public class NotificationsActivity extends Activity {
         Notification n1 = new Notification();
         n1.setTitle("Conflict");
         n1.setDetails("Josh invited you to 'Group Meeting' on Wed 19 March at 10:00. " +
-                        "You have a higher priority event at this time - 'Meeting with Ivor'." );
+                        "You have a lower priority event at this time - 'Meeting with Ted'." );
 
         Notification n2 = new Notification();
         n2.setTitle("Conflict");

@@ -405,6 +405,7 @@ public class AddEventActivity extends FragmentActivity {
             initiateConflictPopupWindow(conflictMessage);
 
         } else {
+            //add the event to server etc.
             Intent intent = new Intent(context, ScheduleActivity.class);
             startActivity(intent);
         }
