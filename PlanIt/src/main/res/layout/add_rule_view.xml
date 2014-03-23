@@ -221,6 +221,18 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/ruleDescriptionContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="90dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:gravity="center"
+        android:textColor="@color/planit_grey"
+        android:textSize="7pt"/>
+
     <Button
         android:id="@+id/createRuleButton"
         style="?android:borderlessButtonStyle"

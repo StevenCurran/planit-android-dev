@@ -12,6 +12,7 @@ import android.widget.ToggleButton;
 
 import com.planit.Participant;
 import com.planit.R;
+import com.planit.activities.AddParticipantActivity;
 import com.planit.utils.ImageTransformer;
 import com.squareup.picasso.Picasso;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
 
     public final ArrayList<Participant> participants;
+    public final ArrayList<Participant> attendingParticipants;
     private final Context context;
     private ImageTransformer imageTransformer = new ImageTransformer();
 
@@ -30,13 +32,20 @@ public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
         super(context, R.layout.participant_list_item, participants);
         this.context = context;
         this.participants = participants;
+        attendingParticipants = new ArrayList<>();
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.participant_list_item, parent, false);
+        View rowView;
+
+        if ( context instanceof AddParticipantActivity ) {
+            rowView = inflater.inflate(R.layout.participant_list_item, parent, false);
+        } else {
+            rowView = inflater.inflate(R.layout.people_popup_list_item, parent, false);
+        }
 
         Typeface uilFont = Typeface.createFromAsset(context.getAssets(), "fonts/segoeuisl.ttf");
 
@@ -66,7 +75,15 @@ public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
         attendingToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doChangeAttendingStatus(view);
+
+                Participant p = participants.get(position);
+                p.setAttending(!p.getAttending());
+                if(p.getAttending()){
+                    attendingParticipants.add(p);
+                } else {
+                    attendingParticipants.remove(p);
+                }
+
             }
         });
 
