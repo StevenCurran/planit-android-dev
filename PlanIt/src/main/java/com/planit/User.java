@@ -13,7 +13,7 @@ public class User {
     private String firstName;
     private String providerId;
     private String email;
-    private String imageUrl;
+    private String profileUrl;
     private String deviceId;
 
     private transient BitmapDrawable image;
@@ -23,7 +23,7 @@ public class User {
         this.firstName = person.getName().getGivenName();
         this.lastName = person.getName().getFamilyName();
         this.email = person.getEmails().get(0).getValue().toString();
-        this.imageUrl = person.getImage().getUrl();
+        this.profileUrl = person.getImage().getUrl();
     }
 
     public User() {
@@ -55,7 +55,8 @@ public class User {
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        //strip out the size limit from google
+        return profileUrl.substring(0, profileUrl.length() - 5);
     }
 
     public String getEmail() {

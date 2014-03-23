@@ -16,6 +16,7 @@ import com.planit.R;
 import com.planit.adapters.ParticipantsArrayAdapter;
 import com.planit.constants.UrlServerConstants;
 import com.planit.utils.WebClient;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +34,7 @@ public class AddParticipantActivity extends Activity {
     ArrayList<Participant> participants = new ArrayList<>();
     private Bundle b = new Bundle();
     private Gson gson = new Gson();
+    ListView listview;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -47,7 +49,7 @@ public class AddParticipantActivity extends Activity {
         Button addParticipantsButton = (Button) findViewById(R.id.addParticipantsButton);
         addParticipantsButton.setTypeface(uilFont);
 
-        ListView listview = (ListView) findViewById(R.id.participantsList);
+        listview = (ListView) findViewById(R.id.participantsList);
         adapter = new ParticipantsArrayAdapter(context, getParticipants());
         listview.setAdapter(adapter);
 

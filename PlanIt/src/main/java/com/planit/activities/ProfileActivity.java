@@ -91,7 +91,7 @@ public class ProfileActivity extends FragmentActivity {
         String imageUrl = currentUser.getImageUrl();
         String[] allowedContentTypes = new String[]{"image/jpeg", "image/png"};
 
-        WebClient.get(imageUrl.substring(0, imageUrl.length() - 5), null, new BinaryHttpResponseHandler(allowedContentTypes) {
+        WebClient.get(imageUrl, null, new BinaryHttpResponseHandler(allowedContentTypes) {
             @Override
             public void onSuccess(byte[] fileData) {
                 BitmapDrawable bitmapDrawable = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(fileData, 0, fileData.length));

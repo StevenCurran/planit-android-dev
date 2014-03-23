@@ -12,6 +12,8 @@ import android.widget.ToggleButton;
 
 import com.planit.Participant;
 import com.planit.R;
+import com.planit.utils.ImageTransformer;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
 
     public final ArrayList<Participant> participants;
     private final Context context;
+    private ImageTransformer imageTransformer = new ImageTransformer();
 
     public ParticipantsArrayAdapter(Context context, ArrayList<Participant> participants) {
         super(context, R.layout.participant_list_item, participants);
@@ -50,7 +53,8 @@ public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
         //- in getParticipants - just doing this to sort layout - remove this later and chnage
         //to commented out code below
         ImageView participantImage = (ImageView) rowView.findViewById(R.id.participantImage);
-        participantImage.setImageResource(R.drawable.default_user_photo);
+        //participantImage.setImageResource(R.drawable.default_user_photo);
+        Picasso.with(context).load(participants.get(position).getImageUrl()).transform(imageTransformer).error(R.drawable.default_user_photo).into(participantImage);
 
         //proper way to get user image when server stuff is in
 //        ImageView participantImage = (ImageView) rowView.findViewById(R.id.participantImage);

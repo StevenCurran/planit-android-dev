@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.planit.Participant;
 import com.planit.R;
+import com.planit.utils.ImageTransformer;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -20,6 +23,7 @@ public class AttendeesArrayAdapter extends ArrayAdapter<Participant> {
 
     public final ArrayList<Participant> attendees;
     private final Context context;
+    private ImageTransformer imageTransformer = new ImageTransformer();
 
     public AttendeesArrayAdapter(Context context, ArrayList<Participant> attendees) {
         super(context, R.layout.attendee_list_item, attendees);
@@ -42,8 +46,8 @@ public class AttendeesArrayAdapter extends ArrayAdapter<Participant> {
         attendeeName.setTypeface(uiFont);
 
         //proper way to get user image when server stuff is in
-//        ImageView attendeeImage = (ImageView) rowView.findViewById(R.id.attendeePicture);
-//        attendeetImage.setImageDrawable(attendees.get(position).getImage());
+        ImageView attendeeImage = (ImageView) rowView.findViewById(R.id.attendeePicture);
+        Picasso.with(context).load(attendees.get(position).getImageUrl()).transform(imageTransformer).error(R.drawable.default_user_photo).into(attendeeImage);
 
         return rowView;
     }
