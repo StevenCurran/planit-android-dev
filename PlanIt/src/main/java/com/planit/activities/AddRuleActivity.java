@@ -109,9 +109,11 @@ public class AddRuleActivity extends Activity {
         priorityBtn.setAlpha((float) 0.5);
         newRule.setSecondPart("tagged as");
         whenTitle.setVisibility(View.VISIBLE);
+
+        //show tags pop up
+
         timeRuleContainer.setVisibility(View.VISIBLE);
 
-        //show tags
     }
 
     public void onFromRule(View view) {
@@ -121,9 +123,25 @@ public class AddRuleActivity extends Activity {
         priorityBtn.setAlpha((float) 0.5);
         newRule.setSecondPart("from");
         whenTitle.setVisibility(View.VISIBLE);
+
+        //show people pop up
+
         timeRuleContainer.setVisibility(View.VISIBLE);
 
-        //show people
+    }
+
+    public void onPriorityRule(View view) {
+        anyBtn.setAlpha((float) 0.5);
+        fromBtn.setAlpha((float) 0.5);
+        tagAsBtn.setAlpha((float) 0.5);
+        priorityBtn.setAlpha(1);
+        newRule.setSecondPart("with priority");
+        whenTitle.setVisibility(View.VISIBLE);
+
+        //show priorities pop up
+
+        timeRuleContainer.setVisibility(View.VISIBLE);
+
     }
 
     public void onAnyRule(View view) {
@@ -136,24 +154,15 @@ public class AddRuleActivity extends Activity {
         timeRuleContainer.setVisibility(View.VISIBLE);
     }
 
-    public void onPriorityRule(View view) {
-        anyBtn.setAlpha((float) 0.5);
-        fromBtn.setAlpha((float) 0.5);
-        tagAsBtn.setAlpha((float) 0.5);
-        priorityBtn.setAlpha(1);
-        newRule.setSecondPart("with priority");
-        whenTitle.setVisibility(View.VISIBLE);
-        timeRuleContainer.setVisibility(View.VISIBLE);
-
-        //show priorities
-    }
-
     public void onBeforeRule(View view) {
         beforeBtn.setAlpha(1);
         betweenBtn.setAlpha((float) 0.5);
         afterBtn.setAlpha((float) 0.5);
         onBtn.setAlpha((float) 0.5);
         newRule.setThirdPart("before");
+
+        //show time selector pop up
+
         createRuleBtn.setVisibility(View.VISIBLE);
 
     }
@@ -164,6 +173,9 @@ public class AddRuleActivity extends Activity {
         afterBtn.setAlpha((float) 0.5);
         onBtn.setAlpha((float) 0.5);
         newRule.setThirdPart("between");
+
+        //show time selectors pop up
+
         createRuleBtn.setVisibility(View.VISIBLE);
 
     }
@@ -174,6 +186,9 @@ public class AddRuleActivity extends Activity {
         afterBtn.setAlpha(1);
         onBtn.setAlpha((float) 0.5);
         newRule.setThirdPart("after");
+
+        //show time selectors pop up
+
         createRuleBtn.setVisibility(View.VISIBLE);
 
     }
@@ -184,6 +199,9 @@ public class AddRuleActivity extends Activity {
         afterBtn.setAlpha((float) 0.5);
         onBtn.setAlpha(1);
         newRule.setThirdPart("on");
+
+        //show day selectors pop up
+
         createRuleBtn.setVisibility(View.VISIBLE);
     }
 
