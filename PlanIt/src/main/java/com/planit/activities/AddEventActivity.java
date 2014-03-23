@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -388,6 +390,9 @@ public class AddEventActivity extends FragmentActivity {
     }
 
     public void doCreateEvent(View view) {
+
+        addEventToAndroidCal();
+
         Event e = new Event();
         e.setTitle(eventNameBox.getText().toString());
         e.setLocation(eventLocationBox.getText().toString());
@@ -451,7 +456,7 @@ public class AddEventActivity extends FragmentActivity {
         values.put(CalendarContract.Events.DTSTART, startWindow.getTime());
         values.put(CalendarContract.Events.DTEND, endWindow.getTime());
         values.put(CalendarContract.Events.TITLE, eventNameBox.getText().toString());
-        values.put(CalendarContract.Events.CALENDAR_ID, 0);
+        values.put(CalendarContract.Events.CALENDAR_ID, 1);
         values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
         Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
@@ -469,6 +474,35 @@ public class AddEventActivity extends FragmentActivity {
             cr.insert(CalendarContract.Attendees.CONTENT_URI, attendeeValues);
         }
 
+
+    }
+
+    private int getCalenadarId() {
+
+        String projection[] = {"_id", "calendar_displayName"};
+        Uri calendars;
+        calendars = Uri.parse("content://com.android.calendar/calendars");
+
+        ContentResolver contentResolver = getContentResolver();
+        Cursor managedCursor = contentResolver.query(calendars, projection, null, null, null);
+
+            List<String> m_calendars = new ArrayList<>();
+
+            if (managedCursor.moveToFirst()){
+                String calName;
+                String calID;
+            int cont= 0;
+            int nameCol = managedCursor.getColumnIndex(projection[1]);
+            int idCol = managedCursor.getColumnIndex(projection[0]);
+            do {
+                calName = managedCursor.getString(nameCol);
+                calID = managedCursor.getString(idCol);
+                m_calendars.add(calName + "," + calID);
+                cont++;
+            } while(managedCursor.moveToNext());
+            managedCursor.close();
+        }
+        return Integer.parseInt(m_calendars.get(0).split(",")[1]);
 
     }
 }
