@@ -11,6 +11,7 @@ public class Rule {
     private Boolean active;
     private String firstPart;
     private String secondPart;
+    private String thirdPart;
 
     public String getFirstPart() {
         return firstPart;
@@ -26,6 +27,14 @@ public class Rule {
 
     public void setSecondPart(String secondPart) {
         this.secondPart = secondPart;
+    }
+
+    public String getThirdPart() {
+        return thirdPart;
+    }
+
+    public void setThirdPart(String thirdPart) {
+        this.thirdPart = thirdPart;
     }
 
     public String getId() {

@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/planit_blue"
         android:textSize="9pt"
-        android:paddingTop="10dp"
+        android:paddingTop="5dp"
         android:paddingLeft="15dp"
         android:text="Try..." />
 
@@ -57,8 +57,8 @@
         android:gravity="center">
 
         <Button android:id="@+id/tryToRuleButton"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@drawable/green_circle_button"
             android:textColor="@color/white"
             android:text="TO"
@@ -67,8 +67,8 @@
             android:onClick="onTryToRule"/>
 
         <Button android:id="@+id/tryNotToRuleButton"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="30dp"
             android:background="@drawable/red_circle_button"
             android:textColor="@color/white"
@@ -85,44 +85,45 @@
         android:layout_height="wrap_content"
         android:textColor="@color/planit_blue"
         android:textSize="9pt"
-        android:paddingTop="10dp"
+        android:paddingTop="5dp"
         android:paddingLeft="15dp"
-        android:paddingBottom="5dp"
-        android:text="schedule events..." />
+        android:paddingBottom="2dp"
+        android:text="schedule events..."
+        android:visibility="invisible"/>
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/eventTypeContainer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="invisible">
 
-        <Button android:id="@+id/allRuleButton"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:paddingTop="3dp"
+        <Button android:id="@+id/anyRuleButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@drawable/blue_circle_button"
             android:textColor="@color/white"
-            android:text="ALL"
+            android:text="ANY"
             android:textSize="15dp"
             android:alpha="0.5"
-            android:onClick="onAllRule"/>
+            android:onClick="onAnyRule"/>
 
         <Button android:id="@+id/taggedAsRuleButton"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="30dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="25dp"
             android:paddingTop="3dp"
             android:background="@drawable/blue_circle_button"
             android:textColor="@color/white"
             android:text="TAGGED AS"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:alpha="0.5"
             android:onClick="onTaggedAsRule"/>
 
         <Button android:id="@+id/fromRuleButton"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="30dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="25dp"
             android:background="@drawable/blue_circle_button"
             android:textColor="@color/white"
             android:text="FROM"
@@ -130,11 +131,88 @@
             android:alpha="0.5"
             android:onClick="onFromRule"/>
 
+        <Button android:id="@+id/priorityRuleButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/blue_circle_button"
+            android:textColor="@color/white"
+            android:text="WITH PRIORITY"
+            android:textSize="13dp"
+            android:alpha="0.5"
+            android:onClick="onPriorityRule"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/whenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/planit_blue"
+        android:textSize="9pt"
+        android:paddingTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingBottom="2dp"
+        android:text="when..."
+        android:visibility="invisible"/>
+
+    <LinearLayout android:id="@+id/timeRuleContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="invisible">
+
+        <Button android:id="@+id/beforeRuleButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/blue_circle_button"
+            android:textColor="@color/white"
+            android:text="BEFORE"
+            android:textSize="15dp"
+            android:alpha="0.5"
+            android:onClick="onBeforeRule"/>
+
+        <Button android:id="@+id/betweenRuleButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="25dp"
+            android:paddingTop="3dp"
+            android:background="@drawable/blue_circle_button"
+            android:textColor="@color/white"
+            android:text="BETWEEN"
+            android:textSize="13dp"
+            android:alpha="0.5"
+            android:onClick="onBetweenRule"/>
+
+        <Button android:id="@+id/afterRuleButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/blue_circle_button"
+            android:textColor="@color/white"
+            android:text="AFTER"
+            android:textSize="15dp"
+            android:alpha="0.5"
+            android:onClick="onAfterRule"/>
+
+        <Button android:id="@+id/onRuleButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/blue_circle_button"
+            android:textColor="@color/white"
+            android:text="ON"
+            android:textSize="15dp"
+            android:alpha="0.5"
+            android:onClick="onOnRule"/>
+
     </LinearLayout>
 
     <Button
         android:id="@+id/createRuleButton"
         style="?android:borderlessButtonStyle"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/green_button"
