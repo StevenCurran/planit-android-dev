@@ -1,5 +1,8 @@
 package com.planit;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by Gareth on 03/03/2014.
  */
@@ -12,6 +15,7 @@ public class Rule {
     private String firstPart;
     private String secondPart;
     private String thirdPart;
+    private ArrayList<Object> secondPartDetail;
 
     public String getFirstPart() {
         return firstPart;
@@ -27,6 +31,14 @@ public class Rule {
 
     public void setSecondPart(String secondPart) {
         this.secondPart = secondPart;
+    }
+
+    public ArrayList<Object> getSecondPartDetail() {
+        return secondPartDetail;
+    }
+
+    public void setSecondPartDetail(ArrayList<Object> secondPartDetail) {
+        this.secondPartDetail = secondPartDetail;
     }
 
     public String getThirdPart() {
