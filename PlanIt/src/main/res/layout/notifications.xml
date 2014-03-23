@@ -23,12 +23,10 @@
             android:text="Notifications" />
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/notificationsContainer"
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/notificationsList"
         android:layout_width="fill_parent"
-        android:layout_height="924px"
-        android:orientation="vertical">
-
-    </LinearLayout>
+        android:layout_height="924px" />
 
     <LinearLayout
         android:id="@+id/navigationBarView"
