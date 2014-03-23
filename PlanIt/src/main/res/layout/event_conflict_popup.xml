@@ -1,76 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/planit_red">
+    android:background="@color/planit_red"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_gravity="center"
         android:layout_width="580px"
         android:layout_height="390px"
-        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:background="@color/planit_red"
         android:gravity="center"
-        android:background="@color/planit_red">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/addParticipantBar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/white"
             android:orientation="horizontal"
-            android:paddingBottom="5dp"
-            android:background="@color/white">
+            android:paddingBottom="5dp">
 
             <TextView
                 android:id="@+id/conflictTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/planit_red"
-                android:paddingTop="7dp"
-                android:textSize="12pt"
                 android:paddingLeft="95dp"
-                android:text="Hold on..." />
+                android:paddingTop="7dp"
+                android:text="Hold on..."
+                android:textColor="@color/planit_red"
+                android:textSize="12pt" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/conflictDetails"
             android:layout_width="fill_parent"
             android:layout_height="210px"
-            android:textColor="@color/white"
-            android:textSize="6pt"
-            android:paddingBottom="5dp"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:layout_gravity="center" />
+            android:paddingBottom="5dp"
+            android:textColor="@color/white"
+            android:textSize="6pt" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp">
 
-            <Button android:id="@+id/cancelEventCreationButtton"
+            <Button
+                android:id="@+id/cancelEventCreationButtton"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
                 android:background="@drawable/small_white_button"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:text="Cancel"
                 android:textColor="@color/planit_red"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:textSize="16dp"
-                android:text="Cancel"/>
+                android:textSize="16dp" />
 
-            <Button android:id="@+id/proceedWithEventCreationButton"
-                android:background="@drawable/small_green_button"
-                android:textColor="@color/white"
-                android:layout_marginLeft="30dp"
+            <Button
+                android:id="@+id/proceedWithEventCreationButton"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/small_green_button"
+                android:paddingBottom="3dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:textSize="16dp"
-                android:text="OK"/>
+                android:text="OK"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
 
         </LinearLayout>
 

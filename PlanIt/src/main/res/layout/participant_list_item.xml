@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="7dp"
+    android:orientation="horizontal"
+    android:paddingBottom="7dp"
     android:paddingLeft="10dp"
-    android:paddingBottom="7dp">
+    android:paddingTop="7dp">
 
-    <ImageView android:id="@+id/participantImage"
+    <ImageView
+        android:id="@+id/participantImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"/>
+        android:paddingTop="5dp" />
 
-    <LinearLayout android:id="@+id/ParticipantDetailsContainer"
+    <LinearLayout
+        android:id="@+id/ParticipantDetailsContainer"
         android:layout_width="475px"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="15dp"
         android:paddingTop="5dp">
 
-        <TextView android:id="@+id/participantName"
+        <TextView
+            android:id="@+id/participantName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="20dp"/>
+            android:textSize="20dp" />
 
-        <TextView android:id="@+id/participantEmail"
+        <TextView
+            android:id="@+id/participantEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/planit_grey"
-            android:textSize="14dp"/>
+            android:textSize="14dp" />
 
     </LinearLayout>
 
     <ToggleButton
+        android:id="@+id/attendingToggleButton"
+        style="@style/planit_checkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/attendingToggleButton"
-        android:background="@drawable/planit_check_bg"
         android:layout_marginTop="5dp"
-        style="@style/planit_checkButton"/>
+        android:background="@drawable/planit_check_bg" />
 
 </LinearLayout>

@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.planit.Participant;
@@ -31,10 +30,9 @@ public class AddParticipantActivity extends Activity {
 
     final Context context = this;
     ParticipantsArrayAdapter adapter;
+    ArrayList<Participant> participants = new ArrayList<>();
     private Bundle b = new Bundle();
     private Gson gson = new Gson();
-    ArrayList<Participant> participants = new ArrayList<>();
-
 
     public void onCreate(Bundle savedInstanceState) {
 

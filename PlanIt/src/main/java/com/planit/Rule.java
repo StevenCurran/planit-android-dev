@@ -61,7 +61,11 @@ public class Rule {
         this.description = description;
     }
 
-    public Boolean getActive() { return active; }
+    public Boolean getActive() {
+        return active;
+    }
 
-    public void setActive(Boolean active) { this.active = active; }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }

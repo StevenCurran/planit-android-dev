@@ -6,14 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.planit.Participant;
 import com.planit.R;
-import com.planit.User;
 
 import java.util.ArrayList;
 
@@ -22,8 +20,8 @@ import java.util.ArrayList;
  */
 public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
 
-    private final Context context;
     public final ArrayList<Participant> participants;
+    private final Context context;
 
     public ParticipantsArrayAdapter(Context context, ArrayList<Participant> participants) {
         super(context, R.layout.participant_list_item, participants);

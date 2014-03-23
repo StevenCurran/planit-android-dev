@@ -112,7 +112,7 @@ public class AsyncDeviceRegistrationTask implements Runnable {
 
         Header h = new BasicHeader("providerid", providerId);
 
-        WebClient.post(UrlServerConstants.DEVICE_GCM_REG, params, new AsyncHttpResponseHandler(){
+        WebClient.post(UrlServerConstants.DEVICE_GCM_REG, params, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

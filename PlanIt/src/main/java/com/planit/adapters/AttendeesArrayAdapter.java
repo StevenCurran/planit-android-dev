@@ -16,10 +16,10 @@ import java.util.ArrayList;
 /**
  * Created by Gareth on 22/03/2014.
  */
-public class AttendeesArrayAdapter extends ArrayAdapter<Participant>{
+public class AttendeesArrayAdapter extends ArrayAdapter<Participant> {
 
-    private final Context context;
     public final ArrayList<Participant> attendees;
+    private final Context context;
 
     public AttendeesArrayAdapter(Context context, ArrayList<Participant> attendees) {
         super(context, R.layout.attendee_list_item, attendees);

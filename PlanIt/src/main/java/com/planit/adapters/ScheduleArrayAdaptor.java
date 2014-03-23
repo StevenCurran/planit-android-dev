@@ -21,8 +21,8 @@ import java.util.Date;
  */
 public class ScheduleArrayAdaptor extends ArrayAdapter<Event> {
 
-    private final Context context;
     public final ArrayList<Event> events;
+    private final Context context;
 
     public ScheduleArrayAdaptor(Context context, ArrayList<Event> events) {
         super(context, R.layout.schedule_list_item, events);
@@ -63,19 +63,19 @@ public class ScheduleArrayAdaptor extends ArrayAdapter<Event> {
         //set priority indicator
         Button priorityIndicator = (Button) rowView.findViewById(R.id.priorityIndicator);
         switch (events.get(position).getPriority()) {
-            case 1 :
+            case 1:
                 priorityIndicator.setBackgroundResource(R.color.priority_one);
                 break;
-            case 2 :
+            case 2:
                 priorityIndicator.setBackgroundResource(R.color.priority_two);
                 break;
-            case 3 :
+            case 3:
                 priorityIndicator.setBackgroundResource(R.color.priority_three);
                 break;
-            case 4 :
+            case 4:
                 priorityIndicator.setBackgroundResource(R.color.priority_four);
                 break;
-            case 5 :
+            case 5:
                 priorityIndicator.setBackgroundResource(R.color.priority_five);
                 break;
         }

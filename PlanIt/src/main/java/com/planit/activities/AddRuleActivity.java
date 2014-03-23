@@ -2,7 +2,6 @@ package com.planit.activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +19,6 @@ import com.planit.Rule;
 public class AddRuleActivity extends Activity {
 
     final Context context = this;
-    private Bundle b = new Bundle();
     Button tryToBtn;
     Button tryNotToBtn;
     Button fromBtn;
@@ -38,6 +36,7 @@ public class AddRuleActivity extends Activity {
     TextView whenTitle;
     LinearLayout eventTypeContainer;
     LinearLayout timeRuleContainer;
+    private Bundle b = new Bundle();
 
     public void onCreate(Bundle savedInstanceState) {
 

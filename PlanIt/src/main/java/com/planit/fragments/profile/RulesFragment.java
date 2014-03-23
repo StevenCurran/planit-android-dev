@@ -55,7 +55,7 @@ public class RulesFragment extends Fragment {
         return rootView;
     }
 
-    private ArrayList<Rule> getRules(){
+    private ArrayList<Rule> getRules() {
 
         ArrayList<Rule> rules = new ArrayList<>();
 
@@ -81,7 +81,7 @@ public class RulesFragment extends Fragment {
         return rules;
     }
 
-    public void doAddRule(){
+    public void doAddRule() {
         Intent intent = new Intent(context, AddRuleActivity.class);
         startActivity(intent);
     }

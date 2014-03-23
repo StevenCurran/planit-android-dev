@@ -18,11 +18,10 @@ import com.planit.R;
 public class AddLinkedAccountActivity extends Activity {
 
     final Context context = this;
-    private Bundle b = new Bundle();
-
     public String provider = "";
     LinearLayout tagContainer;
     Button accountLinkSignInButton;
+    private Bundle b = new Bundle();
 
     //testing commit and push on new comp
 

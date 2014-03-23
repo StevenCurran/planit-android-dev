@@ -19,7 +19,7 @@ public class UrlServerConstants {
     public static final String FACEBOOK_EVENTS = PLANIT_ROOT + "/fbevents";
     public static final String GOOGLE_EVENTS = PLANIT_ROOT + "/googlelogin/gcalEvents";
     public static final String DEVICE_GCM_REG = PLANIT_ROOT + "/googlelogin/deviceregistration";
+    public static final String ATTENDEES = PLANIT_ROOT + "/googlelogin/getAttendees";
     //public urls
     public static final String GOOGLE_HOME = "google.com";
-    public static final String ATTENDEES = PLANIT_ROOT + "/googlelogin/getAttendees";
 }

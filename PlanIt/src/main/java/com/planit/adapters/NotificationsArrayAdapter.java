@@ -19,8 +19,8 @@ import java.util.ArrayList;
  */
 public class NotificationsArrayAdapter extends ArrayAdapter<Notification> {
 
-    private final Context context;
     public final ArrayList<Notification> notifications;
+    private final Context context;
 
     public NotificationsArrayAdapter(Context context, ArrayList<Notification> notifications) {
         super(context, R.layout.notification_list_item, notifications);
@@ -52,8 +52,7 @@ public class NotificationsArrayAdapter extends ArrayAdapter<Notification> {
         acceptButton.setTypeface(uilFont);
 
         //set buttons depending on type of notification
-        if (notifications.get(position).getTitle() == "Conflict")
-        {
+        if (notifications.get(position).getTitle() == "Conflict") {
             notificationTitle.setTextColor(context.getResources().getColor(R.color.planit_red));
             rejectButton.setOnClickListener(new View.OnClickListener() {
                 @Override

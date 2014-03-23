@@ -34,7 +34,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +45,20 @@ import java.util.Date;
 public class AddEventActivity extends FragmentActivity {
 
     final Context context = this;
+    private View.OnClickListener proceed_button_click_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            //server fings
+            conflictsPopup.dismiss();
+            Intent intent = new Intent(context, ScheduleActivity.class);
+            startActivity(intent);
+        }
+    };
+    EditText eventNameBox;
+    EditText eventLocationBox;
+    AttendeesArrayAdapter adapter;
+    ArrayList<Participant> attendees = new ArrayList<>();
+    Typeface uilFont;
+    Typeface uiFont;
     private Bundle b = new Bundle();
     private Gson gson = new Gson();
     private DatePickerBuilder startDpb;
@@ -56,19 +69,95 @@ public class AddEventActivity extends FragmentActivity {
     private TextView endDateTextView;
     private TextView durationTextView;
     private TextView preferredTextView;
-    EditText eventNameBox;
-    EditText eventLocationBox;
     private Date startWindow;
+    private DatePickerDialogFragment.DatePickerDialogHandler START_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
+
+        final Calendar c = Calendar.getInstance();
+
+        @Override
+        public void onDialogDateSet(int i, int i2, int i3, int i4) {
+            c.set(i2, i3, i4);
+            startWindow = c.getTime();
+            startDateTextView.setText(df.format(startWindow));
+        }
+    };
     private Date endWindow;
+    private DatePickerDialogFragment.DatePickerDialogHandler END_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
+
+        final Calendar c = Calendar.getInstance();
+
+        @Override
+        public void onDialogDateSet(int i, int i2, int i3, int i4) {
+            c.set(i2, i3, i4);
+            endWindow = c.getTime();
+            endDateTextView.setText(df.format(endWindow));
+        }
+    };
     private Date preferredTime;
+    private RadialTimePickerDialog.OnTimeSetListener TIME_CALLBACK = new RadialTimePickerDialog.OnTimeSetListener() {
+
+        final Calendar c = Calendar.getInstance();
+
+        @Override
+        public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
+            c.set(0, 0, 0, i, i2);
+            preferredTime = c.getTime();
+            preferredTextView.setText(tf.format(preferredTime));
+        }
+    };
     private EventDuration eventDuration;
+    private HmsPickerDialogFragment.HmsPickerDialogHandler EVENT_DURATION_HANDLER = new HmsPickerDialogFragment.HmsPickerDialogHandler() {
+
+        final EventDuration e = new EventDuration();
+
+        @Override
+        public void onDialogHmsSet(int i, int i2, int i3, int i4) {
+            e.setHours(i2);
+            e.setMinutes(i3);
+
+            eventDuration = e;
+
+            String hoursString;
+            String minutesString;
+            String durationSeperator;
+
+            //set hours string
+            if (i2 == 0) {
+                hoursString = "";
+            } else if (i2 == 1) {
+                hoursString = "1 hour";
+            } else {
+                hoursString = i2 + " hours";
+            }
+
+            //set minutes string
+            if (i3 == 0) {
+                minutesString = "";
+            } else if (i3 == 1) {
+                minutesString = "1 min";
+            } else {
+                minutesString = i3 + " mins";
+            }
+
+            //set duration seperator string
+            if (i2 == 0 || i3 == 0) {
+                durationSeperator = "";
+            } else {
+                durationSeperator = ", ";
+            }
+
+            durationTextView.setText(hoursString + durationSeperator + minutesString);
+        }
+    };
     private SimpleDateFormat df = new SimpleDateFormat("E d MMM yyy");
     private SimpleDateFormat tf = new SimpleDateFormat("kk:mm");
     private int eventPriority;
-    AttendeesArrayAdapter adapter;
-    ArrayList<Participant> attendees = new ArrayList<>();
-    Typeface uilFont;
-    Typeface uiFont;
+    private PopupWindow conflictsPopup;
+    private View.OnClickListener cancel_button_click_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            conflictsPopup.dismiss();
+        }
+    };
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -118,14 +207,13 @@ public class AddEventActivity extends FragmentActivity {
         durationPicker.setFragmentManager(getSupportFragmentManager());
         durationPicker.addHmsPickerDialogHandler(EVENT_DURATION_HANDLER);
         Calendar instance = Calendar.getInstance();
-        timePicker = RadialTimePickerDialog.newInstance(TIME_CALLBACK,  instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
+        timePicker = RadialTimePickerDialog.newInstance(TIME_CALLBACK, instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
 
         it.sephiroth.android.library.widget.HListView listview = (it.sephiroth.android.library.widget.HListView) findViewById(R.id.attendeesList);
         adapter = new AttendeesArrayAdapter(context, getAttendees());
         listview.setAdapter(adapter);
 
     }
-
 
     public void openStartWindowPicker(View view) {
         startDpb.show();
@@ -158,86 +246,6 @@ public class AddEventActivity extends FragmentActivity {
         ///get the result of the selection of the contacts
 
     }
-
-    private HmsPickerDialogFragment.HmsPickerDialogHandler EVENT_DURATION_HANDLER = new HmsPickerDialogFragment.HmsPickerDialogHandler() {
-
-        final EventDuration e = new EventDuration();
-
-        @Override
-        public void onDialogHmsSet(int i, int i2, int i3, int i4) {
-            e.setHours(i2);
-            e.setMinutes(i3);
-
-            eventDuration = e;
-
-            String hoursString;
-            String minutesString;
-            String durationSeperator;
-
-            //set hours string
-            if(i2 == 0) {
-                hoursString = "";
-            } else if (i2 == 1) {
-                hoursString = "1 hour";
-            } else {
-                hoursString = Integer.toString(i2) + " hours";
-            }
-
-            //set minutes string
-            if(i3 == 0) {
-                minutesString = "";
-            } else if (i3 == 1) {
-                minutesString = "1 min";
-            } else {
-                minutesString = Integer.toString(i3) + " mins";
-            }
-
-            //set duration seperator string
-            if (i2 == 0 || i3 == 0) {
-                durationSeperator = "";
-            } else {
-                durationSeperator = ", ";
-            }
-
-            durationTextView.setText(hoursString + durationSeperator + minutesString);
-        }
-    };
-
-    private DatePickerDialogFragment.DatePickerDialogHandler START_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
-
-        final Calendar c = Calendar.getInstance();
-
-        @Override
-        public void onDialogDateSet(int i, int i2, int i3, int i4) {
-            c.set(i2, i3, i4);
-            startWindow = c.getTime();
-            startDateTextView.setText(df.format(startWindow));
-        }
-    };
-
-    private DatePickerDialogFragment.DatePickerDialogHandler END_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
-
-        final Calendar c = Calendar.getInstance();
-
-        @Override
-        public void onDialogDateSet(int i, int i2, int i3, int i4) {
-            c.set(i2, i3, i4);
-            endWindow = c.getTime();
-            endDateTextView.setText(df.format(endWindow));
-        }
-    };
-
-    private RadialTimePickerDialog.OnTimeSetListener TIME_CALLBACK = new RadialTimePickerDialog.OnTimeSetListener() {
-
-        final Calendar c = Calendar.getInstance();
-
-        @Override
-        public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
-            c.set(0,0,0,i,i2);
-            preferredTime = c.getTime();
-            preferredTextView.setText(tf.format(preferredTime));
-        }
-    };
 
     public void setPriority(View view) {
         Button p1 = (Button) findViewById(R.id.priorityOneButton);
@@ -344,12 +352,11 @@ public class AddEventActivity extends FragmentActivity {
 
     }
 
-    private PopupWindow conflictsPopup;
     private void initiateConflictPopupWindow(String message) {
         try {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.event_conflict_popup, (ViewGroup) findViewById(R.layout.add_event) ,false);
-            conflictsPopup = new PopupWindow(layout,600,400);
+            View layout = inflater.inflate(R.layout.event_conflict_popup, (ViewGroup) findViewById(R.layout.add_event), false);
+            conflictsPopup = new PopupWindow(layout, 600, 400);
             conflictsPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
             TextView conflictTitle = (TextView) layout.findViewById(R.id.conflictTitle);
@@ -370,21 +377,6 @@ public class AddEventActivity extends FragmentActivity {
         }
     }
 
-    private View.OnClickListener cancel_button_click_listener = new View.OnClickListener() {
-        public void onClick(View v) {
-            conflictsPopup.dismiss();
-        }
-    };
-
-    private View.OnClickListener proceed_button_click_listener = new View.OnClickListener() {
-        public void onClick(View v) {
-            //server fings
-            conflictsPopup.dismiss();
-            Intent intent = new Intent(context, ScheduleActivity.class);
-            startActivity(intent);
-        }
-    };
-
     public void doCreateEvent(View view) {
         Event e = new Event();
         e.setTitle(eventNameBox.getText().toString());
@@ -399,8 +391,7 @@ public class AddEventActivity extends FragmentActivity {
         //do server stuff - find if there if other people's schedules will have to be changed
         Boolean schedulesHaveToChange = true;
 
-        if (schedulesHaveToChange)
-        {
+        if (schedulesHaveToChange) {
             String conflictMessage = "Gareth will have to reschedule a high priority event.\n\nAre you sure you want to continue?";
             initiateConflictPopupWindow(conflictMessage);
 

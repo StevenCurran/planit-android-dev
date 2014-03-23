@@ -104,7 +104,6 @@ public class ProfileActivity extends FragmentActivity {
     }
 
 
-
     public void doSignOut(View view) {
         Intent intent = new Intent(context, LoginActivity.class);
         startActivity(intent);
