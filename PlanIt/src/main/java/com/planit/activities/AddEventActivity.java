@@ -1,9 +1,14 @@
 package com.planit.activities;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,23 +26,30 @@ import com.doomonafireball.betterpickers.hmspicker.HmsPickerDialogFragment;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.planit.Event;
 import com.planit.EventDuration;
 import com.planit.Participant;
 import com.planit.R;
 import com.planit.adapters.AttendeesArrayAdapter;
 import com.planit.constants.UrlServerConstants;
+import com.planit.utils.UrlParamUtils;
 import com.planit.utils.WebClient;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by Gareth on 18/03/2014.
@@ -378,6 +390,9 @@ public class AddEventActivity extends FragmentActivity {
     }
 
     public void doCreateEvent(View view) {
+
+        addEventToAndroidCal();
+
         Event e = new Event();
         e.setTitle(eventNameBox.getText().toString());
         e.setLocation(eventLocationBox.getText().toString());
@@ -388,6 +403,29 @@ public class AddEventActivity extends FragmentActivity {
         e.setPriority(eventPriority);
         e.setParticipants(attendees);
 
+
+        RequestParams params = new RequestParams();
+        params.put("attendees", UrlParamUtils.addAttendees(attendees));
+        params.put("startDate", UrlParamUtils.addDate(startWindow));
+        params.put("endDate", UrlParamUtils.addDate(endWindow));
+        params.put("duration", UrlParamUtils.addDuration(eventDuration));
+        params.put("priority", eventPriority + "");
+
+        WebClient.post(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                System.out.println(responseBody);
+                super.onFailure(statusCode, headers, responseBody, error);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String s2 = new String(responseBody);
+                System.out.println(s2);
+            }
+
+        });
         //do server stuff - find if there if other people's schedules will have to be changed
         Boolean schedulesHaveToChange = true;
 
@@ -397,8 +435,74 @@ public class AddEventActivity extends FragmentActivity {
 
         } else {
             //add the event to server etc.
-            Intent intent = new Intent(context, ScheduleActivity.class);
-            startActivity(intent);
+            //   Intent intent = new Intent(context, ScheduleActivity.class);
+            //   startActivity(intent);
         }
+    }
+
+    public void addEventToAndroidCal() {
+        Event e = new Event();
+        e.setTitle(eventNameBox.getText().toString());
+        e.setLocation(eventLocationBox.getText().toString());
+        e.setStartDate(startWindow);
+        e.setEndDate(endWindow);
+        e.setDuration(eventDuration);
+        e.setPreferredTime(preferredTime);
+        e.setPriority(eventPriority);
+        e.setParticipants(attendees);
+
+        ContentResolver cr = getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Events.DTSTART, startWindow.getTime());
+        values.put(CalendarContract.Events.DTEND, endWindow.getTime());
+        values.put(CalendarContract.Events.TITLE, eventNameBox.getText().toString());
+        values.put(CalendarContract.Events.CALENDAR_ID, 1);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+
+        long eventID = Long.parseLong(uri.getLastPathSegment());
+
+        for (Participant attendee : attendees) {
+
+            ContentValues attendeeValues = new ContentValues();
+            attendeeValues.put(CalendarContract.Attendees.ATTENDEE_NAME, attendee.getFirstName());
+            attendeeValues.put(CalendarContract.Attendees.ATTENDEE_EMAIL, attendee.getEmail());
+            attendeeValues.put(CalendarContract.Attendees.ATTENDEE_RELATIONSHIP, CalendarContract.Attendees.RELATIONSHIP_ATTENDEE);
+            attendeeValues.put(CalendarContract.Attendees.ATTENDEE_TYPE, CalendarContract.Attendees.TYPE_OPTIONAL);
+            attendeeValues.put(CalendarContract.Attendees.ATTENDEE_STATUS, CalendarContract.Attendees.ATTENDEE_STATUS_INVITED);
+            attendeeValues.put(CalendarContract.Attendees.EVENT_ID, eventID);
+            cr.insert(CalendarContract.Attendees.CONTENT_URI, attendeeValues);
+        }
+
+
+    }
+
+    private int getCalenadarId() {
+
+        String projection[] = {"_id", "calendar_displayName"};
+        Uri calendars;
+        calendars = Uri.parse("content://com.android.calendar/calendars");
+
+        ContentResolver contentResolver = getContentResolver();
+        Cursor managedCursor = contentResolver.query(calendars, projection, null, null, null);
+
+            List<String> m_calendars = new ArrayList<>();
+
+            if (managedCursor.moveToFirst()){
+                String calName;
+                String calID;
+            int cont= 0;
+            int nameCol = managedCursor.getColumnIndex(projection[1]);
+            int idCol = managedCursor.getColumnIndex(projection[0]);
+            do {
+                calName = managedCursor.getString(nameCol);
+                calID = managedCursor.getString(idCol);
+                m_calendars.add(calName + "," + calID);
+                cont++;
+            } while(managedCursor.moveToNext());
+            managedCursor.close();
+        }
+        return Integer.parseInt(m_calendars.get(0).split(",")[1]);
+
     }
 }
