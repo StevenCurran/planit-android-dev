@@ -1,6 +1,7 @@
 package com.planit.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.planit.Event;
 import com.planit.R;
+import com.planit.activities.EventDetailsActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -74,6 +75,17 @@ public class ScheduleActivity extends Activity {
         adapter = new ScheduleArrayAdaptor(context, getSchedule(todaysDate));
         listview.setAdapter(adapter);
 
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Event selectedEvent = (Event) (listview.getItemAtPosition(i));
+
+                Intent intent = new Intent(view.getContext(), EventDetailsActivity.class);
+                intent.putExtra("eventId", selectedEvent.getId());
+                view.getContext().startActivity(intent);
+            }
+        });
+
         //do calendar view stuff and set onClick
         calView = (CalendarView) findViewById(R.id.scheduleCal);
         calView.setWeekDayTextAppearance(R.style.planit_cal_header_text);
@@ -93,8 +105,6 @@ public class ScheduleActivity extends Activity {
 
             }
         });
-
-
     }
 
     public void doNewEvent(View view) {

@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/addParticipantBar"
+        android:id="@+id/addEventBar"
         android:layout_width="match_parent"
         android:layout_height="142px"
         android:background="@color/planit_blue"

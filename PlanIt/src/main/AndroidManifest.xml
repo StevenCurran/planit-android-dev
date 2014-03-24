@@ -45,6 +45,8 @@
 
         <activity android:name=".activities.AddParticipantActivity" />
 
+        <activity android:name=".activities.EventDetailsActivity" />
+
         <activity android:name=".gcm.DemoActivity" />
 
         <!--
