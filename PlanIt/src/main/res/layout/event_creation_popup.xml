@@ -97,7 +97,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="3dp"
-                    android:text="OK"
+                    android:text="Schedule"
                     android:textColor="@color/white"
                     android:textSize="16dp" />
 
