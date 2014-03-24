@@ -26,21 +26,16 @@ import com.doomonafireball.betterpickers.hmspicker.HmsPickerDialogFragment;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 import com.google.gson.Gson;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.planit.Event;
 import com.planit.EventDuration;
 import com.planit.Participant;
 import com.planit.QueryResponse;
 import com.planit.R;
 import com.planit.adapters.AttendeesArrayAdapter;
-import com.planit.constants.GlobalUserStore;
 import com.planit.constants.UrlServerConstants;
-import com.planit.utils.UrlParamUtils;
 import com.planit.utils.WebClient;
 
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,12 +64,12 @@ public class AddEventActivity extends FragmentActivity {
     private Gson gson = new Gson();
     private DatePickerBuilder startDpb;
     private DatePickerBuilder endDpb;
-    private RadialTimePickerDialog timePicker;
+    private RadialTimePickerDialog startTimePicker;
+    private RadialTimePickerDialog endTimePicker;
     private HmsPickerBuilder durationPicker;
     private TextView startDateTextView;
     private TextView endDateTextView;
     private TextView durationTextView;
-    private TextView preferredTextView;
     private Date startWindow;
     DateFormat queryDF = new SimpleDateFormat("EE d MMMM yyy - kk:mm");
 
@@ -87,7 +82,8 @@ public class AddEventActivity extends FragmentActivity {
         public void onDialogDateSet(int i, int i2, int i3, int i4) {
             c.set(i2, i3, i4);
             startWindow = c.getTime();
-            startDateTextView.setText(df.format(startWindow));
+            //then open start date
+            openStartTimePicker();
         }
     };
     private Date endWindow;
@@ -99,19 +95,38 @@ public class AddEventActivity extends FragmentActivity {
         public void onDialogDateSet(int i, int i2, int i3, int i4) {
             c.set(i2, i3, i4);
             endWindow = c.getTime();
-            endDateTextView.setText(df.format(endWindow));
+            //then open end date
+            openEndTimePicker();
         }
     };
-    private Date preferredTime;
-    private RadialTimePickerDialog.OnTimeSetListener TIME_CALLBACK = new RadialTimePickerDialog.OnTimeSetListener() {
+    private Date startTime;
+    private RadialTimePickerDialog.OnTimeSetListener START_TIME_CALLBACK = new RadialTimePickerDialog.OnTimeSetListener() {
 
         final Calendar c = Calendar.getInstance();
 
         @Override
         public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
             c.set(0, 0, 0, i, i2);
-            preferredTime = c.getTime();
-            preferredTextView.setText(tf.format(preferredTime));
+            startTime = c.getTime();
+            //generate a start date string
+            startDateTextView.setText(df.format(startWindow)  + " '" + dfy.format(startWindow) + " - " +tf.format(startTime));
+            startWindow.setHours(startTime.getHours());
+            startWindow.setMinutes(startTime.getMinutes());
+        }
+    };
+    private Date endTime;
+    private RadialTimePickerDialog.OnTimeSetListener END_TIME_CALLBACK = new RadialTimePickerDialog.OnTimeSetListener() {
+
+        final Calendar c = Calendar.getInstance();
+
+        @Override
+        public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
+            c.set(0, 0, 0, i, i2);
+            endTime = c.getTime();
+            //generate an end date string
+            endDateTextView.setText(df.format(endWindow) + " '" + dfy.format(endWindow) + " - " + tf.format(endTime));
+            endWindow.setHours(endTime.getHours());
+            endWindow.setMinutes(endTime.getMinutes());
         }
     };
     private EventDuration eventDuration;
@@ -158,7 +173,8 @@ public class AddEventActivity extends FragmentActivity {
             durationTextView.setText(hoursString + durationSeperator + minutesString);
         }
     };
-    private SimpleDateFormat df = new SimpleDateFormat("E d MMM yyy");
+    private SimpleDateFormat df = new SimpleDateFormat("d MMM");
+    private SimpleDateFormat dfy = new SimpleDateFormat("yy");
     private SimpleDateFormat tf = new SimpleDateFormat("kk:mm");
     private int eventPriority;
 
@@ -181,16 +197,12 @@ public class AddEventActivity extends FragmentActivity {
         endHeaderText.setTypeface(uilFont);
         TextView durationTimeHeader = (TextView) findViewById(R.id.durationTextheader);
         durationTimeHeader.setTypeface(uilFont);
-        TextView preferredTimeHeader = (TextView) findViewById(R.id.preferredTimeHeader);
-        preferredTimeHeader.setTypeface(uilFont);
         startDateTextView = (TextView) findViewById(R.id.startDateText);
         startDateTextView.setTypeface(uilFont);
         endDateTextView = (TextView) findViewById(R.id.endDateText);
         endDateTextView.setTypeface(uilFont);
         durationTextView = (TextView) findViewById(R.id.durationText);
         durationTextView.setTypeface(uilFont);
-        preferredTextView = (TextView) findViewById(R.id.preferredTimeText);
-        preferredTextView.setTypeface(uilFont);
         TextView priorityTitle = (TextView) findViewById(R.id.priorityTitle);
         priorityTitle.setTypeface(uilFont);
         TextView attendeesTitle = (TextView) findViewById(R.id.attendeesTitle);
@@ -205,7 +217,6 @@ public class AddEventActivity extends FragmentActivity {
 
         Button planitButton = (Button) findViewById(R.id.planitButton);
         planitButton.setTypeface(uilFont);
-//        planitButton.setClickable(false);
 
         int year = Calendar.getInstance().get(Calendar.YEAR);
         startDpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(year).setFragmentManager(getSupportFragmentManager()).addDatePickerDialogHandler(START_WINDOW_HANDLER);
@@ -214,7 +225,8 @@ public class AddEventActivity extends FragmentActivity {
         durationPicker.setFragmentManager(getSupportFragmentManager());
         durationPicker.addHmsPickerDialogHandler(EVENT_DURATION_HANDLER);
         Calendar instance = Calendar.getInstance();
-        timePicker = RadialTimePickerDialog.newInstance(TIME_CALLBACK, instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
+        startTimePicker = RadialTimePickerDialog.newInstance(START_TIME_CALLBACK, instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
+        endTimePicker = RadialTimePickerDialog.newInstance(END_TIME_CALLBACK, instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
 
         it.sephiroth.android.library.widget.HListView listview = (it.sephiroth.android.library.widget.HListView) findViewById(R.id.attendeesList);
         adapter = new AttendeesArrayAdapter(context, getAttendees());
@@ -230,8 +242,12 @@ public class AddEventActivity extends FragmentActivity {
         endDpb.show();
     }
 
-    public void openTimePicker(View view) {
-        timePicker.show(getSupportFragmentManager(), "Pick Time");
+    public void openStartTimePicker() {
+        startTimePicker.show(getSupportFragmentManager(), "Pick Time");
+    }
+
+    public void openEndTimePicker() {
+        endTimePicker.show(getSupportFragmentManager(), "Pick Time");
     }
 
     public void openDurationPicker(View view) {
@@ -468,7 +484,6 @@ public class AddEventActivity extends FragmentActivity {
         e.setStartDate(startWindow);
         e.setEndDate(endWindow);
         e.setDuration(eventDuration);
-        e.setPreferredTime(preferredTime);
         e.setPriority(eventPriority);
         e.setParticipants(attendees);
 
