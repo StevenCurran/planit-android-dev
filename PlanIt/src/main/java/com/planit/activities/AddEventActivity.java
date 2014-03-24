@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 import com.doomonafireball.betterpickers.hmspicker.HmsPickerBuilder;
@@ -62,43 +63,43 @@ public class AddEventActivity extends FragmentActivity {
     Typeface uiFont;
     private Bundle b = new Bundle();
     private Gson gson = new Gson();
-    private DatePickerBuilder startDpb;
-    private DatePickerBuilder endDpb;
+    private CalendarDatePickerDialog startDpb;
+    private CalendarDatePickerDialog endDpb;
     private RadialTimePickerDialog startTimePicker;
     private RadialTimePickerDialog endTimePicker;
     private HmsPickerBuilder durationPicker;
     private TextView startDateTextView;
     private TextView endDateTextView;
     private TextView durationTextView;
-    private Date startWindow;
+    private Button createEventButton;
     DateFormat queryDF = new SimpleDateFormat("EE d MMMM yyy - kk:mm");
 
-    private Button createEventButton;
-    private DatePickerDialogFragment.DatePickerDialogHandler START_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
-
-        final Calendar c = Calendar.getInstance();
-
+    private Date startWindow;
+    private CalendarDatePickerDialog.OnDateSetListener START_WINDOW_HANDLER = new CalendarDatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDialogDateSet(int i, int i2, int i3, int i4) {
-            c.set(i2, i3, i4);
-            startWindow = c.getTime();
-            //then open start date
-            openStartTimePicker();
+        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
+            final Calendar c = Calendar.getInstance();
+
+                c.set(i, i2, i3);
+                startWindow = c.getTime();
+                //then open start date
+                openStartTimePicker();
         }
     };
+
     private Date endWindow;
-    private DatePickerDialogFragment.DatePickerDialogHandler END_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
-
-        final Calendar c = Calendar.getInstance();
-
+    private CalendarDatePickerDialog.OnDateSetListener END_WINDOW_HANDLER = new CalendarDatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDialogDateSet(int i, int i2, int i3, int i4) {
-            c.set(i2, i3, i4);
+        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
+            final Calendar c = Calendar.getInstance();
+
+            c.set(i, i2, i3);
             endWindow = c.getTime();
-            //then open end date
+            //then open start date
             openEndTimePicker();
         }
     };
+
     private Date startTime;
     private RadialTimePickerDialog.OnTimeSetListener START_TIME_CALLBACK = new RadialTimePickerDialog.OnTimeSetListener() {
 
@@ -219,8 +220,11 @@ public class AddEventActivity extends FragmentActivity {
         planitButton.setTypeface(uilFont);
 
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        startDpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(year).setFragmentManager(getSupportFragmentManager()).addDatePickerDialogHandler(START_WINDOW_HANDLER);
-        endDpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(year).setFragmentManager(getSupportFragmentManager()).addDatePickerDialogHandler(END_WINDOW_HANDLER);
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+
+        startDpb = CalendarDatePickerDialog.newInstance(START_WINDOW_HANDLER, year, month, day);
+        endDpb = CalendarDatePickerDialog.newInstance(END_WINDOW_HANDLER, year, month, day);
         durationPicker = new HmsPickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light);
         durationPicker.setFragmentManager(getSupportFragmentManager());
         durationPicker.addHmsPickerDialogHandler(EVENT_DURATION_HANDLER);
@@ -232,14 +236,15 @@ public class AddEventActivity extends FragmentActivity {
         adapter = new AttendeesArrayAdapter(context, getAttendees());
         listview.setAdapter(adapter);
 
+
     }
 
     public void openStartWindowPicker(View view) {
-        startDpb.show();
+        startDpb.show(getSupportFragmentManager(),"Pick Date");
     }
 
     public void openEndWindowPicker(View view) {
-        endDpb.show();
+        endDpb.show(getSupportFragmentManager(),"Pick Date");
     }
 
     public void openStartTimePicker() {
