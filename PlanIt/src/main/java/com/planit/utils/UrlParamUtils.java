@@ -42,7 +42,7 @@ public class UrlParamUtils {
         date.append(',');
         date.append(c.get(Calendar.MONTH));
         date.append(',');
-        date.append(c.get(Calendar.DAY_OF_MONTH));
+        date.append(c.get(Calendar.DAY_OF_MONTH) + 1);
         date.append(',');
         date.append(c.get(Calendar.HOUR_OF_DAY));
         date.append(',');
