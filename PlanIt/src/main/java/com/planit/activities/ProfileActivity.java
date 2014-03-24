@@ -82,7 +82,7 @@ public class ProfileActivity extends FragmentActivity {
 
         User currentUser = GlobalUserStore.getUser();
 
-        userNameText.setText(currentUser.getName());
+        userNameText.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
         userEmailText.setText(currentUser.getEmail());
 
         final ImageView userPicture = (ImageView) findViewById(R.id.userPicture);
@@ -91,7 +91,7 @@ public class ProfileActivity extends FragmentActivity {
         String imageUrl = currentUser.getImageUrl();
         String[] allowedContentTypes = new String[]{"image/jpeg", "image/png"};
 
-        WebClient.get(imageUrl.substring(0, imageUrl.length() - 5), null, new BinaryHttpResponseHandler(allowedContentTypes) {
+        WebClient.get(imageUrl, null, new BinaryHttpResponseHandler(allowedContentTypes) {
             @Override
             public void onSuccess(byte[] fileData) {
                 BitmapDrawable bitmapDrawable = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(fileData, 0, fileData.length));
@@ -102,7 +102,6 @@ public class ProfileActivity extends FragmentActivity {
 
 
     }
-
 
 
     public void doSignOut(View view) {

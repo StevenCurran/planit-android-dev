@@ -2,47 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     android:weightSum="1">
 
     <LinearLayout
         android:id="@+id/addParticipantBar"
         android:layout_width="match_parent"
         android:layout_height="142px"
-        android:orientation="horizontal"
-        android:background="@color/planit_blue">
+        android:background="@color/planit_blue"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/screenTitle"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:textColor="#FFFFFF"
-            android:textSize="15pt"
             android:gravity="center_vertical"
             android:paddingLeft="120dp"
-            android:text="Attendees" />
+            android:text="Attendees"
+            android:textColor="#FFFFFF"
+            android:textSize="15pt" />
 
         <Button
             android:id="@+id/addParticipantsButton"
             style="?android:borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:background="@null"
-            android:textColor="#FFFFFF"
-            android:textSize="9pt"
-            android:gravity="center_vertical"
             android:layout_marginLeft="55dp"
-            android:text="Done"
+            android:background="@null"
+            android:gravity="center_vertical"
             android:onClick="doAddParticipants"
-            />
+            android:text="Done"
+            android:textColor="#FFFFFF"
+            android:textSize="9pt" />
     </LinearLayout>
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/participantsList"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:listSelector="@android:color/transparent" />
+        android:listSelector="@android:color/transparent"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" />
 </LinearLayout>

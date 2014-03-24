@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
     android:background="@color/planit_blue"
+    android:orientation="vertical"
     android:weightSum="1">
 
     <ImageView
@@ -16,56 +16,56 @@
     <EditText
         android:id="@+id/planitIDTextBox"
         android:layout_width="280dp"
-        android:layout_weight="0.05"
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
+        android:layout_weight="0.05"
+        android:background="@drawable/top_curve_box"
+        android:hint="PlanIt ID"
+        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:singleLine="true"
-        android:textSize="7pt"
         android:textColor="@color/planit_grey"
-        android:background="@drawable/top_curve_box"
-        android:hint="PlanIt ID" />
+        android:textSize="7pt" />
 
     <EditText
         android:id="@+id/planitIDPasswordBox"
         android:layout_width="280dp"
-        android:layout_weight="0.05"
         android:layout_height="40dp"
         android:layout_gravity="center"
+        android:layout_weight="0.05"
+        android:background="@drawable/bottom_curve_box"
+        android:hint="Password"
         android:inputType="textPassword"
+        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:singleLine="true"
-        android:textSize="7pt"
         android:textColor="@color/planit_grey"
-        android:background="@drawable/bottom_curve_box"
-        android:hint="Password" />
+        android:textSize="7pt" />
 
     <TextView
         android:id="@+id/forgottenPasswordText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="@color/white"
-        android:textSize="7pt"
         android:gravity="center"
-        android:text="Forgotten your password?" />
+        android:text="Forgotten your password?"
+        android:textColor="@color/white"
+        android:textSize="7pt" />
 
     <TextView
         android:id="@+id/noAccountText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:textColor="@color/white"
-        android:textSize="7pt"
         android:gravity="center"
-        android:text="Don't have a PlanIt account? Create one." />
+        android:text="Don't have a PlanIt account? Create one."
+        android:textColor="@color/white"
+        android:textSize="7pt" />
 
     <ImageButton
         android:id="@+id/googleLoginButton"
@@ -73,9 +73,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:src="@drawable/google_login_image"
         android:background="@null"
-        android:onClick="doGoogleLogin" />
+        android:onClick="doGoogleLogin"
+        android:src="@drawable/google_login_image" />
 
     <ImageButton
         android:id="@+id/facebookLoginButton"
@@ -83,8 +83,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:src="@drawable/facebook_login_image"
         android:background="@null"
-        android:onClick="doFacebookLogin" />
+        android:onClick="doFacebookLogin"
+        android:src="@drawable/facebook_login_image" />
 
 </LinearLayout>

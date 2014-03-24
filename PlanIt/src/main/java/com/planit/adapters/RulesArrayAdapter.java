@@ -78,15 +78,15 @@ public class RulesArrayAdapter extends ArrayAdapter<Rule> {
         return rowView;
     }
 
-    public void doEditRule(View view){
+    public void doEditRule(View view) {
         //do fings
     }
 
-    public void doDeleteRule(View view){
+    public void doDeleteRule(View view) {
         //do fings
     }
 
-    public void doChangeRuleActiveState(View view){
+    public void doChangeRuleActiveState(View view) {
         //do fings
     }
 

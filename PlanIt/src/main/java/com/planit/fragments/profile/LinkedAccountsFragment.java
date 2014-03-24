@@ -54,7 +54,7 @@ public class LinkedAccountsFragment extends Fragment {
         return rootView;
     }
 
-    public ArrayList<LinkedAccount> getLinkedAccounts(){
+    public ArrayList<LinkedAccount> getLinkedAccounts() {
 
         ArrayList<LinkedAccount> linkedAccounts = new ArrayList<>();
 
@@ -78,7 +78,7 @@ public class LinkedAccountsFragment extends Fragment {
         return linkedAccounts;
     }
 
-    public void doAddAccount(){
+    public void doAddAccount() {
         Intent intent = new Intent(context, AddLinkedAccountActivity.class);
         startActivity(intent);
     }

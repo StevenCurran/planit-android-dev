@@ -1,65 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="15dp"
-    android:paddingBottom="10dp">
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingLeft="15dp">
 
-    <ImageView android:id="@+id/accountProviderIcon"
+    <ImageView
+        android:id="@+id/accountProviderIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"/>
+        android:paddingTop="5dp" />
 
-    <LinearLayout android:id="@+id/linkedAccountDetailsContainer"
+    <LinearLayout
+        android:id="@+id/linkedAccountDetailsContainer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="15dp">
 
-        <TextView android:id="@+id/accountID"
+        <TextView
+            android:id="@+id/accountID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="15dp"/>
-        
-        <LinearLayout android:id="@+id/linkedAccountControls"
+            android:textSize="15dp" />
+
+        <LinearLayout
+            android:id="@+id/linkedAccountControls"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            
-            <Button android:id="@+id/editLinkedAccountButton"
+
+            <Button
+                android:id="@+id/editLinkedAccountButton"
                 android:layout_width="80dp"
                 android:layout_height="30dp"
+                android:background="@drawable/small_blue_button"
+                android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:background="@drawable/small_blue_button"
-                android:textSize="15dp"
+                android:text="Edit"
                 android:textColor="@color/white"
-                android:text="Edit"/>
+                android:textSize="15dp" />
 
-            <Button android:id="@+id/deleteLinkedAccountButton"
+            <Button
+                android:id="@+id/deleteLinkedAccountButton"
                 android:layout_width="85dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/small_red_button"
+                android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/small_red_button"
-                android:textSize="15dp"
+                android:text="Remove"
                 android:textColor="@color/white"
-                android:text="Remove"/>
+                android:textSize="15dp" />
 
-            <ToggleButton android:id="@+id/inCalToggle"
+            <ToggleButton
+                android:id="@+id/inCalToggle"
+                style="@style/planit_toggleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/planit_toggle_bg"
-                style="@style/planit_toggleButton"
-                android:layout_marginLeft="45dp"/>
+                android:layout_marginLeft="45dp"
+                android:background="@drawable/planit_toggle_bg" />
 
         </LinearLayout>
     </LinearLayout>

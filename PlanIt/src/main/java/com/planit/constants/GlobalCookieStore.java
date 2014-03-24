@@ -10,7 +10,7 @@ public enum GlobalCookieStore {
 
     private PersistentCookieStore cookieStore;
 
-    private GlobalCookieStore(){
+    private GlobalCookieStore() {
         this.cookieStore = new PersistentCookieStore(GlobalApplicationContext.getAppContext());
     }
 

@@ -11,7 +11,7 @@ public enum GlobalUserStore {
 
     private User user;
 
-    private GlobalUserStore(){
+    private GlobalUserStore() {
         this.user = new User();
     }
 

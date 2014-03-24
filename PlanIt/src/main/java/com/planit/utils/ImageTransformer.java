@@ -5,10 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.Rect;
 
+import com.squareup.picasso.Transformation;
+
 /**
  * Created by Steven on 15/03/14.
  */
-public class ImageTransformer {
+public class ImageTransformer implements Transformation{
 
     public static Bitmap getRoundedShape(Bitmap sourceBitmap) {
         int targetWidth = 114;
@@ -33,6 +35,20 @@ public class ImageTransformer {
                 new Rect(0, 0, targetWidth,
                         targetHeight), null
         );
+
+        if (targetBitmap != sourceBitmap) {
+            sourceBitmap.recycle();
+        }
         return targetBitmap;
+    }
+
+    @Override
+    public Bitmap transform(Bitmap source) {
+        return ImageTransformer.getRoundedShape(source);
+    }
+
+    @Override
+    public String key() {
+        return "rounded_image";
     }
 }

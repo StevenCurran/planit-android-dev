@@ -17,14 +17,20 @@ public class LinkedAccount {
         this.accountId = accountId;
     }
 
-    public String getAccountProvider() { return accountProvider;  }
+    public String getAccountProvider() {
+        return accountProvider;
+    }
 
     public void setAccountProvider(String name) {
         this.accountProvider = accountProvider;
     }
 
-    public Boolean getDisplayInCal() { return displayInCal; }
+    public Boolean getDisplayInCal() {
+        return displayInCal;
+    }
 
-    public void setDisplayInCal(Boolean displayInCal) { this.displayInCal = displayInCal; }
+    public void setDisplayInCal(Boolean displayInCal) {
+        this.displayInCal = displayInCal;
+    }
 
 }

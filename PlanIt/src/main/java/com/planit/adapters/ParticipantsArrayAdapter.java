@@ -6,14 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.planit.Participant;
 import com.planit.R;
-import com.planit.User;
+import com.planit.activities.AddParticipantActivity;
+import com.planit.utils.ImageTransformer;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -22,20 +23,29 @@ import java.util.ArrayList;
  */
 public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
 
-    private final Context context;
     public final ArrayList<Participant> participants;
+    public final ArrayList<Participant> attendingParticipants;
+    private final Context context;
+    private ImageTransformer imageTransformer = new ImageTransformer();
 
     public ParticipantsArrayAdapter(Context context, ArrayList<Participant> participants) {
         super(context, R.layout.participant_list_item, participants);
         this.context = context;
         this.participants = participants;
+        attendingParticipants = new ArrayList<>();
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.participant_list_item, parent, false);
+        View rowView;
+
+        if ( context instanceof AddParticipantActivity ) {
+            rowView = inflater.inflate(R.layout.participant_list_item, parent, false);
+        } else {
+            rowView = inflater.inflate(R.layout.people_popup_list_item, parent, false);
+        }
 
         Typeface uilFont = Typeface.createFromAsset(context.getAssets(), "fonts/segoeuisl.ttf");
 
@@ -43,7 +53,7 @@ public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
         TextView participantName = (TextView) rowView.findViewById(R.id.participantName);
         TextView participantEmail = (TextView) rowView.findViewById(R.id.participantEmail);
 
-        participantName.setText(participants.get(position).getName());
+        participantName.setText(participants.get(position).getFirstName() + " " + participants.get(position).getLastName());
         participantName.setTypeface(uilFont);
         participantEmail.setText(participants.get(position).getEmail());
         participantEmail.setTypeface(uilFont);
@@ -52,7 +62,8 @@ public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
         //- in getParticipants - just doing this to sort layout - remove this later and chnage
         //to commented out code below
         ImageView participantImage = (ImageView) rowView.findViewById(R.id.participantImage);
-        participantImage.setImageResource(R.drawable.default_user_photo);
+        //participantImage.setImageResource(R.drawable.default_user_photo);
+        Picasso.with(context).load(participants.get(position).getImageUrl()).transform(imageTransformer).error(R.drawable.default_user_photo).into(participantImage);
 
         //proper way to get user image when server stuff is in
 //        ImageView participantImage = (ImageView) rowView.findViewById(R.id.participantImage);
@@ -64,7 +75,15 @@ public class ParticipantsArrayAdapter extends ArrayAdapter<Participant> {
         attendingToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doChangeAttendingStatus(view);
+
+                Participant p = participants.get(position);
+                p.setAttending(!p.getAttending());
+                if(p.getAttending()){
+                    attendingParticipants.add(p);
+                } else {
+                    attendingParticipants.remove(p);
+                }
+
             }
         });
 

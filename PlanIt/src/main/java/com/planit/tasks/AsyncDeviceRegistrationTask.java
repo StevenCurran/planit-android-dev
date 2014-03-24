@@ -71,7 +71,7 @@ public class AsyncDeviceRegistrationTask implements Runnable {
                     }
                     regid = gcm.register(SENDER_ID);
                     msg = "Device registered, registration ID=" + regid;
-                    //sendRegistrationIdToBackend();
+                    sendRegistrationIdToBackend();
 //Turn this off for a bit to save usage.
                     // For this demo: we don't need to send it because the device will send
 
@@ -112,7 +112,7 @@ public class AsyncDeviceRegistrationTask implements Runnable {
 
         Header h = new BasicHeader("providerid", providerId);
 
-        WebClient.post(UrlServerConstants.DEVICE_GCM_REG, params, new AsyncHttpResponseHandler(){
+        WebClient.post(UrlServerConstants.DEVICE_GCM_REG, params, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

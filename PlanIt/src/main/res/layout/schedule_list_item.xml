@@ -1,56 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:paddingTop="7dp"
-    android:paddingBottom="7dp">
+    android:orientation="horizontal"
+    android:paddingBottom="7dp"
+    android:paddingTop="7dp">
 
-    <Button android:id="@+id/priorityIndicator"
-        android:layout_marginTop="14dp"
-        android:layout_width="50px"
-        android:layout_height="50px"/>
+    <Button
+        android:id="@+id/priorityIndicator"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="9dp" />
 
-    <LinearLayout android:id="@+id/eventTimeContainer"
+    <LinearLayout
+        android:id="@+id/eventTimeContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="5dp"
-        android:paddingLeft="15dp">
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp">
 
-        <TextView android:id="@+id/eventStartTime"
+        <TextView
+            android:id="@+id/eventStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/planit_grey"
-            android:textSize="14dp"/>
+            android:textSize="14dp" />
 
-        <TextView android:id="@+id/eventEndTime"
+        <TextView
+            android:id="@+id/eventEndTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/planit_grey"
-            android:textSize="14dp"/>
+            android:textSize="14dp" />
 
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/eventDetailsContainer"
+    <LinearLayout
+        android:id="@+id/eventDetailsContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="15dp">
 
-        <TextView android:id="@+id/eventTitle"
+        <TextView
+            android:id="@+id/eventTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="20dp"/>
+            android:textSize="20dp" />
 
-        <TextView android:id="@+id/eventLocation"
+        <TextView
+            android:id="@+id/eventLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/planit_grey"
-            android:textSize="14dp"/>
+            android:textSize="14dp" />
 
     </LinearLayout>
 

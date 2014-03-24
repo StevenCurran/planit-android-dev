@@ -89,15 +89,15 @@ public class LinkedAccountsArrayAdapter extends ArrayAdapter<LinkedAccount> {
         return rowView;
     }
 
-    public void doEditLinkedAccount(View view){
+    public void doEditLinkedAccount(View view) {
         //do fings
     }
 
-    public void doDeleteLinkedAccount(View view){
+    public void doDeleteLinkedAccount(View view) {
         //do fings
     }
 
-    public void doChangeDisplayInCal(View view){
+    public void doChangeDisplayInCal(View view) {
         //do fings
     }
 

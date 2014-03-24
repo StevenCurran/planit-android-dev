@@ -2,139 +2,344 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
     android:background="@color/white"
-    android:weightSum="1">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/addParticipantBar"
         android:layout_width="match_parent"
         android:layout_height="142px"
-        android:orientation="horizontal"
-        android:background="@color/planit_blue">
+        android:background="@color/planit_blue"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/screenTitle"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:textColor="#FFFFFF"
-            android:textSize="15pt"
             android:gravity="center_vertical"
             android:paddingLeft="120dp"
-            android:text="New Event" />
+            android:text="New Event"
+            android:textColor="#FFFFFF"
+            android:textSize="15pt" />
     </LinearLayout>
 
     <EditText
         android:id="@+id/eventNameBox"
         android:layout_width="350dp"
-        android:layout_weight="0.05"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
+        android:background="@drawable/top_curve_box"
+        android:hint="Event Name"
+        android:paddingBottom="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:singleLine="true"
-        android:textSize="7pt"
         android:textColor="@color/planit_grey"
-        android:background="@drawable/top_curve_box"
-        android:hint="Event Name" />
+        android:textSize="7pt" />
 
     <EditText
         android:id="@+id/eventLocationBox"
         android:layout_width="350dp"
-        android:layout_weight="0.05"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
+        android:background="@drawable/bottom_curve_box"
+        android:hint="Location"
+        android:paddingBottom="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:singleLine="true"
-        android:textSize="7pt"
         android:textColor="@color/planit_grey"
-        android:background="@drawable/bottom_curve_box"
-        android:hint="Location" />
+        android:textSize="7pt" />
 
     <TextView
+        android:id="@+id/dateRangeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/planit_blue"
-        android:textSize="10pt"
-        android:paddingTop="10dp"
         android:paddingLeft="15dp"
-        android:text="start date/time and end date/time selectors go here!!!!!!!!"/>
+        android:paddingTop="5dp"
+        android:text="Date Range"
+        android:textColor="@color/planit_blue"
+        android:textSize="10pt" />
+
+    <LinearLayout
+        android:id="@+id/dateRangeContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/startHeaderText"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="3dp"
+                android:text="Start Date"
+                android:textColor="@color/planit_green"
+                android:textSize="7.5pt" />
+
+            <TextView
+                android:id="@+id/startDateText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="7pt" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addStartWindowButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/cal_button"
+            android:onClick="openStartWindowPicker" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/endHeaderText"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26dp"
+                android:paddingTop="3dp"
+                android:text="End Date"
+                android:textColor="@color/planit_green"
+                android:textSize="7.5pt" />
+
+            <TextView
+                android:id="@+id/endDateText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26dp"
+                android:textColor="@color/black"
+                android:textSize="7pt" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addEndWindowButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/cal_button"
+            android:onClick="openEndWindowPicker" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timeContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/durationTextheader"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="3dp"
+                android:text="Duration"
+                android:textColor="@color/planit_green"
+                android:textSize="7.5pt" />
+
+            <TextView
+                android:id="@+id/durationText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="7pt" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addDurationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/duration_button"
+            android:onClick="openDurationPicker" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/preferredTimeHeader"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26dp"
+                android:paddingTop="3dp"
+                android:text="Preferred Time"
+                android:textColor="@color/planit_green"
+                android:textSize="7.5pt" />
+
+            <TextView
+                android:id="@+id/preferredTimeText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26dp"
+                android:textColor="@color/black"
+                android:textSize="7pt" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addTimeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/time_button"
+            android:onClick="openTimePicker" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/priorityTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/planit_blue"
-        android:textSize="10pt"
-        android:paddingTop="10dp"
         android:paddingLeft="15dp"
-        android:text="Priority"/>
+        android:paddingTop="10dp"
+        android:text="Priority"
+        android:textColor="@color/planit_blue"
+        android:textSize="10pt" />
 
-    <LinearLayout android:id="@+id/attendeesContainer"
+    <LinearLayout
+        android:id="@+id/priorityContainer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
-        <LinearLayout android:id="@+id/attendeesHeaderContainer"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+        <Button
+            android:id="@+id/priorityOneButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="0dp"
+            android:alpha="0.5"
+            android:background="@drawable/priority_one_button"
+            android:onClick="setPriority"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/attendeesTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/planit_blue"
-                android:textSize="10pt"
-                android:paddingTop="10dp"
-                android:paddingLeft="15dp"
-                android:text="Attendees"/>
+        <Button
+            android:id="@+id/priorityTwoButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="37dp"
+            android:alpha="0.5"
+            android:background="@drawable/priority_two_button"
+            android:onClick="setPriority"
+            android:text="2"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
 
-            <Button android:id="@+id/addAttendeeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="219dp"
-                android:background="@drawable/small_plus_button"
-                android:onClick="addAttendees"/>
-        </LinearLayout>
+        <Button
+            android:id="@+id/priorityThreeButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="37dp"
+            android:alpha="0.5"
+            android:background="@drawable/priority_three_button"
+            android:onClick="setPriority"
+            android:text="3"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
 
-       <!-- need to do horizontal listview -look here: http://profi.co/android-horizontal-list-view-library-with-item-scroll/ -->
+        <Button
+            android:id="@+id/priorityFourButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="37dp"
+            android:alpha="0.5"
+            android:background="@drawable/priority_four_button"
+            android:onClick="setPriority"
+            android:text="4"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/priorityFiveButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="37dp"
+            android:alpha="0.5"
+            android:background="@drawable/priority_five_button"
+            android:onClick="setPriority"
+            android:text="5"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tagsTitle"
+        android:id="@+id/attendeesTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/planit_blue"
-        android:textSize="10pt"
-        android:paddingTop="10dp"
         android:paddingLeft="15dp"
-        android:text="Tags"/>
+        android:paddingTop="10dp"
+        android:text="Attendees"
+        android:textColor="@color/planit_blue"
+        android:textSize="10pt" />
+
+    <LinearLayout
+        android:id="@+id/attendeesContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp">
+
+        <it.sephiroth.android.library.widget.HListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/attendeesList"
+            android:layout_width="312dp"
+            android:layout_height="72dp"
+            android:listSelector="@android:color/transparent" />
+
+        <Button
+            android:id="@+id/addAttendeeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/small_plus_button"
+            android:onClick="addAttendees" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/createEventButton"
         style="?android:borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/green_button"
-        android:textColor="#FFFFFF"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:paddingTop="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/green_button"
+        android:gravity="center_vertical"
+        android:onClick="doCreateEvent"
         android:paddingBottom="10dp"
         android:paddingLeft="35dp"
         android:paddingRight="35dp"
-        android:textSize="11pt"
-        android:gravity="center_vertical"
-        android:text="Create"
-        android:onClick="doCreateEvent"
-        />
+        android:paddingTop="10dp"
+        android:text="Plan it"
+        android:textColor="#FFFFFF"
+        android:textSize="11pt" />
 
 </LinearLayout>

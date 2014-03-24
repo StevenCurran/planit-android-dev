@@ -10,12 +10,12 @@ public class GlobalApplicationContext extends Application {
 
     private static Context context;
 
-    public void onCreate(){
-        super.onCreate();
-        GlobalApplicationContext.context = getApplicationContext();
-    }
-
     public static Context getAppContext() {
         return GlobalApplicationContext.context;
+    }
+
+    public void onCreate() {
+        super.onCreate();
+        GlobalApplicationContext.context = getApplicationContext();
     }
 }
