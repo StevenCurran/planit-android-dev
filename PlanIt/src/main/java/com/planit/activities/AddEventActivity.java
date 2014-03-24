@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 import com.doomonafireball.betterpickers.hmspicker.HmsPickerBuilder;
@@ -45,7 +46,6 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -225,6 +225,15 @@ public class AddEventActivity extends FragmentActivity {
         adapter = new AttendeesArrayAdapter(context, getAttendees());
         listview.setAdapter(adapter);
 
+        CalendarDatePickerDialog diag = CalendarDatePickerDialog.newInstance(new CalendarDatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
+                System.out.println(i);
+            }
+        }, 2014, 12, 4);
+
+        diag.show(getSupportFragmentManager(), "Hello");
+
     }
 
     public void openStartWindowPicker(View view) {
@@ -391,7 +400,7 @@ public class AddEventActivity extends FragmentActivity {
 
     public void doCreateEvent(View view) {
 
-        addEventToAndroidCal();
+        //addEventToAndroidCal();
 
         Event e = new Event();
         e.setTitle(eventNameBox.getText().toString());

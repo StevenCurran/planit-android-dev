@@ -23,3 +23,4 @@ public class EventTag {
         this.name = name;
     }
 }
+

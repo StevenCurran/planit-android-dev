@@ -1,7 +1,5 @@
 package com.planit.utils;
 
-import android.view.ViewDebug;
-
 import com.planit.EventDuration;
 import com.planit.Participant;
 
@@ -40,7 +38,7 @@ public class UrlParamUtils {
         StringBuilder date = new StringBuilder();
         date.append(c.get(Calendar.YEAR));
         date.append(',');
-        date.append(c.get(Calendar.MONTH));
+        date.append(c.get(Calendar.MONTH) + 1);
         date.append(',');
         date.append(c.get(Calendar.DAY_OF_MONTH));
         date.append(',');
