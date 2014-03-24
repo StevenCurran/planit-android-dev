@@ -64,19 +64,19 @@ public class ScheduleArrayAdaptor extends ArrayAdapter<Event> {
         Button priorityIndicator = (Button) rowView.findViewById(R.id.priorityIndicator);
         switch (events.get(position).getPriority()) {
             case 1:
-                priorityIndicator.setBackgroundResource(R.color.priority_one);
+                priorityIndicator.setBackgroundResource(R.drawable.priority_one_button);
                 break;
             case 2:
-                priorityIndicator.setBackgroundResource(R.color.priority_two);
+                priorityIndicator.setBackgroundResource(R.drawable.priority_two_button);
                 break;
             case 3:
-                priorityIndicator.setBackgroundResource(R.color.priority_three);
+                priorityIndicator.setBackgroundResource(R.drawable.priority_three_button);
                 break;
             case 4:
-                priorityIndicator.setBackgroundResource(R.color.priority_four);
+                priorityIndicator.setBackgroundResource(R.drawable.priority_four_button);
                 break;
             case 5:
-                priorityIndicator.setBackgroundResource(R.color.priority_five);
+                priorityIndicator.setBackgroundResource(R.drawable.priority_five_button);
                 break;
         }
 

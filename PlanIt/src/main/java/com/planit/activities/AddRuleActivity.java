@@ -237,10 +237,6 @@ public class AddRuleActivity extends Activity {
 
     }
 
-    public void doCreateRule(View view) {
-        //do stuff
-    }
-
     //================================================================================
     // Tags
     //================================================================================
@@ -494,7 +490,7 @@ public class AddRuleActivity extends Activity {
         try {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.time_popup, (ViewGroup) findViewById(R.layout.add_rule_view), false);
-            timePopup = new PopupWindow(layout, 600, 600);
+            timePopup = new PopupWindow(layout, 620, 450);
             timePopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
             TextView timePopUpTitle = (TextView) layout.findViewById(R.id.timePopupTitle);
@@ -574,5 +570,14 @@ public class AddRuleActivity extends Activity {
         newRule.setDescription(rs);
         ruleDescriptionContainer.setText(rs);
     }
+
+    //================================================================================
+    // Create the Rule
+    //================================================================================
+
+    public void doCreateRule(View view) {
+        //do stuff
+    }
+
 
 }
