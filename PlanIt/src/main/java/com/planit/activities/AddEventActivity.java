@@ -32,6 +32,7 @@ import com.loopj.android.http.RequestParams;
 import com.planit.Event;
 import com.planit.EventDuration;
 import com.planit.Participant;
+import com.planit.QueryResponse;
 import com.planit.R;
 import com.planit.adapters.AttendeesArrayAdapter;
 import com.planit.constants.GlobalUserStore;
@@ -44,9 +45,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -58,14 +59,6 @@ import java.util.TimeZone;
 public class AddEventActivity extends FragmentActivity {
 
     final Context context = this;
-    private View.OnClickListener proceed_button_click_listener = new View.OnClickListener() {
-        public void onClick(View v) {
-            //server fings
-            conflictsPopup.dismiss();
-            Intent intent = new Intent(context, ScheduleActivity.class);
-            startActivity(intent);
-        }
-    };
     EditText eventNameBox;
     EditText eventLocationBox;
     AttendeesArrayAdapter adapter;
@@ -83,6 +76,8 @@ public class AddEventActivity extends FragmentActivity {
     private TextView durationTextView;
     private TextView preferredTextView;
     private Date startWindow;
+    DateFormat queryDF = new SimpleDateFormat("EE d MMMM yyy - kk:mm");
+
     private Button createEventButton;
     private DatePickerDialogFragment.DatePickerDialogHandler START_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
 
@@ -166,12 +161,6 @@ public class AddEventActivity extends FragmentActivity {
     private SimpleDateFormat df = new SimpleDateFormat("E d MMM yyy");
     private SimpleDateFormat tf = new SimpleDateFormat("kk:mm");
     private int eventPriority;
-    private PopupWindow conflictsPopup;
-    private View.OnClickListener cancel_button_click_listener = new View.OnClickListener() {
-        public void onClick(View v) {
-            conflictsPopup.dismiss();
-        }
-    };
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -210,14 +199,13 @@ public class AddEventActivity extends FragmentActivity {
         eventNameBox.setTypeface(uilFont);
         eventLocationBox = (EditText) findViewById(R.id.eventLocationBox);
         eventLocationBox.setTypeface(uilFont);
-        createEventButton = (Button) findViewById(R.id.createEventButton);
-        createEventButton.setTypeface(uilFont);
-        createEventButton.setOnClickListener(CREATE_EVENT_LISTENER);
+//        createEventButton = (Button) findViewById(R.id.createEventButton);
+//        createEventButton.setTypeface(uilFont);
+//        createEventButton.setOnClickListener(CREATE_EVENT_LISTENER);
 
         Button planitButton = (Button) findViewById(R.id.planitButton);
         planitButton.setTypeface(uilFont);
-        planitButton.setClickable(false);
-
+//        planitButton.setClickable(false);
 
         int year = Calendar.getInstance().get(Calendar.YEAR);
         startDpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(year).setFragmentManager(getSupportFragmentManager()).addDatePickerDialogHandler(START_WINDOW_HANDLER);
@@ -371,18 +359,45 @@ public class AddEventActivity extends FragmentActivity {
 
     }
 
-    private void initiateConflictPopupWindow(String message) {
+    private PopupWindow creationResponsePopup;
+    private View.OnClickListener cancel_button_click_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            creationResponsePopup.dismiss();
+        }
+    };
+    private View.OnClickListener proceed_button_click_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            //CREATE THE EVENT
+
+            creationResponsePopup.dismiss();
+            Intent intent = new Intent(context, ScheduleActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    private void initiateResponsePopupWindow(QueryResponse response) {
         try {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.event_conflict_popup, (ViewGroup) findViewById(R.layout.add_event), false);
-            conflictsPopup = new PopupWindow(layout, 600, 400);
-            conflictsPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+            View layout = inflater.inflate(R.layout.event_creation_popup, (ViewGroup) findViewById(R.layout.add_event), false);
+            creationResponsePopup = new PopupWindow(layout, 600, 400);
+            creationResponsePopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
-            TextView conflictTitle = (TextView) layout.findViewById(R.id.conflictTitle);
-            conflictTitle.setTypeface(uilFont);
-            TextView conflictDetails = (TextView) layout.findViewById(R.id.conflictDetails);
-            conflictDetails.setTypeface(uilFont);
-            conflictDetails.setText(message);
+            TextView creationTitle = (TextView) layout.findViewById(R.id.eventPopupTitle);
+            creationTitle.setTypeface(uilFont);
+            TextView bestTimeDetails = (TextView) layout.findViewById(R.id.bestTimeDetails);
+            bestTimeDetails.setTypeface(uilFont);
+            TextView additionalDetails = (TextView) layout.findViewById(R.id.additionalDetails);
+            additionalDetails.setTypeface(uilFont);
+
+            bestTimeDetails.setText(queryDF.format(response.getSuggestedDate()));
+
+            if (response.getConflictingEvents().length > 0) {
+                String message = "This date would cause " + response.getConflictingEvents().length + " people to reschedule other events.";
+                additionalDetails.setText(message);
+            } else {
+                String message = "This date doesn't cause conflicts in anyone's schedule.";
+                additionalDetails.setText(message);
+            }
 
             Button proceedBtn = (Button) layout.findViewById(R.id.proceedWithEventCreationButton);
             proceedBtn.setTypeface(uilFont);
@@ -398,54 +413,52 @@ public class AddEventActivity extends FragmentActivity {
 
     public void doPlanit(View view) {
 
-        addEventToAndroidCal();
+        //do server stuff - get response with a date and conflict IDs
+        int[] test = {1,12,34};
+//        int[] test = new int[0];
 
-        Event e = new Event();
-        e.setTitle(eventNameBox.getText().toString());
-        e.setLocation(eventLocationBox.getText().toString());
-        e.setStartDate(startWindow);
-        e.setEndDate(endWindow);
-        e.setDuration(eventDuration);
-        e.setPreferredTime(preferredTime);
-        e.setPriority(eventPriority);
-        e.setParticipants(attendees);
+        QueryResponse qr = new QueryResponse();
+        qr.setSuggestedDate(new Date());
+        qr.setConflictingEvents(test);
+        initiateResponsePopupWindow(qr);
 
+//        addEventToAndroidCal();
+//
+//        Event e = new Event();
+//        e.setTitle(eventNameBox.getText().toString());
+//        e.setLocation(eventLocationBox.getText().toString());
+//        e.setStartDate(startWindow);
+//        e.setEndDate(endWindow);
+//        e.setDuration(eventDuration);
+//        e.setPreferredTime(preferredTime);
+//        e.setPriority(eventPriority);
+//        e.setParticipants(attendees);
+//
+//
+//        RequestParams params = new RequestParams();
+//        params.put("attendees", UrlParamUtils.addAttendees(attendees));
+//        params.put("startDate", UrlParamUtils.addDate(startWindow));
+//        params.put("endDate", UrlParamUtils.addDate(endWindow));
+//        params.put("duration", UrlParamUtils.addDuration(eventDuration));
+//        params.put("priority", eventPriority + "");
+//
+//        WebClient.post(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler() {
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//                System.out.println(responseBody);
+//                super.onFailure(statusCode, headers, responseBody, error);
+//            }
+//
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                String s2 = new String(responseBody);
+//                createEventButton.setClickable(true);
+//                System.out.println(s2);
+//            }
+//
+//        });
 
-        RequestParams params = new RequestParams();
-        params.put("attendees", UrlParamUtils.addAttendees(attendees));
-        params.put("startDate", UrlParamUtils.addDate(startWindow));
-        params.put("endDate", UrlParamUtils.addDate(endWindow));
-        params.put("duration", UrlParamUtils.addDuration(eventDuration));
-        params.put("priority", eventPriority + "");
-
-        WebClient.post(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler() {
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                System.out.println(responseBody);
-                super.onFailure(statusCode, headers, responseBody, error);
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String s2 = new String(responseBody);
-                createEventButton.setClickable(true);
-                System.out.println(s2);
-            }
-
-        });
-        //do server stuff - find if there if other people's schedules will have to be changed
-        Boolean schedulesHaveToChange = true;
-
-        if (schedulesHaveToChange) {
-            String conflictMessage = "Gareth will have to reschedule a high priority event.\n\nAre you sure you want to continue?";
-            initiateConflictPopupWindow(conflictMessage);
-
-        } else {
-            //add the event to server etc.
-            //   Intent intent = new Intent(context, ScheduleActivity.class);
-            //   startActivity(intent);
-        }
     }
 
     public void addEventToAndroidCal() {
@@ -514,17 +527,17 @@ public class AddEventActivity extends FragmentActivity {
 
     }
 
-    private View.OnClickListener CREATE_EVENT_LISTENER = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            RequestParams params = new RequestParams();
-            params.put("attendees", UrlParamUtils.addAttendees(attendees));
-            params.put("startDate", UrlParamUtils.addDate(startWindow));
-            params.put("endDate", UrlParamUtils.addDate(endWindow));
-            params.put("userid", GlobalUserStore.getUser().getUserId());
-            params.put("eventname", eventNameBox.getText().toString());
-
-            WebClient.post(UrlServerConstants.ADD_EVENT, params, new AsyncHttpResponseHandler());
-        }
-    };
+//    private View.OnClickListener CREATE_EVENT_LISTENER = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            RequestParams params = new RequestParams();
+//            params.put("attendees", UrlParamUtils.addAttendees(attendees));
+//            params.put("startDate", UrlParamUtils.addDate(startWindow));
+//            params.put("endDate", UrlParamUtils.addDate(endWindow));
+//            params.put("userid", GlobalUserStore.getUser().getUserId());
+//            params.put("eventname", eventNameBox.getText().toString());
+//
+//            WebClient.post(UrlServerConstants.ADD_EVENT, params, new AsyncHttpResponseHandler());
+//        }
+//    };
 }
