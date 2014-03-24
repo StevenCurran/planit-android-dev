@@ -10,9 +10,9 @@
 
     <Button
         android:id="@+id/priorityIndicator"
-        android:layout_width="50px"
-        android:layout_height="50px"
-        android:layout_marginTop="14dp" />
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="9dp" />
 
     <LinearLayout
         android:id="@+id/eventTimeContainer"

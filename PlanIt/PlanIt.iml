@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.path="C:\Users\Steven Curran\Documents\GitHub\planit-android-dev\PlanIt" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="planit-android-dev" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+<module external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="planit-android-dev" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
@@ -72,18 +72,18 @@
     <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="android-async-http-1.4.4" level="project" />
-    <orderEntry type="library" exported="" name="play-services-4.2.42" level="project" />
-    <orderEntry type="library" exported="" name="guava-15.0" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-1.4.1-beta" level="project" />
-    <orderEntry type="library" exported="" name="google-api-services-plus-v1-rev118-1.17.0-rc" level="project" />
-    <orderEntry type="library" exported="" name="picasso-2.2.0" level="project" />
+    <orderEntry type="library" exported="" name="guava-15.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="library-1.2.1" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-19.0.1" level="project" />
+    <orderEntry type="library" exported="" name="library-1.5.2" level="project" />
+    <orderEntry type="library" exported="" name="play-services-4.2.42" level="project" />
+    <orderEntry type="library" exported="" name="picasso-2.2.0" level="project" />
+    <orderEntry type="library" exported="" name="google-api-services-plus-v1-rev118-1.17.0-rc" level="project" />
     <orderEntry type="library" exported="" name="restfb-1.6.14" level="project" />
     <orderEntry type="library" exported="" name="commons-lang3-3.2.1" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-19.0.1" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
-    <orderEntry type="library" exported="" name="library-1.5.2" level="project" />
   </component>
 </module>
 

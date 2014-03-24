@@ -52,6 +52,13 @@ public class AddRuleActivity extends Activity {
     Button priorityThreeBtn;
     Button priorityFourBtn;
     Button priorityFiveBtn;
+    Button monBtn;
+    Button tueBtn;
+    Button wedBtn;
+    Button thurBtn;
+    Button friBtn;
+    Button satBtn;
+    Button sunBtn;
     Rule newRule;
     EditText ruleNameBox;
     TextView withOrFromTitle;
@@ -235,10 +242,6 @@ public class AddRuleActivity extends Activity {
         //show time pop up
         initiateTimePopupWindow("on");
 
-    }
-
-    public void doCreateRule(View view) {
-        //do stuff
     }
 
     //================================================================================
@@ -494,7 +497,7 @@ public class AddRuleActivity extends Activity {
         try {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.time_popup, (ViewGroup) findViewById(R.layout.add_rule_view), false);
-            timePopup = new PopupWindow(layout, 600, 600);
+            timePopup = new PopupWindow(layout, 620, 600);
             timePopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
             TextView timePopUpTitle = (TextView) layout.findViewById(R.id.timePopupTitle);
@@ -502,6 +505,21 @@ public class AddRuleActivity extends Activity {
             Button doneTimePeopleButton = (Button) layout.findViewById(R.id.doneSelectTimeButton);
             doneTimePeopleButton.setTypeface(uilFont);
             doneTimePeopleButton.setOnClickListener(done_time_button_click_listener);
+
+            monBtn = (Button) layout.findViewById(R.id.monButton);
+            tueBtn = (Button) layout.findViewById(R.id.tueButton);
+            wedBtn = (Button) layout.findViewById(R.id.wedButton);
+            thurBtn = (Button) layout.findViewById(R.id.thurButton);
+            friBtn = (Button) layout.findViewById(R.id.friButton);
+            satBtn = (Button) layout.findViewById(R.id.satButton);
+            sunBtn = (Button) layout.findViewById(R.id.sunButton);
+            monBtn.setTypeface(uilFont);
+            tueBtn.setTypeface(uilFont);
+            wedBtn.setTypeface(uilFont);
+            thurBtn.setTypeface(uilFont);
+            friBtn.setTypeface(uilFont);
+            satBtn.setTypeface(uilFont);
+            sunBtn.setTypeface(uilFont);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -574,5 +592,14 @@ public class AddRuleActivity extends Activity {
         newRule.setDescription(rs);
         ruleDescriptionContainer.setText(rs);
     }
+
+    //================================================================================
+    // Create the Rule
+    //================================================================================
+
+    public void doCreateRule(View view) {
+        //do stuff
+    }
+
 
 }
