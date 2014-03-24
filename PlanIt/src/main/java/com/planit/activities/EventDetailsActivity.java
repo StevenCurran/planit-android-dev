@@ -66,34 +66,39 @@ public class EventDetailsActivity extends Activity {
 
     public void setDetails(int eventId) {
 
-        //do server stuff to get details of event with eventId;
-        Event e = new Event(); //change this to server object
+        //get event info from server using eventId;
+        Event e = new Event(); //change this to server object and uncomment below
 
-        eventName.setText(e.getTitle());
-        eventLocation.setText(e.getLocation());
-        eventDate.setText(df.format(e.getStartDate()));
-        eventTime.setText(tf.format(e.getStartDate()));
-
-        switch (e.getPriority()) {
-            case 1:
-                priorityIndicator.setBackgroundResource(R.drawable.priority_one_button);
-                break;
-            case 2:
-                priorityIndicator.setBackgroundResource(R.drawable.priority_two_button);
-                break;
-            case 3:
-                priorityIndicator.setBackgroundResource(R.drawable.priority_three_button);
-                break;
-            case 4:
-                priorityIndicator.setBackgroundResource(R.drawable.priority_four_button);
-                break;
-            case 5:
-                priorityIndicator.setBackgroundResource(R.drawable.priority_five_button);
-                break;
-        }
-
-        adapter = new AttendeesArrayAdapter(context, e.getParticipants());
-        listview.setAdapter(adapter);
+//        eventName.setText(e.getTitle());
+//        eventLocation.setText(e.getLocation());
+//        eventDate.setText(df.format(e.getStartDate()));
+//        eventTime.setText(tf.format(e.getStartDate()) + tf.format(e.getEndDate()));
+//
+//        switch (e.getPriority()) {
+//            case 1:
+//                priorityIndicator.setBackgroundResource(R.drawable.priority_one_button);
+//                priorityIndicator.setText("1");
+//                break;
+//            case 2:
+//                priorityIndicator.setBackgroundResource(R.drawable.priority_two_button);
+//                priorityIndicator.setText("2");
+//                break;
+//            case 3:
+//                priorityIndicator.setBackgroundResource(R.drawable.priority_three_button);
+//                priorityIndicator.setText("3");
+//                break;
+//            case 4:
+//                priorityIndicator.setBackgroundResource(R.drawable.priority_four_button);
+//                priorityIndicator.setText("4");
+//                break;
+//            case 5:
+//                priorityIndicator.setBackgroundResource(R.drawable.priority_five_button);
+//                priorityIndicator.setText("5");
+//                break;
+//        }
+//
+//        adapter = new AttendeesArrayAdapter(context, e.getParticipants());
+//        listview.setAdapter(adapter);
     }
 
 }

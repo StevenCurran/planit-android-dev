@@ -33,7 +33,7 @@ public class ScheduleArrayAdaptor extends ArrayAdapter<Event> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.schedule_list_item, parent, false);
@@ -81,6 +81,15 @@ public class ScheduleArrayAdaptor extends ArrayAdapter<Event> {
                 priorityIndicator.setBackgroundResource(R.drawable.priority_five_button);
                 break;
         }
+
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), EventDetailsActivity.class);
+                intent.putExtra("eventId", events.get(position).getId());
+                getContext().startActivity(intent);
+            }
+        });
 
         return rowView;
     }
