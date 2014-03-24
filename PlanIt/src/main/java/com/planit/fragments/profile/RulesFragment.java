@@ -61,17 +61,17 @@ public class RulesFragment extends Fragment {
 
         Rule testRule1 = new Rule();
         testRule1.setName("No work after 6");
-        testRule1.setDescription("No events tagged with 'Work' will be accepted after 18:00.");
+        testRule1.setDescription("Try not to schedule events tagged with 'Work' after 18:00.");
         testRule1.setActive(false);
 
         Rule testRule2 = new Rule();
-        testRule2.setName("Tuesday lunchtime tennis");
-        testRule2.setDescription("No events will be accepted on Tuesdays between 12:30 and 13:30.");
+        testRule2.setName("Tuesday Lunchtime Tennis");
+        testRule2.setDescription("Try not to schedule any events on Tuesdays between 12:30 and 13:30.");
         testRule2.setActive(true);
 
         Rule testRule3 = new Rule();
         testRule3.setName("Finish early on Friday");
-        testRule3.setDescription("No events tagged with 'Work' that have a priority lower than 1 will be accepted on Friday after 16:00.");
+        testRule3.setDescription("Try not to schedule events with priority 3, 4 or 5 on Fridays after 16:00.");
         testRule3.setActive(true);
 
         rules.add(testRule1);

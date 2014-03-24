@@ -2,6 +2,7 @@ package com.planit.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -74,11 +75,13 @@ public class AddRuleActivity extends FragmentActivity {
     LinearLayout eventTypeContainer;
     LinearLayout timeRuleContainer;
     ArrayList secondPartDetails;
+    ArrayList thirdPartDetails;
     ParticipantsArrayAdapter adapter;
     ArrayList<Participant> people = new ArrayList<>();
     ArrayList<Participant> attendingPeople = new ArrayList<>();
     ArrayList<Integer> selectedPriorities = new ArrayList<>();
     ArrayList<String> selectedDays = new ArrayList<>();
+    ArrayList<Date> selectedTimes = new ArrayList<>(2);
     private SimpleDateFormat tf = new SimpleDateFormat("kk:mm");
     TextView ruleDescriptionContainer;
     private Gson gson = new Gson();
@@ -505,6 +508,10 @@ public class AddRuleActivity extends FragmentActivity {
             c.set(0, 0, 0, i, i2);
             time1 = c.getTime();
             time1Text.setText(tf.format(time1));
+            if (selectedTimes.size() < 1)
+                selectedTimes.add(0,time1);
+            else
+                selectedTimes.set(0, time1);
 
         }
     };
@@ -518,7 +525,10 @@ public class AddRuleActivity extends FragmentActivity {
             c.set(0, 0, 0, i, i2);
             time2 = c.getTime();
             time2Text.setText(tf.format(time2));
-
+            if (selectedTimes.size() < 2)
+                selectedTimes.add(1,time2);
+            else
+                selectedTimes.set(1, time2);
         }
     };
 
@@ -542,77 +552,77 @@ public class AddRuleActivity extends FragmentActivity {
                 case R.id.monButton:
                     if (monBtn.getAlpha() == 1) {
                         monBtn.setAlpha((float) 0.5);
-                        selectedDays.remove("Monday");
+                        selectedDays.remove("Mondays");
                     } else {
                         monBtn.setAlpha(1);
                         //add to array
-                        selectedDays.add("Monday");
+                        selectedDays.add("Mondays");
                     }
                     break;
                 case R.id.tueButton:
                     if (tueBtn.getAlpha() == 1) {
                         tueBtn.setAlpha((float) 0.5);
                         //remove from array
-                        selectedDays.remove("Tuesday");
+                        selectedDays.remove("Tuesdays");
                     } else {
                         tueBtn.setAlpha(1);
                         //add to array
-                        selectedDays.add("Tuesday");
+                        selectedDays.add("Tuesdays");
                     }
                     break;
                 case R.id.wedButton:
                     if (wedBtn.getAlpha() == 1) {
                         wedBtn.setAlpha((float) 0.5);
                         //remove from array
-                        selectedDays.remove("Wednesday");
+                        selectedDays.remove("Wednesdays");
                     } else {
                         wedBtn.setAlpha(1);
                         //add to array
-                        selectedDays.add("Wednesday");
+                        selectedDays.add("Wednesdays");
                     }
                     break;
                 case R.id.thurButton:
                     if (thurBtn.getAlpha() == 1) {
                         thurBtn.setAlpha((float) 0.5);
                         //remove from array
-                        selectedDays.remove("Thursday");
+                        selectedDays.remove("Thursdays");
                     } else {
                         thurBtn.setAlpha(1);
                         //add to array
-                        selectedDays.add("Thursday");
+                        selectedDays.add("Thursdays");
                     }
                     break;
                 case R.id.friButton:
                     if (friBtn.getAlpha() == 1) {
                         friBtn.setAlpha((float) 0.5);
                         //remove from array
-                        selectedDays.remove("Friday");
+                        selectedDays.remove("Fridays");
                     } else {
                         friBtn.setAlpha(1);
                         //add to array
-                        selectedDays.add("Friday");
+                        selectedDays.add("Fridays");
                     }
                     break;
                 case R.id.satButton:
                     if (satBtn.getAlpha() == 1) {
                         satBtn.setAlpha((float) 0.5);
                         //remove from array
-                        selectedDays.remove("Saturday");
+                        selectedDays.remove("Saturdays");
                     } else {
                         satBtn.setAlpha(1);
                         //add to array
-                        selectedDays.add("Saturday");
+                        selectedDays.add("Saturdays");
                     }
                     break;
                 case R.id.sunButton:
                     if (sunBtn.getAlpha() == 1) {
                         sunBtn.setAlpha((float) 0.5);
                         //remove from array
-                        selectedDays.remove("Sunday");
+                        selectedDays.remove("Sundays");
                     } else {
                         sunBtn.setAlpha(1);
                         //add to array
-                        selectedDays.add("Sunday");
+                        selectedDays.add("Sundays");
                     }
                     break;
             }
@@ -625,6 +635,8 @@ public class AddRuleActivity extends FragmentActivity {
             //record selected people
             createRuleBtn.setVisibility(View.VISIBLE);
             timePopup.dismiss();
+            newRule.setThirdPartDays(selectedDays);
+            newRule.setThirdPartTime(selectedTimes);
             updateRuleString();
         }
     };
@@ -690,25 +702,25 @@ public class AddRuleActivity extends FragmentActivity {
 
             for (int i = 0; i < selectedDays.size(); i++) {
                 switch (selectedDays.get(i)) {
-                    case "Monday" :
+                    case "Mondays" :
                         monBtn.setAlpha(1);
                         break;
-                    case "Tuesday" :
+                    case "Tuesdays" :
                         tueBtn.setAlpha(1);
                         break;
-                    case "Wednesday" :
+                    case "Wednesdays" :
                         wedBtn.setAlpha(1);
                         break;
-                    case "Thursday" :
+                    case "Thursdays" :
                         thurBtn.setAlpha(1);
                         break;
-                    case "Friday" :
+                    case "Fridays" :
                         friBtn.setAlpha(1);
                         break;
-                    case "Saturday" :
+                    case "Saturdays" :
                         satBtn.setAlpha(1);
                         break;
-                    case "Sunday" :
+                    case "Sundays" :
                         sunBtn.setAlpha(1);
                         break;
                 }
@@ -719,11 +731,17 @@ public class AddRuleActivity extends FragmentActivity {
                 openTimePicker1Btn.setVisibility(View.INVISIBLE);
                 secondTimeContainer.setVisibility(View.INVISIBLE);
             } else if (option == "between") {
-                time1Title.setText("From ");
                 openTimePicker1Btn.setVisibility(View.VISIBLE);
                 secondTimeContainer.setVisibility(View.VISIBLE);
+                time1Title.setText("From ");
+                if (selectedTimes.get(0) != null)
+                    time1Text.setText(tf.format(selectedTimes.get(0)));
+                if (selectedTimes.get(1) != null)
+                    time2Text.setText(tf.format(selectedTimes.get(1)));
             } else {
                 time1Title.setText("Time ");
+                if (selectedTimes.get(0) != null)
+                    time1Text.setText(tf.format(selectedTimes.get(0)));
                 openTimePicker1Btn.setVisibility(View.VISIBLE);
                 secondTimeContainer.setVisibility(View.INVISIBLE);
             }
@@ -742,7 +760,7 @@ public class AddRuleActivity extends FragmentActivity {
 
         switch (newRule.getSecondPart()) {
             case "any":
-                rs = newRule.getFirstPart() + " schedule any events ";
+                rs = newRule.getFirstPart() + " schedule any events";
                 break;
             case "tagged as":
                 rs = newRule.getFirstPart() + " schedule events tagged as <tags>";
@@ -783,17 +801,40 @@ public class AddRuleActivity extends FragmentActivity {
 
         switch (newRule.getThirdPart()) {
             case "before":
-                rs += " before <date>.";
+                rs += " before ";
+                if (selectedTimes.size() > 0) {
+                    rs += tf.format(selectedTimes.get(0));
+                }
                 break;
             case "between":
-                rs += " between <date> and <date>.";
+                rs += " between ";
+                if (selectedTimes.size() > 1) {
+                    rs += tf.format(selectedTimes.get(0)) + " and " + tf.format(selectedTimes.get(1));
+                }
                 break;
             case "after":
-                rs += " after <date>.";
-                break;
-            case "on":
-                rs += " on <day/days>.";
-                break;
+                rs += " after ";
+                if (selectedTimes.size() > 0) {
+                    rs += tf.format(selectedTimes.get(0));
+                }
+
+        }
+
+        if(newRule.getThirdPart() != null) {
+            rs += " on ";
+            if (selectedDays.size() == 1) {
+                rs += selectedDays.get(0) + ".";
+            } else if (selectedDays.size() > 1) {
+                for (int i = 0; i < selectedDays.size(); i++) {
+                    rs += selectedDays.get(i);
+                    if (i == selectedDays.size() - 2)
+                        rs += " or ";
+                    else if (i != selectedDays.size() - 1)
+                        rs += ", ";
+                    else if (i == selectedDays.size() - 1)
+                        rs += ".";
+                }
+            }
         }
 
         newRule.setDescription(rs);
@@ -805,7 +846,8 @@ public class AddRuleActivity extends FragmentActivity {
     //================================================================================
 
     public void doCreateRule(View view) {
-        //do stuff
+        //add newRule to db
+        super.onBackPressed();
     }
 
 

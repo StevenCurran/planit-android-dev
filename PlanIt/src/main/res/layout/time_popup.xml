@@ -73,7 +73,6 @@
                     android:paddingLeft="37dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/planit_grey"
-                    android:layout_gravity="center"
                     android:textSize="9.5pt" />
 
                 <Button
