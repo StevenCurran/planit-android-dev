@@ -35,6 +35,7 @@ import com.planit.EventDuration;
 import com.planit.Participant;
 import com.planit.R;
 import com.planit.adapters.AttendeesArrayAdapter;
+import com.planit.constants.GlobalUserStore;
 import com.planit.constants.UrlServerConstants;
 import com.planit.utils.UrlParamUtils;
 import com.planit.utils.WebClient;
@@ -82,6 +83,7 @@ public class AddEventActivity extends FragmentActivity {
     private TextView durationTextView;
     private TextView preferredTextView;
     private Date startWindow;
+    private Button createEventButton;
     private DatePickerDialogFragment.DatePickerDialogHandler START_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
 
         final Calendar c = Calendar.getInstance();
@@ -208,8 +210,13 @@ public class AddEventActivity extends FragmentActivity {
         eventNameBox.setTypeface(uilFont);
         eventLocationBox = (EditText) findViewById(R.id.eventLocationBox);
         eventLocationBox.setTypeface(uilFont);
-        Button createEventButton = (Button) findViewById(R.id.createEventButton);
+        createEventButton = (Button) findViewById(R.id.createEventButton);
         createEventButton.setTypeface(uilFont);
+        createEventButton.setOnClickListener(CREATE_EVENT_LISTENER);
+
+        Button planitButton = (Button) findViewById(R.id.planitButton);
+        planitButton.setTypeface(uilFont);
+        planitButton.setClickable(false);
 
 
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -398,7 +405,7 @@ public class AddEventActivity extends FragmentActivity {
         }
     }
 
-    public void doCreateEvent(View view) {
+    public void doPlanit(View view) {
 
         //addEventToAndroidCal();
 
@@ -431,6 +438,7 @@ public class AddEventActivity extends FragmentActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String s2 = new String(responseBody);
+                createEventButton.setClickable(true);
                 System.out.println(s2);
             }
 
@@ -495,12 +503,12 @@ public class AddEventActivity extends FragmentActivity {
         ContentResolver contentResolver = getContentResolver();
         Cursor managedCursor = contentResolver.query(calendars, projection, null, null, null);
 
-            List<String> m_calendars = new ArrayList<>();
+        List<String> m_calendars = new ArrayList<>();
 
-            if (managedCursor.moveToFirst()){
-                String calName;
-                String calID;
-            int cont= 0;
+        if (managedCursor.moveToFirst()) {
+            String calName;
+            String calID;
+            int cont = 0;
             int nameCol = managedCursor.getColumnIndex(projection[1]);
             int idCol = managedCursor.getColumnIndex(projection[0]);
             do {
@@ -508,10 +516,24 @@ public class AddEventActivity extends FragmentActivity {
                 calID = managedCursor.getString(idCol);
                 m_calendars.add(calName + "," + calID);
                 cont++;
-            } while(managedCursor.moveToNext());
+            } while (managedCursor.moveToNext());
             managedCursor.close();
         }
         return Integer.parseInt(m_calendars.get(0).split(",")[1]);
 
     }
+
+    private View.OnClickListener CREATE_EVENT_LISTENER = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            RequestParams params = new RequestParams();
+            params.put("attendees", UrlParamUtils.addAttendees(attendees));
+            params.put("startDate", UrlParamUtils.addDate(startWindow));
+            params.put("endDate", UrlParamUtils.addDate(endWindow));
+            params.put("userid", GlobalUserStore.getUser().getUserId());
+            params.put("eventname", eventNameBox.getText().toString());
+
+            WebClient.post(UrlServerConstants.ADD_EVENT, params, new AsyncHttpResponseHandler());
+        }
+    };
 }

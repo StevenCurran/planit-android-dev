@@ -324,6 +324,30 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+    <Button
+        android:id="@+id/planitButton"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/green_button"
+        android:gravity="center_vertical"
+        android:onClick="doPlanit"
+        android:paddingBottom="10dp"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:paddingTop="10dp"
+        android:text="Plan it"
+        android:textColor="#FFFFFF"
+        android:textSize="11pt" />
+
     <Button
         android:id="@+id/createEventButton"
         style="?android:borderlessButtonStyle"
@@ -338,8 +362,10 @@
         android:paddingLeft="35dp"
         android:paddingRight="35dp"
         android:paddingTop="10dp"
-        android:text="Plan it"
+        android:text="Create Event"
         android:textColor="#FFFFFF"
         android:textSize="11pt" />
+
+    </LinearLayout>
 
 </LinearLayout>
