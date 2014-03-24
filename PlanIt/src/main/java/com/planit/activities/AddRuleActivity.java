@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
+import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.planit.Participant;
@@ -28,12 +31,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Gareth on 04/03/2014.
  */
-public class AddRuleActivity extends Activity {
+public class AddRuleActivity extends FragmentActivity {
 
     final Context context = this;
     Button tryToBtn;
@@ -63,13 +69,17 @@ public class AddRuleActivity extends Activity {
     EditText ruleNameBox;
     TextView withOrFromTitle;
     TextView whenTitle;
+    TextView time1Text;
+    TextView time2Text;
     LinearLayout eventTypeContainer;
     LinearLayout timeRuleContainer;
-    ArrayList<Integer> selectedPriorities;
     ArrayList secondPartDetails;
     ParticipantsArrayAdapter adapter;
     ArrayList<Participant> people = new ArrayList<>();
     ArrayList<Participant> attendingPeople = new ArrayList<>();
+    ArrayList<Integer> selectedPriorities = new ArrayList<>();
+    ArrayList<String> selectedDays = new ArrayList<>();
+    private SimpleDateFormat tf = new SimpleDateFormat("kk:mm");
     TextView ruleDescriptionContainer;
     private Gson gson = new Gson();
     Typeface uilFont;
@@ -124,7 +134,6 @@ public class AddRuleActivity extends Activity {
         newRule.setFirstPart("");
         newRule.setSecondPart("");
         newRule.setThirdPart("");
-        selectedPriorities = new ArrayList<Integer>();
 
     }
 
@@ -482,6 +491,133 @@ public class AddRuleActivity extends Activity {
     //================================================================================
     // Time
     //================================================================================
+    private RadialTimePickerDialog timePicker1;
+    private RadialTimePickerDialog timePicker2;
+    private Date time1;
+    private Date time2;
+    Calendar instance = Calendar.getInstance();
+    private RadialTimePickerDialog.OnTimeSetListener TIME_CALLBACK1 = new RadialTimePickerDialog.OnTimeSetListener() {
+
+        final Calendar c = Calendar.getInstance();
+
+        @Override
+        public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
+            c.set(0, 0, 0, i, i2);
+            time1 = c.getTime();
+            time1Text.setText(tf.format(time1));
+
+        }
+    };
+
+    private RadialTimePickerDialog.OnTimeSetListener TIME_CALLBACK2 = new RadialTimePickerDialog.OnTimeSetListener() {
+
+        final Calendar c = Calendar.getInstance();
+
+        @Override
+        public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
+            c.set(0, 0, 0, i, i2);
+            time2 = c.getTime();
+            time2Text.setText(tf.format(time2));
+
+        }
+    };
+
+    private View.OnClickListener openTimePicker1 = new View.OnClickListener() {
+        public void onClick(View v) {
+            timePicker1.show(getSupportFragmentManager(), "Pick Time");
+        }
+    };
+
+    private View.OnClickListener openTimePicker2 = new View.OnClickListener() {
+        public void onClick(View v) {
+            timePicker2.show(getSupportFragmentManager(), "Pick Time");
+        }
+    };
+
+    private View.OnClickListener select_time_button_click_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            //record selected days
+
+            switch (v.getId()) {
+                case R.id.monButton:
+                    if (monBtn.getAlpha() == 1) {
+                        monBtn.setAlpha((float) 0.5);
+                        selectedDays.remove("Monday");
+                    } else {
+                        monBtn.setAlpha(1);
+                        //add to array
+                        selectedDays.add("Monday");
+                    }
+                    break;
+                case R.id.tueButton:
+                    if (tueBtn.getAlpha() == 1) {
+                        tueBtn.setAlpha((float) 0.5);
+                        //remove from array
+                        selectedDays.remove("Tuesday");
+                    } else {
+                        tueBtn.setAlpha(1);
+                        //add to array
+                        selectedDays.add("Tuesday");
+                    }
+                    break;
+                case R.id.wedButton:
+                    if (wedBtn.getAlpha() == 1) {
+                        wedBtn.setAlpha((float) 0.5);
+                        //remove from array
+                        selectedDays.remove("Wednesday");
+                    } else {
+                        wedBtn.setAlpha(1);
+                        //add to array
+                        selectedDays.add("Wednesday");
+                    }
+                    break;
+                case R.id.thurButton:
+                    if (thurBtn.getAlpha() == 1) {
+                        thurBtn.setAlpha((float) 0.5);
+                        //remove from array
+                        selectedDays.remove("Thursday");
+                    } else {
+                        thurBtn.setAlpha(1);
+                        //add to array
+                        selectedDays.add("Thursday");
+                    }
+                    break;
+                case R.id.friButton:
+                    if (friBtn.getAlpha() == 1) {
+                        friBtn.setAlpha((float) 0.5);
+                        //remove from array
+                        selectedDays.remove("Friday");
+                    } else {
+                        friBtn.setAlpha(1);
+                        //add to array
+                        selectedDays.add("Friday");
+                    }
+                    break;
+                case R.id.satButton:
+                    if (satBtn.getAlpha() == 1) {
+                        satBtn.setAlpha((float) 0.5);
+                        //remove from array
+                        selectedDays.remove("Saturday");
+                    } else {
+                        satBtn.setAlpha(1);
+                        //add to array
+                        selectedDays.add("Saturday");
+                    }
+                    break;
+                case R.id.sunButton:
+                    if (sunBtn.getAlpha() == 1) {
+                        sunBtn.setAlpha((float) 0.5);
+                        //remove from array
+                        selectedDays.remove("Sunday");
+                    } else {
+                        sunBtn.setAlpha(1);
+                        //add to array
+                        selectedDays.add("Sunday");
+                    }
+                    break;
+            }
+        }
+    };
 
     private PopupWindow timePopup;
     private View.OnClickListener done_time_button_click_listener = new View.OnClickListener() {
@@ -493,6 +629,11 @@ public class AddRuleActivity extends Activity {
         }
     };
 
+    TextView time1Title;
+    TextView time2Title;
+    TextView daysTitle;
+    LinearLayout secondTimeContainer;
+
     private void initiateTimePopupWindow(String option) {
         try {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -502,6 +643,18 @@ public class AddRuleActivity extends Activity {
 
             TextView timePopUpTitle = (TextView) layout.findViewById(R.id.timePopupTitle);
             timePopUpTitle.setTypeface(uilFont);
+            time1Title = (TextView) layout.findViewById(R.id.time1Header);
+            time1Title.setTypeface(uilFont);
+            time2Title = (TextView) layout.findViewById(R.id.time2Header);
+            time2Title.setTypeface(uilFont);
+            daysTitle = (TextView) layout.findViewById(R.id.dayHeader);
+            daysTitle.setTypeface(uilFont);
+            secondTimeContainer = (LinearLayout) layout.findViewById(R.id.secondTimeContainer);
+
+            time1Text = (TextView) layout.findViewById(R.id.time1Text);
+            time1Text.setTypeface(uilFont);
+            time2Text = (TextView) layout.findViewById(R.id.time2Text);
+            time2Text.setTypeface(uilFont);
             Button doneTimePeopleButton = (Button) layout.findViewById(R.id.doneSelectTimeButton);
             doneTimePeopleButton.setTypeface(uilFont);
             doneTimePeopleButton.setOnClickListener(done_time_button_click_listener);
@@ -514,12 +667,66 @@ public class AddRuleActivity extends Activity {
             satBtn = (Button) layout.findViewById(R.id.satButton);
             sunBtn = (Button) layout.findViewById(R.id.sunButton);
             monBtn.setTypeface(uilFont);
+            monBtn.setOnClickListener(select_time_button_click_listener);
             tueBtn.setTypeface(uilFont);
+            tueBtn.setOnClickListener(select_time_button_click_listener);
             wedBtn.setTypeface(uilFont);
+            wedBtn.setOnClickListener(select_time_button_click_listener);
             thurBtn.setTypeface(uilFont);
+            thurBtn.setOnClickListener(select_time_button_click_listener);
             friBtn.setTypeface(uilFont);
+            friBtn.setOnClickListener(select_time_button_click_listener);
             satBtn.setTypeface(uilFont);
+            satBtn.setOnClickListener(select_time_button_click_listener);
             sunBtn.setTypeface(uilFont);
+            sunBtn.setOnClickListener(select_time_button_click_listener);
+
+            Button openTimePicker1Btn = (Button) layout.findViewById(R.id.addTime1Button);
+            openTimePicker1Btn.setOnClickListener(openTimePicker1);
+            timePicker1 = RadialTimePickerDialog.newInstance(TIME_CALLBACK1, instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
+            Button openTimePicker2Btn = (Button) layout.findViewById(R.id.addTime2Button);
+            openTimePicker2Btn.setOnClickListener(openTimePicker2);
+            timePicker2 = RadialTimePickerDialog.newInstance(TIME_CALLBACK2, instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
+
+            for (int i = 0; i < selectedDays.size(); i++) {
+                switch (selectedDays.get(i)) {
+                    case "Monday" :
+                        monBtn.setAlpha(1);
+                        break;
+                    case "Tuesday" :
+                        tueBtn.setAlpha(1);
+                        break;
+                    case "Wednesday" :
+                        wedBtn.setAlpha(1);
+                        break;
+                    case "Thursday" :
+                        thurBtn.setAlpha(1);
+                        break;
+                    case "Friday" :
+                        friBtn.setAlpha(1);
+                        break;
+                    case "Saturday" :
+                        satBtn.setAlpha(1);
+                        break;
+                    case "Sunday" :
+                        sunBtn.setAlpha(1);
+                        break;
+                }
+            }
+
+            if (option == "on") {
+                time1Text.setText("All Day");
+                openTimePicker1Btn.setVisibility(View.INVISIBLE);
+                secondTimeContainer.setVisibility(View.INVISIBLE);
+            } else if (option == "between") {
+                time1Title.setText("From ");
+                openTimePicker1Btn.setVisibility(View.VISIBLE);
+                secondTimeContainer.setVisibility(View.VISIBLE);
+            } else {
+                time1Title.setText("Time ");
+                openTimePicker1Btn.setVisibility(View.VISIBLE);
+                secondTimeContainer.setVisibility(View.INVISIBLE);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
