@@ -123,6 +123,7 @@ public class ScheduleActivity extends Activity {
                         e.setStartDate(new Date(o.getLong("startDate")));
                         e.setEndDate(new Date(o.getLong("endDate")));
                         e.setTitle(o.getString("name"));
+                        e.setId(o.getString("eventId"));
 
                         events.add(e);
                     }

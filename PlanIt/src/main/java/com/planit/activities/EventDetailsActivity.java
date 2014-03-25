@@ -1,16 +1,34 @@
 package com.planit.activities;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.planit.Event;
 import com.planit.R;
 import com.planit.adapters.AttendeesArrayAdapter;
+import com.planit.constants.UrlServerConstants;
+import com.planit.utils.WebClient;
 
+import org.joda.time.DateTime;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 
 
@@ -30,6 +48,7 @@ public class EventDetailsActivity extends Activity {
     private it.sephiroth.android.library.widget.HListView listview;
     private SimpleDateFormat tf = new SimpleDateFormat("EEEE dd MMMM yyyy");
     private SimpleDateFormat df = new SimpleDateFormat("kk:mm");
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +75,7 @@ public class EventDetailsActivity extends Activity {
 
         extras = getIntent().getExtras();
         if (extras != null) {
-            int eventId = extras.getInt("eventId");
+            String eventId = extras.getString("eventId");
             setDetails(eventId);
         }
 
@@ -64,41 +83,57 @@ public class EventDetailsActivity extends Activity {
 
     }
 
-    public void setDetails(int eventId) {
+    public void setDetails(String eventId) {
 
         //get event info from server using eventId;
-        Event e = new Event(); //change this to server object and uncomment below
+        final Event[] e = {new Event()}; //change this to server object and uncomment below
 
-//        eventName.setText(e.getTitle());
-//        eventLocation.setText(e.getLocation());
-//        eventDate.setText(df.format(e.getStartDate()));
-//        eventTime.setText(tf.format(e.getStartDate()) + tf.format(e.getEndDate()));
-//
-//        switch (e.getPriority()) {
-//            case 1:
-//                priorityIndicator.setBackgroundResource(R.drawable.priority_one_button);
-//                priorityIndicator.setText("1");
-//                break;
-//            case 2:
-//                priorityIndicator.setBackgroundResource(R.drawable.priority_two_button);
-//                priorityIndicator.setText("2");
-//                break;
-//            case 3:
-//                priorityIndicator.setBackgroundResource(R.drawable.priority_three_button);
-//                priorityIndicator.setText("3");
-//                break;
-//            case 4:
-//                priorityIndicator.setBackgroundResource(R.drawable.priority_four_button);
-//                priorityIndicator.setText("4");
-//                break;
-//            case 5:
-//                priorityIndicator.setBackgroundResource(R.drawable.priority_five_button);
-//                priorityIndicator.setText("5");
-//                break;
-//        }
-//
-//        adapter = new AttendeesArrayAdapter(context, e.getParticipants());
-//        listview.setAdapter(adapter);
+        RequestParams params = new RequestParams();
+        params.put("eventid", eventId);
+
+
+        WebClient.get(UrlServerConstants.GET_EVENT, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Event e = gson.fromJson(response.toString(), Event.class);
+
+                eventName.setText(e.getTitle());
+                eventLocation.setText(e.getLocation());
+                eventDate.setText(df.format(e.getStartDate()));
+                eventTime.setText(tf.format(e.getStartDate()) + tf.format(e.getEndDate()));
+
+                switch (e.getPriority()) {
+                    case 1:
+                        priorityIndicator.setBackgroundResource(R.drawable.priority_one_button);
+                        priorityIndicator.setText("1");
+                        break;
+                    case 2:
+                        priorityIndicator.setBackgroundResource(R.drawable.priority_two_button);
+                        priorityIndicator.setText("2");
+                        break;
+                    case 3:
+                        priorityIndicator.setBackgroundResource(R.drawable.priority_three_button);
+                        priorityIndicator.setText("3");
+                        break;
+                    case 4:
+                        priorityIndicator.setBackgroundResource(R.drawable.priority_four_button);
+                        priorityIndicator.setText("4");
+                        break;
+                    case 5:
+                        priorityIndicator.setBackgroundResource(R.drawable.priority_five_button);
+                        priorityIndicator.setText("5");
+                        break;
+                }
+
+                adapter = new AttendeesArrayAdapter(context, e.getParticipants());
+                listview.setAdapter(adapter);
+            }
+
+        });
+
+
     }
+
+
 
 }
