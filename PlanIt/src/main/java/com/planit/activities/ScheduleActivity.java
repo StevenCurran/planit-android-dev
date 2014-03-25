@@ -13,9 +13,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.planit.Event;
 import com.planit.R;
 import com.planit.adapters.ScheduleArrayAdaptor;
+import com.planit.constants.GlobalUserStore;
 import com.planit.constants.UrlServerConstants;
 import com.planit.utils.WebClient;
 
@@ -106,8 +108,11 @@ public class ScheduleActivity extends Activity {
         final ArrayList<Event> events = new ArrayList<>();
         final Date localDate = date;
 
+        RequestParams params = new RequestParams();
+        params.put("userid", GlobalUserStore.getUser().getUserId());
 
-        WebClient.get(UrlServerConstants.GOOGLE_EVENTS, null, new JsonHttpResponseHandler() {
+
+        WebClient.get(UrlServerConstants.GOOGLE_EVENTS, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(JSONArray response) {
