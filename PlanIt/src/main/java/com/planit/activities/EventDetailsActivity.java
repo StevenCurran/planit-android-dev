@@ -23,6 +23,7 @@ import com.planit.Event;
 import com.planit.R;
 import com.planit.adapters.AttendeesArrayAdapter;
 import com.planit.constants.UrlServerConstants;
+import com.planit.utils.EventReader;
 import com.planit.utils.WebClient;
 
 import org.joda.time.DateTime;
@@ -95,7 +96,7 @@ public class EventDetailsActivity extends Activity {
         WebClient.get(UrlServerConstants.GET_EVENT, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
-                Event e = gson.fromJson(response.toString(), Event.class);
+                Event e = EventReader.read(response);
 
                 eventName.setText(e.getTitle());
                 eventLocation.setText(e.getLocation());
