@@ -40,7 +40,6 @@
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
             android:paddingTop="5dp"
-            android:text="Event Name"
             android:textColor="@color/planit_blue"
             android:textSize="10pt" />
 
@@ -51,7 +50,6 @@
             android:paddingLeft="15dp"
             android:paddingTop="5dp"
             android:textColor="@color/planit_green"
-            android:text="Event Location"
             android:textSize="9pt" />
     </LinearLayout>
 
@@ -62,7 +60,6 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/priority_one_button"
         android:textColor="@color/white"
-        android:text="1"
         android:textSize="25dp" />
 
     </LinearLayout>
@@ -73,7 +70,6 @@
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
         android:paddingTop="10dp"
-        android:text="Monday 24th March 2014"
         android:textColor="@color/planit_grey"
         android:textSize="8pt" />
 
@@ -83,7 +79,6 @@
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
         android:paddingTop="10dp"
-        android:text="13:00 - 14:00"
         android:textColor="@color/planit_grey"
         android:textSize="7pt" />
 
@@ -94,7 +89,6 @@
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
         android:paddingTop="15dp"
-        android:text="Attendees"
         android:textColor="@color/planit_blue"
         android:textSize="10pt" />
 
