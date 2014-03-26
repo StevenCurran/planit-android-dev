@@ -16,6 +16,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.planit.R;
 import com.planit.activities.AddLinkedAccountActivity;
+import com.planit.activities.NotificationsActivity;
 
 /**
  * This {@code IntentService} does the actual handling of the GCM message.
@@ -55,7 +56,7 @@ public class GcmIntentService extends IntentService {
                 // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // This loop represents the service doing some work.
-                sendNotification("Received: " + extras.getString("data"));
+                sendNotification(extras.getString("data"));
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }
@@ -71,7 +72,7 @@ public class GcmIntentService extends IntentService {
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, AddLinkedAccountActivity.class), 0);
+                new Intent(this, NotificationsActivity.class), 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
