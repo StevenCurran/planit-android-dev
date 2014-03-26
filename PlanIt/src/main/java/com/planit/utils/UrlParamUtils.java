@@ -50,6 +50,20 @@ public class UrlParamUtils {
     }
 
     public static String addDuration(EventDuration eventDuration) {
-        return "1";
+        int hours = eventDuration.getHours();
+        int minutes = eventDuration.getMinutes();
+        int blocks = 0;
+
+        blocks = blocks + (hours * 2);
+
+        if (minutes > 0) {
+            if (minutes < 31) {
+                blocks = blocks + 1;
+            } else {
+                blocks = blocks + 2;
+            }
+        }
+
+        return Integer.toString(blocks);
     }
 }
