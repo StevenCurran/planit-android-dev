@@ -45,6 +45,10 @@
 
         <activity android:name=".activities.AddParticipantActivity" />
 
+        <activity android:name=".activities.EventDetailsActivity" />
+
+        <activity android:name=".activities.RescheduleActivity" />
+
         <activity android:name=".gcm.DemoActivity" />
 
         <!--

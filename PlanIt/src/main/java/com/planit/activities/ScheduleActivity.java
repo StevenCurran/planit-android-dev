@@ -6,15 +6,18 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.planit.Event;
 import com.planit.R;
 import com.planit.adapters.ScheduleArrayAdaptor;
+import com.planit.constants.GlobalUserStore;
 import com.planit.constants.UrlServerConstants;
 import com.planit.utils.WebClient;
 
@@ -93,8 +96,6 @@ public class ScheduleActivity extends Activity {
 
             }
         });
-
-
     }
 
     public void doNewEvent(View view) {
@@ -107,8 +108,11 @@ public class ScheduleActivity extends Activity {
         final ArrayList<Event> events = new ArrayList<>();
         final Date localDate = date;
 
+        RequestParams params = new RequestParams();
+        params.put("userid", GlobalUserStore.getUser().getUserId());
 
-        WebClient.get(UrlServerConstants.GOOGLE_EVENTS, null, new JsonHttpResponseHandler() {
+
+        WebClient.get(UrlServerConstants.GOOGLE_EVENTS, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(JSONArray response) {
@@ -124,6 +128,7 @@ public class ScheduleActivity extends Activity {
                         e.setStartDate(new Date(o.getLong("startDate")));
                         e.setEndDate(new Date(o.getLong("endDate")));
                         e.setTitle(o.getString("name"));
+                        e.setId(o.getString("eventId"));
 
                         events.add(e);
                     }

@@ -11,7 +11,7 @@ public class User {
 
     private String lastName;
     private String firstName;
-    private String providerId;
+    private String userId; //may need to be providerId
     private String email;
     private String profileUrl;
     private String deviceId;
@@ -19,7 +19,7 @@ public class User {
     private transient BitmapDrawable image;
 
     public User(Person person) {
-        this.providerId = person.getId();
+        this.userId = person.getId();
         this.firstName = person.getName().getGivenName();
         this.lastName = person.getName().getFamilyName();
         this.email = person.getEmails().get(0).getValue().toString();
@@ -39,11 +39,11 @@ public class User {
     }
 
     public String getUserId() {
-        return providerId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        this.providerId = userId;
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -68,11 +68,11 @@ public class User {
     }
 
     public String getId() {
-        return providerId;
+        return userId;
     }
 
     public void setId(String id) {
-        this.providerId = id;
+        this.userId= id;
     }
 
     public BitmapDrawable getImage() {

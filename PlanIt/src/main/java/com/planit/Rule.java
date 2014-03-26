@@ -2,6 +2,7 @@ package com.planit;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Gareth on 03/03/2014.
@@ -16,6 +17,24 @@ public class Rule {
     private String secondPart;
     private String thirdPart;
     private ArrayList<Object> secondPartDetail;
+    private ArrayList<Date> thirdPartTime;
+    private ArrayList<String> thirdPartDays;
+
+    public ArrayList<Date> getThirdPartTime() {
+        return thirdPartTime;
+    }
+
+    public void setThirdPartTime(ArrayList<Date> thirdPartTime) {
+        this.thirdPartTime = thirdPartTime;
+    }
+
+    public ArrayList<String> getThirdPartDays() {
+        return thirdPartDays;
+    }
+
+    public void setThirdPartDays(ArrayList<String> thirdPartDays) {
+        this.thirdPartDays = thirdPartDays;
+    }
 
     public String getFirstPart() {
         return firstPart;

@@ -5,8 +5,18 @@ package com.planit;
  */
 public class Notification {
 
+    private int id;
     private String title;
     private String details;
+    private int[] conflicts;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -22,5 +32,13 @@ public class Notification {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public int[] getConflicts() {
+        return conflicts;
+    }
+
+    public void setConflicts(int[] conflicts) {
+        this.conflicts = conflicts;
     }
 }

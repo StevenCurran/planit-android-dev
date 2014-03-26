@@ -52,35 +52,28 @@
             android:layout_height="490px"
             android:orientation="vertical">
 
-            <LinearLayout
+            <LinearLayout android:id="@+id/firstTimeContainer"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="14dp"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/time1Header"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:paddingTop="3dp"
+                    android:text="Time "
+                    android:textColor="@color/planit_green"
+                    android:textSize="8pt" />
 
-                    <TextView
-                        android:id="@+id/time1Header"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="3dp"
-                        android:text="Time"
-                        android:textColor="@color/planit_green"
-                        android:textSize="7.5pt" />
-
-                    <TextView
-                        android:id="@+id/time1Text"
-                        android:layout_width="205dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="26dp"
-                        android:textColor="@color/black"
-                        android:textSize="7pt" />
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/time1Text"
+                    android:layout_width="140dp"
+                    android:paddingLeft="37dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/planit_grey"
+                    android:textSize="9.5pt" />
 
                 <Button
                     android:id="@+id/addTime1Button"
@@ -91,35 +84,29 @@
                     android:background="@drawable/time_button"/>
             </LinearLayout>
 
-            <LinearLayout
+            <LinearLayout android:id="@+id/secondTimeContainer"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="14dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="invisible">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/time2Header"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:paddingTop="3dp"
+                    android:text="To "
+                    android:textColor="@color/planit_green"
+                    android:textSize="8pt" />
 
-                    <TextView
-                        android:id="@+id/time2Header"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="3dp"
-                        android:text="End Time"
-                        android:textColor="@color/planit_green"
-                        android:textSize="7.5pt" />
-
-                    <TextView
-                        android:id="@+id/time2Text"
-                        android:layout_width="205dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="26dp"
-                        android:textColor="@color/black"
-                        android:textSize="7pt" />
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/time2Text"
+                    android:layout_width="140dp"
+                    android:paddingLeft="37dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/planit_grey"
+                    android:textSize="9.5pt" />
 
                 <Button
                     android:id="@+id/addTime2Button"

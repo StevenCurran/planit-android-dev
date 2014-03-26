@@ -20,8 +20,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
-import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
-import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 import com.doomonafireball.betterpickers.hmspicker.HmsPickerBuilder;
 import com.doomonafireball.betterpickers.hmspicker.HmsPickerDialogFragment;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
@@ -33,6 +31,7 @@ import com.loopj.android.http.RequestParams;
 import com.planit.Event;
 import com.planit.EventDuration;
 import com.planit.Participant;
+import com.planit.QueryResponse;
 import com.planit.R;
 import com.planit.adapters.AttendeesArrayAdapter;
 import com.planit.constants.GlobalUserStore;
@@ -45,6 +44,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,65 +58,78 @@ import java.util.TimeZone;
 public class AddEventActivity extends FragmentActivity {
 
     final Context context = this;
-    private View.OnClickListener proceed_button_click_listener = new View.OnClickListener() {
-        public void onClick(View v) {
-            //server fings
-            conflictsPopup.dismiss();
-            Intent intent = new Intent(context, ScheduleActivity.class);
-            startActivity(intent);
-        }
-    };
     EditText eventNameBox;
     EditText eventLocationBox;
     AttendeesArrayAdapter adapter;
     ArrayList<Participant> attendees = new ArrayList<>();
     Typeface uilFont;
     Typeface uiFont;
+    DateFormat queryDF = new SimpleDateFormat("EE d MMMM yyy - kk:mm");
     private Bundle b = new Bundle();
     private Gson gson = new Gson();
-    private DatePickerBuilder startDpb;
-    private DatePickerBuilder endDpb;
-    private RadialTimePickerDialog timePicker;
+    private CalendarDatePickerDialog startDpb;
+    private CalendarDatePickerDialog endDpb;
+    private RadialTimePickerDialog startTimePicker;
+    private RadialTimePickerDialog endTimePicker;
     private HmsPickerBuilder durationPicker;
     private TextView startDateTextView;
     private TextView endDateTextView;
     private TextView durationTextView;
-    private TextView preferredTextView;
-    private Date startWindow;
     private Button createEventButton;
-    private DatePickerDialogFragment.DatePickerDialogHandler START_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
-
-        final Calendar c = Calendar.getInstance();
-
+    private Date startWindow;
+    private CalendarDatePickerDialog.OnDateSetListener START_WINDOW_HANDLER = new CalendarDatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDialogDateSet(int i, int i2, int i3, int i4) {
-            c.set(i2, i3, i4);
+        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
+            final Calendar c = Calendar.getInstance();
+
+            c.set(i, i2, i3);
             startWindow = c.getTime();
-            startDateTextView.setText(df.format(startWindow));
+            //then open start date
+            openStartTimePicker();
         }
     };
+
     private Date endWindow;
-    private DatePickerDialogFragment.DatePickerDialogHandler END_WINDOW_HANDLER = new DatePickerDialogFragment.DatePickerDialogHandler() {
-
-        final Calendar c = Calendar.getInstance();
-
+    private CalendarDatePickerDialog.OnDateSetListener END_WINDOW_HANDLER = new CalendarDatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDialogDateSet(int i, int i2, int i3, int i4) {
-            c.set(i2, i3, i4);
+        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
+            final Calendar c = Calendar.getInstance();
+
+            c.set(i, i2, i3);
             endWindow = c.getTime();
-            endDateTextView.setText(df.format(endWindow));
+            //then open start date
+            openEndTimePicker();
         }
     };
-    private Date preferredTime;
-    private RadialTimePickerDialog.OnTimeSetListener TIME_CALLBACK = new RadialTimePickerDialog.OnTimeSetListener() {
+
+    private Date startTime;
+    private RadialTimePickerDialog.OnTimeSetListener START_TIME_CALLBACK = new RadialTimePickerDialog.OnTimeSetListener() {
 
         final Calendar c = Calendar.getInstance();
 
         @Override
         public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
             c.set(0, 0, 0, i, i2);
-            preferredTime = c.getTime();
-            preferredTextView.setText(tf.format(preferredTime));
+            startTime = c.getTime();
+            //generate a start date string
+            startDateTextView.setText(df.format(startWindow) + " '" + dfy.format(startWindow) + " - " + tf.format(startTime));
+            startWindow.setHours(startTime.getHours());
+            startWindow.setMinutes(startTime.getMinutes());
+        }
+    };
+    private Date endTime;
+    private RadialTimePickerDialog.OnTimeSetListener END_TIME_CALLBACK = new RadialTimePickerDialog.OnTimeSetListener() {
+
+        final Calendar c = Calendar.getInstance();
+
+        @Override
+        public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
+            c.set(0, 0, 0, i, i2);
+            endTime = c.getTime();
+            //generate an end date string
+            endDateTextView.setText(df.format(endWindow) + " '" + dfy.format(endWindow) + " - " + tf.format(endTime));
+            endWindow.setHours(endTime.getHours());
+            endWindow.setMinutes(endTime.getMinutes());
         }
     };
     private EventDuration eventDuration;
@@ -163,13 +176,51 @@ public class AddEventActivity extends FragmentActivity {
             durationTextView.setText(hoursString + durationSeperator + minutesString);
         }
     };
-    private SimpleDateFormat df = new SimpleDateFormat("E d MMM yyy");
+    private SimpleDateFormat df = new SimpleDateFormat("d MMM");
+    private SimpleDateFormat dfy = new SimpleDateFormat("yy");
     private SimpleDateFormat tf = new SimpleDateFormat("kk:mm");
     private int eventPriority;
-    private PopupWindow conflictsPopup;
+    private View.OnClickListener proceed_button_click_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+
+
+            // addEventToAndroidCal();
+
+            Event e = new Event();
+            e.setTitle(eventNameBox.getText().toString());
+            e.setLocation(eventLocationBox.getText().toString());
+            e.setStartDate(startWindow);
+            e.setEndDate(endWindow);
+            e.setDuration(eventDuration);
+            e.setPriority(eventPriority);
+            e.setParticipants(attendees);
+
+
+            RequestParams params = new RequestParams();
+            params.put("attendees", UrlParamUtils.addAttendees(attendees));
+            params.put("startDate", UrlParamUtils.addDate(startWindow));
+            params.put("endDate", UrlParamUtils.addDate(endWindow));
+            params.put("userid", GlobalUserStore.getUser().getUserId());
+            params.put("eventname", eventNameBox.getText().toString());
+
+            WebClient.post(UrlServerConstants.ADD_EVENT, params, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    System.out.println("Succes!");
+                    super.onSuccess(statusCode, headers, responseBody);
+                }
+            });
+
+
+            creationResponsePopup.dismiss();
+            //  Intent intent = new Intent(context, ScheduleActivity.class);
+            //  startActivity(intent);
+        }
+    };
+    private PopupWindow creationResponsePopup;
     private View.OnClickListener cancel_button_click_listener = new View.OnClickListener() {
         public void onClick(View v) {
-            conflictsPopup.dismiss();
+            creationResponsePopup.dismiss();
         }
     };
 
@@ -192,16 +243,12 @@ public class AddEventActivity extends FragmentActivity {
         endHeaderText.setTypeface(uilFont);
         TextView durationTimeHeader = (TextView) findViewById(R.id.durationTextheader);
         durationTimeHeader.setTypeface(uilFont);
-        TextView preferredTimeHeader = (TextView) findViewById(R.id.preferredTimeHeader);
-        preferredTimeHeader.setTypeface(uilFont);
         startDateTextView = (TextView) findViewById(R.id.startDateText);
         startDateTextView.setTypeface(uilFont);
         endDateTextView = (TextView) findViewById(R.id.endDateText);
         endDateTextView.setTypeface(uilFont);
         durationTextView = (TextView) findViewById(R.id.durationText);
         durationTextView.setTypeface(uilFont);
-        preferredTextView = (TextView) findViewById(R.id.preferredTimeText);
-        preferredTextView.setTypeface(uilFont);
         TextView priorityTitle = (TextView) findViewById(R.id.priorityTitle);
         priorityTitle.setTypeface(uilFont);
         TextView attendeesTitle = (TextView) findViewById(R.id.attendeesTitle);
@@ -210,49 +257,47 @@ public class AddEventActivity extends FragmentActivity {
         eventNameBox.setTypeface(uilFont);
         eventLocationBox = (EditText) findViewById(R.id.eventLocationBox);
         eventLocationBox.setTypeface(uilFont);
-        createEventButton = (Button) findViewById(R.id.createEventButton);
-        createEventButton.setTypeface(uilFont);
-        createEventButton.setOnClickListener(CREATE_EVENT_LISTENER);
+//        createEventButton = (Button) findViewById(R.id.createEventButton);
+//        createEventButton.setTypeface(uilFont);
+//        createEventButton.setOnClickListener(CREATE_EVENT_LISTENER);
 
         Button planitButton = (Button) findViewById(R.id.planitButton);
         planitButton.setTypeface(uilFont);
-        planitButton.setClickable(false);
-
 
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        startDpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(year).setFragmentManager(getSupportFragmentManager()).addDatePickerDialogHandler(START_WINDOW_HANDLER);
-        endDpb = new DatePickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light).setYear(year).setFragmentManager(getSupportFragmentManager()).addDatePickerDialogHandler(END_WINDOW_HANDLER);
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+
+        startDpb = CalendarDatePickerDialog.newInstance(START_WINDOW_HANDLER, year, month, day);
+        endDpb = CalendarDatePickerDialog.newInstance(END_WINDOW_HANDLER, year, month, day);
         durationPicker = new HmsPickerBuilder().setStyleResId(R.style.BetterPickersDialogFragment_Light);
         durationPicker.setFragmentManager(getSupportFragmentManager());
         durationPicker.addHmsPickerDialogHandler(EVENT_DURATION_HANDLER);
         Calendar instance = Calendar.getInstance();
-        timePicker = RadialTimePickerDialog.newInstance(TIME_CALLBACK, instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
+        startTimePicker = RadialTimePickerDialog.newInstance(START_TIME_CALLBACK, instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
+        endTimePicker = RadialTimePickerDialog.newInstance(END_TIME_CALLBACK, instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE), true);
 
         it.sephiroth.android.library.widget.HListView listview = (it.sephiroth.android.library.widget.HListView) findViewById(R.id.attendeesList);
         adapter = new AttendeesArrayAdapter(context, getAttendees());
         listview.setAdapter(adapter);
 
-        CalendarDatePickerDialog diag = CalendarDatePickerDialog.newInstance(new CalendarDatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
-                System.out.println(i);
-            }
-        }, 2014, 12, 4);
-
-        diag.show(getSupportFragmentManager(), "Hello");
 
     }
 
     public void openStartWindowPicker(View view) {
-        startDpb.show();
+        startDpb.show(getSupportFragmentManager(), "Pick Date");
     }
 
     public void openEndWindowPicker(View view) {
-        endDpb.show();
+        endDpb.show(getSupportFragmentManager(), "Pick Date");
     }
 
-    public void openTimePicker(View view) {
-        timePicker.show(getSupportFragmentManager(), "Pick Time");
+    public void openStartTimePicker() {
+        startTimePicker.show(getSupportFragmentManager(), "Pick Time");
+    }
+
+    public void openEndTimePicker() {
+        endTimePicker.show(getSupportFragmentManager(), "Pick Time");
     }
 
     public void openDurationPicker(View view) {
@@ -380,18 +425,29 @@ public class AddEventActivity extends FragmentActivity {
 
     }
 
-    private void initiateConflictPopupWindow(String message) {
+    private void initiateResponsePopupWindow(QueryResponse response) {
         try {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.event_conflict_popup, (ViewGroup) findViewById(R.layout.add_event), false);
-            conflictsPopup = new PopupWindow(layout, 600, 400);
-            conflictsPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+            View layout = inflater.inflate(R.layout.event_creation_popup, (ViewGroup) findViewById(R.layout.add_event), false);
+            creationResponsePopup = new PopupWindow(layout, 600, 400);
+            creationResponsePopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
-            TextView conflictTitle = (TextView) layout.findViewById(R.id.conflictTitle);
-            conflictTitle.setTypeface(uilFont);
-            TextView conflictDetails = (TextView) layout.findViewById(R.id.conflictDetails);
-            conflictDetails.setTypeface(uilFont);
-            conflictDetails.setText(message);
+            TextView creationTitle = (TextView) layout.findViewById(R.id.eventPopupTitle);
+            creationTitle.setTypeface(uilFont);
+            TextView bestTimeDetails = (TextView) layout.findViewById(R.id.bestTimeDetails);
+            bestTimeDetails.setTypeface(uilFont);
+            TextView additionalDetails = (TextView) layout.findViewById(R.id.additionalDetails);
+            additionalDetails.setTypeface(uilFont);
+
+            bestTimeDetails.setText(queryDF.format(response.getSuggestedDate()));
+
+            if (response.getConflictingEvents().size() > 0) {
+                String message = "This date would cause " + response.getConflictingEvents().size() + " people to reschedule other events.";
+                additionalDetails.setText(message);
+            } else {
+                String message = "This date doesn't cause conflicts in anyone's schedule.";
+                additionalDetails.setText(message);
+            }
 
             Button proceedBtn = (Button) layout.findViewById(R.id.proceedWithEventCreationButton);
             proceedBtn.setTypeface(uilFont);
@@ -407,54 +463,45 @@ public class AddEventActivity extends FragmentActivity {
 
     public void doPlanit(View view) {
 
-        //addEventToAndroidCal();
-
-        Event e = new Event();
-        e.setTitle(eventNameBox.getText().toString());
-        e.setLocation(eventLocationBox.getText().toString());
-        e.setStartDate(startWindow);
-        e.setEndDate(endWindow);
-        e.setDuration(eventDuration);
-        e.setPreferredTime(preferredTime);
-        e.setPriority(eventPriority);
-        e.setParticipants(attendees);
-
+        //do server stuff - get response with a date and conflict IDs
 
         RequestParams params = new RequestParams();
         params.put("attendees", UrlParamUtils.addAttendees(attendees));
         params.put("startDate", UrlParamUtils.addDate(startWindow));
         params.put("endDate", UrlParamUtils.addDate(endWindow));
+        params.put("userid", GlobalUserStore.getUser().getUserId());
+        params.put("eventname", eventNameBox.getText().toString());
         params.put("duration", UrlParamUtils.addDuration(eventDuration));
-        params.put("priority", eventPriority + "");
+        params.put("priority", 3 + "");
+
 
         WebClient.post(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler() {
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                System.out.println(responseBody);
-                super.onFailure(statusCode, headers, responseBody, error);
-            }
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String s2 = new String(responseBody);
-                createEventButton.setClickable(true);
-                System.out.println(s2);
+                String s = new String(responseBody);
+
+                System.out.println(s);
+
+                String[] responseData = s.split(",");
+                //do things with the response.
+
+                QueryResponse qr = new QueryResponse();
+                qr.setSuggestedDate(new Date(Long.parseLong(responseData[0])));
+
+                List<String> eventIds = new ArrayList<>();
+                if(responseData.length > 0){
+                    String[] ids = responseData[1].split("|");
+                    for (String id : ids) {
+                        eventIds.add(id);
+                    }
+                }
+                qr.setConflictingEvents(eventIds);
+
+                initiateResponsePopupWindow(qr);
             }
-
         });
-        //do server stuff - find if there if other people's schedules will have to be changed
-        Boolean schedulesHaveToChange = true;
 
-        if (schedulesHaveToChange) {
-            String conflictMessage = "Gareth will have to reschedule a high priority event.\n\nAre you sure you want to continue?";
-            initiateConflictPopupWindow(conflictMessage);
 
-        } else {
-            //add the event to server etc.
-            //   Intent intent = new Intent(context, ScheduleActivity.class);
-            //   startActivity(intent);
-        }
     }
 
     public void addEventToAndroidCal() {
@@ -464,7 +511,6 @@ public class AddEventActivity extends FragmentActivity {
         e.setStartDate(startWindow);
         e.setEndDate(endWindow);
         e.setDuration(eventDuration);
-        e.setPreferredTime(preferredTime);
         e.setPriority(eventPriority);
         e.setParticipants(attendees);
 
@@ -523,17 +569,10 @@ public class AddEventActivity extends FragmentActivity {
 
     }
 
-    private View.OnClickListener CREATE_EVENT_LISTENER = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            RequestParams params = new RequestParams();
-            params.put("attendees", UrlParamUtils.addAttendees(attendees));
-            params.put("startDate", UrlParamUtils.addDate(startWindow));
-            params.put("endDate", UrlParamUtils.addDate(endWindow));
-            params.put("userid", GlobalUserStore.getUser().getUserId());
-            params.put("eventname", eventNameBox.getText().toString());
+//    private View.OnClickListener CREATE_EVENT_LISTENER = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
 
-            WebClient.post(UrlServerConstants.ADD_EVENT, params, new AsyncHttpResponseHandler());
-        }
-    };
+//        }
+//    };
 }
