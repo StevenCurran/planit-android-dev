@@ -39,6 +39,7 @@ import com.planit.constants.UrlServerConstants;
 import com.planit.utils.UrlParamUtils;
 import com.planit.utils.WebClient;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -183,7 +184,7 @@ public class AddEventActivity extends FragmentActivity {
         public void onClick(View v) {
 
 
-            addEventToAndroidCal();
+           // addEventToAndroidCal();
 
             Event e = new Event();
             e.setTitle(eventNameBox.getText().toString());
@@ -202,12 +203,18 @@ public class AddEventActivity extends FragmentActivity {
             params.put("userid", GlobalUserStore.getUser().getUserId());
             params.put("eventname", eventNameBox.getText().toString());
 
-            WebClient.post(UrlServerConstants.ADD_EVENT, params, new AsyncHttpResponseHandler());
+            WebClient.post(UrlServerConstants.ADD_EVENT, params, new AsyncHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    System.out.println("Succes!");
+                    super.onSuccess(statusCode, headers, responseBody);
+                }
+            });
 
 
             creationResponsePopup.dismiss();
-            Intent intent = new Intent(context, ScheduleActivity.class);
-            startActivity(intent);
+          //  Intent intent = new Intent(context, ScheduleActivity.class);
+          //  startActivity(intent);
         }
     };
     private PopupWindow creationResponsePopup;

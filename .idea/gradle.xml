@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/PlanIt" />
+            <option value="C:\Users\Steven Curran\Documents\GitHub\planit-android-dev" />
+            <option value="C:\Users\Steven Curran\Documents\GitHub\planit-android-dev\PlanIt" />
           </set>
         </option>
       </GradleProjectSettings>
