@@ -69,6 +69,7 @@ public class NotificationsActivity extends Activity {
         params.put("userid", GlobalUserStore.getUser().getId());
 
         WebClient.get(UrlServerConstants.PENDING_EVENTS, params, new JsonHttpResponseHandler() {
+
             @Override
             public void onSuccess(JSONArray responseArr) {
                 List<EventWithConflicts> events = new ArrayList<>();
@@ -107,7 +108,7 @@ public class NotificationsActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+                //todo: eat dicks 24/7
                 List<Notification> nots = buildNotifications(events);
 
                 adapter.clear();
@@ -119,6 +120,12 @@ public class NotificationsActivity extends Activity {
                 }
                 adapter.notifyDataSetChanged();
 
+            }
+
+            @Override
+            public void onFailure(Throwable e, JSONObject errorResponse) {
+                System.out.println("oblem here!");
+                super.onFailure(e, errorResponse);
             }
         });
 

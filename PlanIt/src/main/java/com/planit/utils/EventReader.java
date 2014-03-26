@@ -26,7 +26,7 @@ public class EventReader {
             e.setStartDate(new Date(object.getLong("startDate")));
             e.setEndDate(new Date(object.getLong("endDate")));
             //do participant stuff here
-            JSONArray attendees = object.getJSONArray("attendees");
+            JSONArray attendees = object.getJSONArray("userEvents");
             ArrayList<Participant> ps = new ArrayList<>();
 
             for (int i = 0; i < attendees.length(); i++) {
