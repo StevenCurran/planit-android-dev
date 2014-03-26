@@ -442,7 +442,13 @@ public class AddEventActivity extends FragmentActivity {
             bestTimeDetails.setText(queryDF.format(response.getSuggestedDate()));
 
             if (response.getConflictingEvents().size() > 0) {
-                String message = "This date would cause " + response.getConflictingEvents().size() + " people to reschedule other events.";
+                String message;
+                if (response.getConflictingEvents().size() == 1) {
+                    message = "This date would cause 1 person to reschedule other events.";
+                } else {
+                    message = "This date would cause " + response.getConflictingEvents().size() + " people to reschedule other events.";
+                }
+
                 additionalDetails.setText(message);
             } else {
                 String message = "This date doesn't cause conflicts in anyone's schedule.";
