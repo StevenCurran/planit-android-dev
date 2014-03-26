@@ -472,7 +472,7 @@ public class AddEventActivity extends FragmentActivity {
         params.put("userid", GlobalUserStore.getUser().getUserId());
         params.put("eventname", eventNameBox.getText().toString());
         params.put("duration", UrlParamUtils.addDuration(eventDuration));
-        params.put("priority", 3);
+        params.put("priority", 3+"");
 
 
         WebClient.post(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler(){

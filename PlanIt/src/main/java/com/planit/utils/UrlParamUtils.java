@@ -40,9 +40,9 @@ public class UrlParamUtils {
         StringBuilder date = new StringBuilder();
         date.append(c.get(Calendar.YEAR));
         date.append(',');
-        date.append(c.get(Calendar.MONTH));
+        date.append(c.get(Calendar.MONTH) + 1);
         date.append(',');
-        date.append(c.get(Calendar.DAY_OF_MONTH) + 1);
+        date.append(c.get(Calendar.DAY_OF_MONTH));
         date.append(',');
         date.append(c.get(Calendar.HOUR_OF_DAY));
         date.append(',');
