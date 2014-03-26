@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/planit_blue"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/planitLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/small_planit_logo" />
+
+    <EditText
+        android:id="@+id/planitIDTextBox"
+        android:layout_width="340dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_weight="0.05"
+        android:background="@drawable/top_curve_box"
+        android:hint="PlanIt ID"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:singleLine="true"
+        android:textColor="@color/planit_grey"
+        android:textSize="7pt" />
+
+    <EditText
+        android:id="@+id/planitIDPasswordBox"
+        android:layout_width="340dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.05"
+        android:background="@drawable/bottom_curve_box"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:singleLine="true"
+        android:textColor="@color/planit_grey"
+        android:textSize="7pt" />
+
+    <TextView
+        android:id="@+id/forgottenPasswordText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Forgotten your password?"
+        android:textColor="@color/white"
+        android:textSize="7pt" />
+
+    <TextView
+        android:id="@+id/noAccountText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="Don't have a PlanIt account? Create one."
+        android:textColor="@color/white"
+        android:textSize="7pt" />
+
+    <ImageButton
+        android:id="@+id/googleLoginButton"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:background="@null"
+        android:onClick="doGoogleLogin"
+        android:src="@drawable/google_login_image" />
+
+    <ImageButton
+        android:id="@+id/facebookLoginButton"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@null"
+        android:onClick="doFacebookLogin"
+        android:src="@drawable/facebook_login_image" />
+
+</LinearLayout>
