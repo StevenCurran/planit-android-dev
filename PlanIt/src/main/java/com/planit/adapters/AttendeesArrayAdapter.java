@@ -43,12 +43,19 @@ public class AttendeesArrayAdapter extends ArrayAdapter<Participant> {
         TextView attendeeName = (TextView) rowView.findViewById(R.id.attendeeName);
 
         if (attendees != null && attendees.size() > 0) {
-            attendeeName.setText(attendees.get(position).getFirstName() + " " + attendees.get(position).getLastName().substring(0, 1) + ".");
-            attendeeName.setTypeface(uiFont);
 
-            //proper way to get user image when server stuff is in
-            ImageView attendeeImage = (ImageView) rowView.findViewById(R.id.attendeePicture);
-            Picasso.with(context).load(attendees.get(position).getImageUrl()).transform(imageTransformer).error(R.drawable.default_user_photo).into(attendeeImage);
+            try {
+                attendeeName.setText(attendees.get(position).getFirstName() + " " + attendees.get(position).getLastName().substring(0, 1) + ".");
+                attendeeName.setTypeface(uiFont);
+
+                //proper way to get user image when server stuff is in
+                ImageView attendeeImage = (ImageView) rowView.findViewById(R.id.attendeePicture);
+                Picasso.with(context).load(attendees.get(position).getImageUrl()).transform(imageTransformer).error(R.drawable.default_user_photo).into(attendeeImage);
+
+
+            } catch (Exception e) {
+                //unhandled
+            }
 
 
         }
