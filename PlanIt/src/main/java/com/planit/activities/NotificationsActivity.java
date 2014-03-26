@@ -10,12 +10,26 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.planit.Event;
+import com.planit.EventWithConflicts;
 import com.planit.Notification;
 import com.planit.R;
 import com.planit.adapters.NotificationsArrayAdapter;
+import com.planit.constants.GlobalUserStore;
+import com.planit.constants.UrlServerConstants;
+import com.planit.utils.WebClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Gareth on 17/03/2014.
@@ -24,6 +38,7 @@ public class NotificationsActivity extends Activity {
 
     final Context context = this;
     NotificationsArrayAdapter adapter;
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,32 +65,93 @@ public class NotificationsActivity extends Activity {
 
         ArrayList<Notification> notifications = new ArrayList<>();
 
-        //do server fings
+        RequestParams params = new RequestParams();
+        params.put("userid", GlobalUserStore.getUser().getId());
 
-        Notification n1 = new Notification();
-        n1.setTitle("Conflict");
-        n1.setDetails("Josh invited you to 'Group Meeting' on Wed 19 March at 10:00. " +
-                "You have a lower priority event at this time - 'Meeting with Ted'.");
+        WebClient.get(UrlServerConstants.PENDING_EVENTS, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(JSONArray responseArr) {
+                List<EventWithConflicts> events = new ArrayList<>();
 
-        Notification n2 = new Notification();
-        n2.setTitle("Conflict");
-        n2.setDetails("Steven invited you to 'Android Dev' on Thur 2 April at 11:30. " +
-                "You have a higher priority event at this time - 'Meeting with Fatih'.");
+                try {
+                    for (int i = 0; i < responseArr.length(); i++) {
+                        JSONObject o1 = responseArr.getJSONObject(i);
+                        JSONObject o = o1.getJSONObject("planitEvent");
 
-        Notification n3 = new Notification();
-        n3.setTitle("New Invitation");
-        n3.setDetails("Jay invited you to 'HPC Assignment Work' on Fri 21 March at 15:00.");
+                        Event e = new Event();
+                        e.setTitle(o.getString("name"));
+                        e.setId(o.getString("eventId"));
+                        e.setLocation(o.getString("location"));
+                        e.setPriority(o.getInt("priority"));
+                        e.setStartDate(new Date(o.getLong("startDate")));
+                        e.setEndDate(new Date(o.getLong("endDate")));
 
-        Notification n4 = new Notification();
-        n4.setTitle("New Invitation");
-        n4.setDetails("Josh invited you to 'After Work Drinks' on Fri 21 March at 18:00.");
+                        EventWithConflicts ewc = new EventWithConflicts(e);
 
-        notifications.add(n1);
-        notifications.add(n2);
-        notifications.add(n3);
-        notifications.add(n4);
+                        JSONArray conflicts = o1.getJSONArray("conflictingEvents");
+                        if (conflicts != null && conflicts.length() > 0) {
+                            for (int j = 0; j < conflicts.length(); j++) {
+                                Event e1 = new Event();
+                                JSONObject o2 = conflicts.getJSONObject(j);
+                                e1.setTitle(o2.getString("name"));
+                                e1.setId(o2.getString("eventId"));
+                                e1.setLocation(o2.getString("location"));
+                                e1.setPriority(o2.getInt("priority"));
+                                e1.setStartDate(new Date(o2.getLong("startDate")));
+                                e1.setEndDate(new Date(o2.getLong("endDate")));
+                                ewc.addConflict(e1);
+                            }
+                        }
+                        events.add(ewc);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                List<Notification> nots = buildNotifications(events);
+
+                adapter.clear();
+                adapter.addAll(nots);
+
+                adapter.clear();
+                for (Notification not : nots) {
+                    adapter.add(not);
+                }
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+
 
         return notifications;
+    }
+
+    private List<Notification> buildNotifications(List<EventWithConflicts> events) {
+        List<Notification> nots = new ArrayList<>();
+
+        for (EventWithConflicts event : events) {
+            Notification n = new Notification();
+
+            String s = event.getPlanitEvent().getTitle() + "\n" + event.getPlanitEvent().getStartDate();
+
+            n.setTitle("Notification");
+            if(event.getConflictingEvents().size() > 0)
+            {
+                n.setTitle("Conflict");
+                s += "\n\nConflicts:\n";
+            }
+
+            for(Event e : event.getConflictingEvents())
+            {
+                s += "\n" + e.getTitle() + " @ " + e.getStartDate();
+            }
+
+            n.setId(event.getPlanitEvent().getId());
+            n.setDetails(s);
+            nots.add(n);
+        }
+
+        return nots;
     }
 
 
