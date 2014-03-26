@@ -184,7 +184,7 @@ public class AddEventActivity extends FragmentActivity {
         public void onClick(View v) {
 
 
-           // addEventToAndroidCal();
+            // addEventToAndroidCal();
 
             Event e = new Event();
             e.setTitle(eventNameBox.getText().toString());
@@ -203,7 +203,7 @@ public class AddEventActivity extends FragmentActivity {
             params.put("userid", GlobalUserStore.getUser().getUserId());
             params.put("eventname", eventNameBox.getText().toString());
 
-            WebClient.post(UrlServerConstants.ADD_EVENT, params, new AsyncHttpResponseHandler(){
+            WebClient.post(UrlServerConstants.ADD_EVENT, params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     System.out.println("Succes!");
@@ -213,8 +213,8 @@ public class AddEventActivity extends FragmentActivity {
 
 
             creationResponsePopup.dismiss();
-          //  Intent intent = new Intent(context, ScheduleActivity.class);
-          //  startActivity(intent);
+            //  Intent intent = new Intent(context, ScheduleActivity.class);
+            //  startActivity(intent);
         }
     };
     private PopupWindow creationResponsePopup;
@@ -441,8 +441,8 @@ public class AddEventActivity extends FragmentActivity {
 
             bestTimeDetails.setText(queryDF.format(response.getSuggestedDate()));
 
-            if (response.getConflictingEvents().length > 0) {
-                String message = "This date would cause " + response.getConflictingEvents().length + " people to reschedule other events.";
+            if (response.getConflictingEvents().size() > 0) {
+                String message = "This date would cause " + response.getConflictingEvents().size() + " people to reschedule other events.";
                 additionalDetails.setText(message);
             } else {
                 String message = "This date doesn't cause conflicts in anyone's schedule.";
@@ -472,20 +472,31 @@ public class AddEventActivity extends FragmentActivity {
         params.put("userid", GlobalUserStore.getUser().getUserId());
         params.put("eventname", eventNameBox.getText().toString());
         params.put("duration", UrlParamUtils.addDuration(eventDuration));
-        params.put("priority", 3+"");
+        params.put("priority", 3 + "");
 
 
-        WebClient.post(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler(){
+        WebClient.post(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String s = new String(responseBody);
 
                 System.out.println(s);
+
+                String[] responseData = s.split(",");
                 //do things with the response.
 
                 QueryResponse qr = new QueryResponse();
-                qr.setSuggestedDate(new Date());
-                qr.setConflictingEvents(new int[]{1});
+                qr.setSuggestedDate(new Date(Long.parseLong(responseData[0])));
+
+                List<String> eventIds = new ArrayList<>();
+                if(responseData.length > 0){
+                    String[] ids = responseData[1].split("|");
+                    for (String id : ids) {
+                        eventIds.add(id);
+                    }
+                }
+                qr.setConflictingEvents(eventIds);
+
                 initiateResponsePopupWindow(qr);
             }
         });

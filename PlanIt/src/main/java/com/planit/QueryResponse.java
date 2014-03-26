@@ -1,6 +1,7 @@
 package com.planit;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Gareth on 24/03/2014.
@@ -8,7 +9,7 @@ import java.util.Date;
 public class QueryResponse {
 
     private Date suggestedDate;
-    private int[] conflictingEvents;
+    private List<String> conflictingEvents;
 
     public Date getSuggestedDate() {
         return suggestedDate;
@@ -18,11 +19,11 @@ public class QueryResponse {
         this.suggestedDate = suggestedDate;
     }
 
-    public int[] getConflictingEvents() {
+    public List<String> getConflictingEvents() {
         return conflictingEvents;
     }
 
-    public void setConflictingEvents(int[] conflictingEvents) {
+    public void setConflictingEvents(List<String> conflictingEvents) {
         this.conflictingEvents = conflictingEvents;
     }
 }
