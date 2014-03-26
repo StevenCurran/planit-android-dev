@@ -51,6 +51,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 /**
  * Created by Gareth on 18/03/2014.
@@ -77,6 +78,12 @@ public class AddEventActivity extends FragmentActivity {
     private TextView durationTextView;
     private Button createEventButton;
     private Date startWindow;
+    private Date newStartTime;
+    private Date newEndTime;
+
+    private EventDuration eventDuration;
+    private Calendar cal;
+
     private CalendarDatePickerDialog.OnDateSetListener START_WINDOW_HANDLER = new CalendarDatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
@@ -132,7 +139,7 @@ public class AddEventActivity extends FragmentActivity {
             endWindow.setMinutes(endTime.getMinutes());
         }
     };
-    private EventDuration eventDuration;
+
     private HmsPickerDialogFragment.HmsPickerDialogHandler EVENT_DURATION_HANDLER = new HmsPickerDialogFragment.HmsPickerDialogHandler() {
 
         final EventDuration e = new EventDuration();
@@ -184,7 +191,7 @@ public class AddEventActivity extends FragmentActivity {
         public void onClick(View v) {
 
 
-            // addEventToAndroidCal();
+            addEventToAndroidCal();
 
             Event e = new Event();
             e.setTitle(eventNameBox.getText().toString());
@@ -492,13 +499,23 @@ public class AddEventActivity extends FragmentActivity {
                 //do things with the response.
 
                 QueryResponse qr = new QueryResponse();
-                qr.setSuggestedDate(new Date(Long.parseLong(responseData[0])));
+                Date tempDate = new Date(Long.parseLong(responseData[0]));
+                cal = Calendar.getInstance();
+                cal.setTime(tempDate);
+                cal.add(Calendar.HOUR_OF_DAY, 0);
+                qr.setSuggestedDate(cal.getTime());
+
+                final long HOUR = 3600 * 1000; // in milli-seconds.
+
+                newEndTime = new Date(tempDate.getTime() + eventDuration.getHours() * HOUR);
 
                 List<String> eventIds = new ArrayList<>();
                 if(responseData.length > 1){
-                    String[] ids = responseData[1].split("|");
+                    String[] ids = responseData[1].split(Pattern.quote("|"));
                     for (String id : ids) {
+                        if (!id.isEmpty()) {
                         eventIds.add(id);
+                        }
                     }
                 }
                 qr.setConflictingEvents(eventIds);
@@ -514,16 +531,16 @@ public class AddEventActivity extends FragmentActivity {
         Event e = new Event();
         e.setTitle(eventNameBox.getText().toString());
         e.setLocation(eventLocationBox.getText().toString());
-        e.setStartDate(startWindow);
-        e.setEndDate(endWindow);
+        e.setStartDate(cal.getTime());
+        e.setEndDate(newEndTime);
         e.setDuration(eventDuration);
         e.setPriority(eventPriority);
         e.setParticipants(attendees);
 
         ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
-        values.put(CalendarContract.Events.DTSTART, startWindow.getTime());
-        values.put(CalendarContract.Events.DTEND, endWindow.getTime());
+        values.put(CalendarContract.Events.DTSTART, cal.getTime().getTime());
+        values.put(CalendarContract.Events.DTEND, newEndTime.getTime());
         values.put(CalendarContract.Events.TITLE, eventNameBox.getText().toString());
         values.put(CalendarContract.Events.CALENDAR_ID, 1);
         values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());

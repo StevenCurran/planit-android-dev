@@ -131,15 +131,22 @@ public class NotificationsActivity extends Activity {
 
         for (EventWithConflicts event : events) {
             Notification n = new Notification();
-            n.setTitle("Conflict");
 
-            String s = event.getPlanitEvent().getTitle() + "\n" + event.getPlanitEvent().getStartDate() + "\n\nConflicts:\n";
+            String s = event.getPlanitEvent().getTitle() + "\n" + event.getPlanitEvent().getStartDate();
+
+            n.setTitle("Notification");
+            if(event.getConflictingEvents().size() > 0)
+            {
+                n.setTitle("Conflict");
+                s += "\n\nConflicts:\n";
+            }
 
             for(Event e : event.getConflictingEvents())
             {
                 s += "\n" + e.getTitle() + " @ " + e.getStartDate();
             }
 
+            n.setId(event.getPlanitEvent().getId());
             n.setDetails(s);
             nots.add(n);
         }
