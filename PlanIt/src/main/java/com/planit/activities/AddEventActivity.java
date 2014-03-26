@@ -464,13 +464,31 @@ public class AddEventActivity extends FragmentActivity {
     public void doPlanit(View view) {
 
         //do server stuff - get response with a date and conflict IDs
-        int[] test = {1, 12, 34};
-//        int[] test = new int[0];
 
-        QueryResponse qr = new QueryResponse();
-        qr.setSuggestedDate(new Date());
-        qr.setConflictingEvents(test);
-        initiateResponsePopupWindow(qr);
+        RequestParams params = new RequestParams();
+        params.put("attendees", UrlParamUtils.addAttendees(attendees));
+        params.put("startDate", UrlParamUtils.addDate(startWindow));
+        params.put("endDate", UrlParamUtils.addDate(endWindow));
+        params.put("userid", GlobalUserStore.getUser().getUserId());
+        params.put("eventname", eventNameBox.getText().toString());
+        params.put("duration", UrlParamUtils.addDuration(eventDuration));
+        params.put("priority", 3);
+
+
+        WebClient.get(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String s = new String(responseBody);
+
+                System.out.println(s);
+                //do things with the response.
+
+                QueryResponse qr = new QueryResponse();
+                qr.setSuggestedDate(new Date());
+                qr.setConflictingEvents(new int[]{1});
+                initiateResponsePopupWindow(qr);
+            }
+        });
 
 
     }
