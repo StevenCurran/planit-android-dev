@@ -489,7 +489,7 @@ public class AddEventActivity extends FragmentActivity {
                 qr.setSuggestedDate(new Date(Long.parseLong(responseData[0])));
 
                 List<String> eventIds = new ArrayList<>();
-                if(responseData.length > 0){
+                if(responseData.length > 1){
                     String[] ids = responseData[1].split("|");
                     for (String id : ids) {
                         eventIds.add(id);
