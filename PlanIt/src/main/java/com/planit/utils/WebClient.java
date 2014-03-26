@@ -12,8 +12,10 @@ import org.apache.http.Header;
 public class WebClient {
 
     private static AsyncHttpClient client = new AsyncHttpClient();
+    private static final int DEFAULT_TIMEOUT = 20 * 1000;
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.setTimeout(DEFAULT_TIMEOUT);
         client.get(url, params, responseHandler);
     }
 
