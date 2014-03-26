@@ -475,7 +475,7 @@ public class AddEventActivity extends FragmentActivity {
         params.put("priority", 3);
 
 
-        WebClient.get(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler(){
+        WebClient.post(UrlServerConstants.PLANIT, params, new AsyncHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String s = new String(responseBody);
