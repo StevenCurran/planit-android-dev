@@ -17,6 +17,8 @@ import com.planit.activities.RescheduleActivity;
 
 import java.util.ArrayList;
 
+import javax.xml.transform.Source;
+
 /**
  * Created by Gareth on 22/03/2014.
  */
@@ -61,6 +63,7 @@ public class NotificationsArrayAdapter extends ArrayAdapter<Notification> {
                 rejectNotification();
             }
         });
+
         rescheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +73,7 @@ public class NotificationsArrayAdapter extends ArrayAdapter<Notification> {
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                acceptNotification();
+                acceptNotification(notifications.get(position));
             }
         });
 
@@ -101,7 +104,9 @@ public class NotificationsArrayAdapter extends ArrayAdapter<Notification> {
         //do server things
     }
 
-    public void acceptNotification() {
-        //do server things
+    public void acceptNotification(Notification not) {
+        System.out.println(not.getId());
+        notifications.remove(not);
+        this.notifyDataSetChanged();
     }
 }
