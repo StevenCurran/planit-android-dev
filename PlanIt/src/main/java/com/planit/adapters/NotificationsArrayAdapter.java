@@ -1,6 +1,7 @@
 package com.planit.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.planit.Notification;
 import com.planit.R;
+import com.planit.activities.EventDetailsActivity;
+import com.planit.activities.RescheduleActivity;
 
 import java.util.ArrayList;
 
@@ -29,7 +32,7 @@ public class NotificationsArrayAdapter extends ArrayAdapter<Notification> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.notification_list_item, parent, false);
@@ -51,38 +54,40 @@ public class NotificationsArrayAdapter extends ArrayAdapter<Notification> {
         rescheduleButton.setTypeface(uilFont);
         acceptButton.setTypeface(uilFont);
 
+
+        rejectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rejectNotification();
+            }
+        });
+        rescheduleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rescheduleNotification();
+            }
+        });
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                acceptNotification();
+            }
+        });
+
         //set buttons depending on type of notification
         if (notifications.get(position).getTitle() == "Conflict") {
             notificationTitle.setTextColor(context.getResources().getColor(R.color.planit_red));
-            rejectButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    rejectNotification();
-                }
-            });
             rescheduleButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    rescheduleNotification();
-                }
-            });
-            acceptButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    acceptNotification();
+                    Intent intent = new Intent(view.getContext(), RescheduleActivity.class);
+                    intent.putExtra("notificationId", notifications.get(position).getId());
+                    getContext().startActivity(intent);
                 }
             });
         } else {
-            rescheduleButton.setText("Acknowledge");
-            rescheduleButton.setBackgroundResource(R.drawable.small_green_button);
-            rescheduleButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    acceptNotification();
-                }
-            });
-            rejectButton.setVisibility(View.INVISIBLE);
-            acceptButton.setVisibility(View.INVISIBLE);
+            notificationTitle.setTextColor(context.getResources().getColor(R.color.planit_blue));
+            rescheduleButton.setVisibility(View.INVISIBLE);
         }
 
         return rowView;

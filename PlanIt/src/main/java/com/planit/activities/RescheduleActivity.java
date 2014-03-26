@@ -1,42 +1,32 @@
 package com.planit.activities;
 
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.planit.Event;
+import com.planit.Notification;
 import com.planit.R;
 import com.planit.adapters.AttendeesArrayAdapter;
 import com.planit.constants.UrlServerConstants;
 import com.planit.utils.EventReader;
 import com.planit.utils.WebClient;
 
-import org.joda.time.DateTime;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 
-
 /**
- * Created by Gareth on 24/03/2014.
+ * Created by Gareth on 26/03/2014.
  */
-public class EventDetailsActivity extends Activity {
+public class RescheduleActivity extends Activity {
 
     final Context context = this;
     private Bundle extras;
@@ -45,65 +35,72 @@ public class EventDetailsActivity extends Activity {
     private TextView eventDate;
     private TextView eventTime;
     private Button priorityIndicator;
-    private AttendeesArrayAdapter adapter;
     private TextView attendeesTitle;
-    private it.sephiroth.android.library.widget.HListView listview;
+    private TextView conflictsTitle;
+    private ListView conflictingEventsList;
+    private AttendeesArrayAdapter adapter;
+    private it.sephiroth.android.library.widget.HListView attendeesListView;
     private SimpleDateFormat df = new SimpleDateFormat("EEEE dd MMMM yyyy");
-    private SimpleDateFormat tf = new SimpleDateFormat("hh:mm a");
+    private SimpleDateFormat tf = new SimpleDateFormat("kk:mm");
     private Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.event_details);
+        setContentView(R.layout.reschedule);
 
         //set fonts
         Typeface uilFont = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
 
         TextView screenTitle = (TextView) findViewById(R.id.screenTitle);
         screenTitle.setTypeface(uilFont);
-        eventName = (TextView) findViewById(R.id.details_eventName);
+        eventName = (TextView) findViewById(R.id.reschedule_eventName);
         eventName.setTypeface(uilFont);
-        eventLocation = (TextView) findViewById(R.id.details_eventLocation);
+        eventLocation = (TextView) findViewById(R.id.reschedule_eventLocation);
         eventLocation.setTypeface(uilFont);
-        eventDate = (TextView) findViewById(R.id.details_eventDate);
+        eventDate = (TextView) findViewById(R.id.reschedule_eventDate);
         eventDate.setTypeface(uilFont);
-        eventTime = (TextView) findViewById(R.id.details_eventTime);
+        eventTime = (TextView) findViewById(R.id.reschedule_eventTime);
         eventTime.setTypeface(uilFont);
-        attendeesTitle = (TextView) findViewById(R.id.attendeesTitle);
+        attendeesTitle = (TextView) findViewById(R.id.reschedule_attendeesTitle);
         attendeesTitle.setTypeface(uilFont);
+        conflictsTitle = (TextView) findViewById(R.id.reschedule_conflictsTitle);
+        conflictsTitle.setTypeface(uilFont);
 
-        priorityIndicator = (Button) findViewById(R.id.detail_priorityIndicator);
+        priorityIndicator = (Button) findViewById(R.id.reschedule_priorityIndicator);
 
         extras = getIntent().getExtras();
         if (extras != null) {
-            String eventId = extras.getString("eventId");
-            setDetails(eventId);
+            String notificationId = extras.getString("notificationId");
+            setDetails(notificationId);
         }
 
-        listview = (it.sephiroth.android.library.widget.HListView) findViewById(R.id.details_attendeesList);
-
+        attendeesListView = (it.sephiroth.android.library.widget.HListView) findViewById(R.id.details_attendeesList);
+        conflictingEventsList = (ListView) findViewById(R.id.conflictingEventsList);
     }
 
-    public void setDetails(String eventId) {
+    public void setDetails(String notificationId) {
 
         //get event info from server using eventId;
         final Event[] e = {new Event()}; //change this to server object and uncomment below
 
         RequestParams params = new RequestParams();
-        params.put("eventid", eventId);
-
+        params.put("notificationId", notificationId);
 
         WebClient.get(UrlServerConstants.GET_EVENT, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
+
+                // need to use notification to get eventid??? and get conflicts array
+                Notification n = new Notification();
+
                 Event e = EventReader.read(response);
 
                 eventName.setText(e.getTitle());
                 eventLocation.setText(e.getLocation());
                 eventDate.setText(df.format(e.getStartDate()));
                 eventTime.setText(tf.format(e.getStartDate()) + " - " + tf.format(e.getEndDate()));
-
 
                 switch (e.getPriority()) {
                     case 1:
@@ -129,13 +126,23 @@ public class EventDetailsActivity extends Activity {
                 }
 
                 adapter = new AttendeesArrayAdapter(context, e.getParticipants());
-                listview.setAdapter(adapter);
+                attendeesListView.setAdapter(adapter);
                 attendeesTitle.setText("Attendees");
+
+                if (n.getConflicts().length > 0) {
+
+                    //populate conflicts list with the conflicting events
+                    //prob have to use server request to send each conflicitng event id, to get
+                    //info of event
+
+//                    adapter = new ConflictingEventsArrayAdapter(context, <list of conflicting event object>);
+//                    conflictingEventsList.setAdapter(adapter);
+//                    conflictsTitle.setText("Conflicting Events");
+
+                }
             }
 
         });
-
-
     }
 
 
